@@ -18,8 +18,9 @@ jobs:
     - name: Get latest GitHub release version
       id: latest_release
       run: |
+        echo "🔍 Getting latest GitHub release version..."
         LATEST_VERSION=$(curl -s https://api.github.com/repos/n8n-io/n8n/releases/latest | jq -r '.tag_name')
-        echo "Latest release tag: $LATEST_VERSION"
+        echo "✅ Latest release tag: $LATEST_VERSION"
         echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
 
     - name: Checkout local
@@ -27,22 +28,16 @@ jobs:
       with:
         path: ./n8n-i18n-japanese
 
-    # - name: Read version from package.json
-    #   id: get_version
-    #   run: |
-    #     VERSION=$(jq -r '.version' package.json)
-    #     echo "Version: $VERSION"
-    #     echo "version=$VERSION" >> $GITHUB_OUTPUT
-    #   working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-
     - name: Check if tag exists
       id: check_tag
       run: |
         TAG="${{ steps.latest_release.outputs.latest }}"
-        echo "Checking for remote tag: $TAG"
+        echo "🔍 Checking for remote tag: $TAG"
         if git ls-remote --tags origin | grep "refs/tags/$TAG$"; then
+          echo "⚠️ Tag $TAG already exists. Stopping workflow."
           echo "exists=true" >> $GITHUB_OUTPUT
         else
+          echo "✅ Tag $TAG does not exist. Proceeding with build."
           echo "exists=false" >> $GITHUB_OUTPUT
         fi
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese
@@ -50,7 +45,8 @@ jobs:
     - name: Exit if tags exist
       if: steps.check_tag.outputs.exists == 'true'
       run: |
-        echo "Tags exist, stopping workflow."
+        echo "⏹️ Tags exist, stopping workflow."
+        exit 0
 
     - name: Checkout n8n
       if: steps.check_tag.outputs.exists == 'false'
@@ -60,76 +56,157 @@ jobs:
         ref: ${{ steps.latest_release.outputs.latest }}
         path: ./n8n
 
-    - uses: actions/setup-node@v4.2.0
+    - name: Setup Node.js
       if: steps.check_tag.outputs.exists == 'false'
+      uses: actions/setup-node@v4.2.0
       with:
         node-version: 20.x
+
+    - name: Verify Node.js version
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔍 Checking Node.js setup..."
+        NODE_VERSION=$(node --version | cut -d'.' -f1 | cut -d'v' -f2)
+        echo "📋 Current Node.js version: $(node --version)"
+        if [ "$NODE_VERSION" -lt 20 ]; then
+          echo "❌ Node.js version 20 or later is required. Current version: $(node --version)"
+          exit 1
+        fi
+        echo "✅ Node.js version check passed"
 
     - name: Setup corepack and pnpm
       if: steps.check_tag.outputs.exists == 'false'
       run: |
+        echo "🔧 Setting up corepack and pnpm..."
         npm i -g corepack@0.31
         corepack enable
+        echo "✅ Corepack and pnpm setup completed"
 
-    - run: pnpm install --frozen-lockfile
+    - name: Install dependencies
       if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "📦 Installing dependencies..."
+        pnpm install --frozen-lockfile
+        echo "✅ Dependencies installed successfully"
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
-    - name: check n8n editor-ui is old
-      id: editorui_dir
+    - name: Build @n8n/stores package
+      if: steps.check_tag.outputs.exists == 'false'
       run: |
-        DIR_PATH="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/frontend/editor-ui"       # 確認するディレクトリ
-        FALLBACK_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/editor-ui" # フォールバックディレクトリ
-
-        if [ -d "$DIR_PATH" ]; then
-          echo "flag=new" >> $GITHUB_OUTPUT
-          echo "dir=$DIR_PATH" >> $GITHUB_OUTPUT
+        echo "🔧 Fixing @n8n/stores TypeScript configuration and building..."
+        STORES_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/frontend/@n8n/stores"
+        if [ -d "$STORES_DIR" ]; then
+          cd "$STORES_DIR"
+          
+          echo "📝 Updating tsconfig.json for @n8n/stores..."
+          if ! grep -q '"moduleResolution"' tsconfig.json; then
+            # isolatedModulesの行にカンマを追加してからmoduleResolutionを追加
+            sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
+            sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+            echo "✅ Added moduleResolution: bundler to tsconfig.json"
+          fi
+          
+          echo "🏗️ Building @n8n/stores package..."
+          if command -v npx &> /dev/null; then
+            npx tsup
+          else
+            echo "⚠️ npx not found, trying with pnpm..."
+            pnpm run build --skip-typecheck || {
+              echo "⚠️ Build with typecheck failed, trying tsup directly..."
+              pnpm exec tsup
+            }
+          fi
+          
+          # distディレクトリの存在確認
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/stores build completed successfully"
+          else
+            echo "❌ @n8n/stores build failed - dist directory not found"
+            exit 1
+          fi
         else
-          echo "flag=old" >> $GITHUB_OUTPUT
-          echo "dir=$FALLBACK_DIR" >> $GITHUB_OUTPUT
+          echo "⚠️ @n8n/stores directory not found, skipping stores build"
         fi
 
-    - name: Move editor-ui i18n language
-      if: steps.check_tag.outputs.exists == 'false'
-      run:     cp -r /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/languages/* "${{ steps.editorui_dir.outputs.dir }}/src/plugins/i18n/locales/"
-
-    - name: Patch New editor-ui
-      if: steps.editorui_dir.outputs.flag == 'new' && steps.check_tag.outputs.exists == 'false'
-      run: git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch
-      working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-
-    - name: Patch Old editor-ui
-      if: steps.editorui_dir.outputs.flag == 'old' && steps.check_tag.outputs.exists == 'false'
-      run: git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch
-      working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-
-    - name: Pnpm build editor-ui
-      if: steps.check_tag.outputs.exists == 'false'
-      run: pnpm build
-      working-directory: ${{ steps.editorui_dir.outputs.dir }}
-
-    - name: dist成果物のパッケージ化
+    - name: Check n8n editor-ui directory structure
+      id: editorui_dir
       if: steps.check_tag.outputs.exists == 'false'
       run: |
+        echo "🔍 Checking editor-ui directory structure..."
+        NEW_DIR_PATH="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/frontend/editor-ui"
+        OLD_DIR_PATH="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/editor-ui"
+
+        if [ -d "$NEW_DIR_PATH" ]; then
+          echo "✅ Using new editor-ui structure: $NEW_DIR_PATH"
+          echo "flag=new" >> $GITHUB_OUTPUT
+          echo "dir=$NEW_DIR_PATH" >> $GITHUB_OUTPUT
+        else
+          echo "✅ Using old editor-ui structure: $OLD_DIR_PATH"
+          echo "flag=old" >> $GITHUB_OUTPUT
+          echo "dir=$OLD_DIR_PATH" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Move editor-ui i18n language files
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "📁 Moving editor-ui i18n language files..."
+        cp -r /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/languages/* "${{ steps.editorui_dir.outputs.dir }}/src/plugins/i18n/locales/"
+        echo "✅ Language files copied successfully"
+
+    - name: Apply patches
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Applying patches..."
+        cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
+        if [ "${{ steps.editorui_dir.outputs.flag }}" = "new" ]; then
+          if [ -f "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch" ]; then
+            git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch
+            echo "✅ Applied new editor-ui patch"
+          fi
+        else
+          if [ -f "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch" ]; then
+            git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch
+            echo "✅ Applied old editor-ui patch"
+          fi
+        fi
+
+    - name: Build editor-ui
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🏗️ Building editor-ui..."
+        pnpm build
+        echo "✅ Editor-ui build completed successfully"
+      working-directory: ${{ steps.editorui_dir.outputs.dir }}
+
+    - name: Package build artifacts
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "📦 Packaging build artifacts..."
         tar -czvf editor-ui.tar.gz dist
+        echo "✅ Build artifacts packaged successfully"
       working-directory: ${{ steps.editorui_dir.outputs.dir }}
 
-    - name: dist をプロジェクトディレクトリにコピー
+    - name: Copy dist to project directory
       if: steps.check_tag.outputs.exists == 'false'
       run: |
+        echo "📁 Copying dist to project directory..."
         cp -r ${{ steps.editorui_dir.outputs.dir }}/dist /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/editor-ui-dist
+        echo "✅ Dist copied to project directory"
 
     - name: Update docker-compose.yml version
       if: steps.check_tag.outputs.exists == 'false'
       run: |
+        echo "📝 Updating docker-compose.yml version..."
         RAW_TAG="${{ steps.latest_release.outputs.latest }}"
         VERSION="${RAW_TAG#n8n@}"  # プレフィックス n8n@ を削除
-        echo "Replacing {version} with $VERSION in docker-compose.yml"
+        echo "🔄 Replacing {version} with $VERSION in docker-compose.yml"
         sed -i "s/{version}/$VERSION/g" /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/docker-compose.yml
+        echo "✅ Docker-compose.yml updated successfully"
 
-    - name: Gitタグの作成
+    - name: Create Git tag and push changes
       if: steps.check_tag.outputs.exists == 'false'
       run: |
+        echo "🏷️ Creating Git tag and pushing changes..."
         TAG="${{ steps.latest_release.outputs.latest }}"
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
@@ -138,9 +215,10 @@ jobs:
         git commit -m "chore: add built editor-ui dist for ${{ steps.latest_release.outputs.latest }}"
         git tag $TAG
         git push origin $TAG
+        echo "✅ Tag $TAG pushed successfully"
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese
 
-    - name: GitHub Release の作成
+    - name: Create GitHub Release
       if: steps.check_tag.outputs.exists == 'false'
       id: create_release
       uses: softprops/action-gh-release@v2
@@ -154,3 +232,16 @@ jobs:
         files: ${{ steps.editorui_dir.outputs.dir }}/editor-ui.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build completion summary
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🎉 Build completed successfully!"
+        echo "📋 Summary:"
+        echo "  - Version: ${{ steps.latest_release.outputs.latest }}"
+        echo "  - Editor-UI Structure: ${{ steps.editorui_dir.outputs.flag }}"
+        echo "  - Build Artifacts: editor-ui.tar.gz"
+        echo "  - GitHub Release: Created"
+        echo ""
+        echo "📖 Installation Instructions:"
+        echo "  Extract editor-ui.tar.gz in: /usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/"
