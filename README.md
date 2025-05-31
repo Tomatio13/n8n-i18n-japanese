@@ -4,14 +4,14 @@
 
 **多くのユーザーにとって最も簡単な方法は、GitHub Releases からビルド済みの日本語化パッケージをダウンロードすることです。**
 
-[**最新の日本語化パッケージはこちらからダウンロード (GitHub Releases)**](https://github.com/nemumusito/n8n-i18n-japanese/releases)
+[**最新の日本語化パッケージはこちらからダウンロード (GitHub Releases)**](https://github.com/Tomatio13/n8n-i18n-japanese/releases)
 
 このリリースには、特定の n8n バージョンに対応した翻訳済み `editor-ui` が `editor-ui.tar.gz` として含まれています。
 これを利用することで、煩雑なビルド作業なしに n8n を日本語で利用開始できます。
 
 ## 主な機能
 
-*   **翻訳済み `editor-ui` の配布 (推奨)**: 最新の n8n リリースに対応した、日本語化済みの `editor-ui` ビルド成果物を [GitHub Releases](https://github.com/nemumusito/n8n-i18n-japanese/releases) で公開しています。
+*   **翻訳済み `editor-ui` の配布 (推奨)**: 最新の n8n リリースに対応した、日本語化済みの `editor-ui` ビルド成果物を [GitHub Releases](https://github.com/Tomatio13/n8n-i18n-japanese/releases) で公開しています。
 *   **日本語翻訳ファイルの提供**: n8n の UI テキストに対応する日本語の翻訳ファイル ([`languages/ja.json`](languages/ja.json:0)) を提供します。これは主に開発者や、自身でビルドを行いたい方向けです。
 *   **Docker イメージでの簡易利用**: `docker-compose` を使用して、日本語化された n8n 環境を簡単に起動できます。
 
@@ -20,7 +20,7 @@
 ### 1. GitHub Releases からパッケージを取得して利用する (推奨)
 
 1.  **パッケージのダウンロード**:
-    [GitHub Releases ページ](https://github.com/nemumusito/n8n-i18n-japanese/releases) から、利用したい n8n のバージョンに対応する `editor-ui.tar.gz` をダウンロードします。
+    [GitHub Releases ページ](https://github.com/Tomatio13/n8n-i18n-japanese/releases) から、利用したい n8n のバージョンに対応する `editor-ui.tar.gz` をダウンロードします。
 2.  **パッケージの展開**:
     ダウンロードした `editor-ui.tar.gz` を展開し、`editor-ui-dist` ディレクトリを取得します。
 3.  **Docker で n8n を起動**:
@@ -29,7 +29,7 @@
     *   **`docker-compose.yml` を利用する場合 (簡単):**
         1.  このリポジトリをクローンまたはダウンロードします。
             ```shell
-            git clone https://github.com/nemumusito/n8n-i18n-japanese.git # またはあなたのフォーク
+            git clone https://github.com/Tomatio13/n8n-i18n-japanese.git # またはあなたのフォーク
             cd n8n-i18n-japanese
             ```
         2.  取得した `editor-ui-dist` ディレクトリを、クローンしたリポジトリのルート (`docker-compose.yml` と同じ階層) に配置します。
@@ -106,7 +106,7 @@
 
 ## GitHub Actions による自動化
 
-このリポジトリでは、GitHub Actions ([`.github/workflows/node.js.yml`](.github/workflows/node.js.yml:0)) を利用して、以下の処理を自動化し、[GitHub Releases](https://github.com/nemumusito/n8n-i18n-japanese/releases) に日本語化パッケージを公開しています。
+このリポジトリでは、GitHub Actions ([`.github/workflows/node.js.yml`](.github/workflows/node.js.yml:0)) を利用して、以下の処理を自動化し、[GitHub Releases](https://github.com/Tomatio13/n8n-i18n-japanese/releases) に日本語化パッケージを公開しています。
 
 *   **定期的な n8n リリースチェック**: 毎日定時に n8n の GitHub リポジトリを監視し、新しいリリースがないか確認します。
 *   **自動ビルドとパッケージ化**:
