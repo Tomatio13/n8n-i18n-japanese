@@ -118,8 +118,45 @@ else
 fi
 
 # 10. 言語ファイルのコピー
-log_info "Moving editor-ui i18n language files..."
-cp -r "$N8N_I18N_DIR/languages/"* "$EDITOR_UI_DIR/src/plugins/i18n/locales/"
+log_info "Moving i18n language files..."
+I18N_LOCALES_DIR="$N8N_DIR/packages/frontend/@n8n/i18n/src/locales"
+if [ -d "$I18N_LOCALES_DIR" ]; then
+    cp -r "$N8N_I18N_DIR/languages/"* "$I18N_LOCALES_DIR/"
+    log_info "Copied language files to new i18n structure: $I18N_LOCALES_DIR"
+    
+    # @n8n/i18nパッケージのビルド
+    log_info "Building @n8n/i18n package..."
+    cd "$N8N_DIR/packages/frontend/@n8n/i18n"
+    
+    # TypeScript設定の更新
+    if ! grep -q '"moduleResolution"' tsconfig.json; then
+        sed -i 's/"resolveJsonModule": true/"resolveJsonModule": true,/' tsconfig.json
+        sed -i '/\"resolveJsonModule\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+        log_info "Added moduleResolution: bundler to @n8n/i18n tsconfig.json"
+    fi
+    
+    # 依存関係の確認とインストール
+    pnpm install --frozen-lockfile
+    
+    # ビルド実行（型チェックを無効にしてビルドのみ実行）
+    if command -v npx &> /dev/null; then
+        npx tsup --no-dts
+    else
+        pnpm build --skip-typecheck || pnpm exec tsup --no-dts
+    fi
+    
+    if [ -d "dist" ]; then
+        log_info "@n8n/i18n build completed successfully"
+    else
+        log_error "@n8n/i18n build failed - dist directory not found"
+        exit 1
+    fi
+    
+    cd "$N8N_DIR"
+else
+    log_error "i18n locales directory not found: $I18N_LOCALES_DIR"
+    exit 1
+fi
 
 # 11. パッチの適用
 log_info "Applying patches..."

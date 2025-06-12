@@ -146,12 +146,49 @@ jobs:
           echo "dir=$OLD_DIR_PATH" >> $GITHUB_OUTPUT
         fi
 
-    - name: Move editor-ui i18n language files
+    - name: Move i18n language files
       if: steps.check_tag.outputs.exists == 'false'
       run: |
-        echo "📁 Moving editor-ui i18n language files..."
-        cp -r /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/languages/* "${{ steps.editorui_dir.outputs.dir }}/src/plugins/i18n/locales/"
-        echo "✅ Language files copied successfully"
+        echo "📁 Moving i18n language files..."
+        I18N_LOCALES_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/frontend/@n8n/i18n/src/locales"
+        if [ -d "$I18N_LOCALES_DIR" ]; then
+          cp -r /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/languages/* "$I18N_LOCALES_DIR/"
+          echo "✅ Language files copied to new i18n structure: $I18N_LOCALES_DIR"
+        else
+          echo "❌ i18n locales directory not found: $I18N_LOCALES_DIR"
+          exit 1
+        fi
+
+    - name: Build @n8n/i18n package
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🏗️ Building @n8n/i18n package..."
+        I18N_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/frontend/@n8n/i18n"
+        cd "$I18N_DIR"
+        
+        # TypeScript設定の更新
+        if ! grep -q '"moduleResolution"' tsconfig.json; then
+          sed -i 's/"resolveJsonModule": true/"resolveJsonModule": true,/' tsconfig.json
+          sed -i '/\"resolveJsonModule\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+          echo "✅ Added moduleResolution: bundler to @n8n/i18n tsconfig.json"
+        fi
+        
+        # 依存関係の確認とインストール
+        pnpm install --frozen-lockfile
+        
+        # ビルド実行（型チェックを無効にしてビルドのみ実行）
+        if command -v npx &> /dev/null; then
+          npx tsup --no-dts
+        else
+          pnpm build --skip-typecheck || pnpm exec tsup --no-dts
+        fi
+        
+        if [ -d "dist" ]; then
+          echo "✅ @n8n/i18n build completed successfully"
+        else
+          echo "❌ @n8n/i18n build failed - dist directory not found"
+          exit 1
+        fi
 
     - name: Apply patches
       if: steps.check_tag.outputs.exists == 'false'
