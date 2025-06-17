@@ -111,12 +111,12 @@ jobs:
           
           echo "🏗️ Building @n8n/stores package..."
           if command -v npx &> /dev/null; then
-            npx tsup
+            npx tsup --no-dts
           else
             echo "⚠️ npx not found, trying with pnpm..."
             pnpm run build --skip-typecheck || {
               echo "⚠️ Build with typecheck failed, trying tsup directly..."
-              pnpm exec tsup
+              pnpm exec tsup --no-dts
             }
           fi
           
