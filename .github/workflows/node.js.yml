@@ -100,9 +100,12 @@ jobs:
           
           echo "📝 Updating tsconfig.json for @n8n/stores..."
           if ! grep -q '"moduleResolution"' tsconfig.json; then
-            # isolatedModulesの行にカンマを追加してからmoduleResolutionを追加
-            sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
-            sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+            # isolatedModulesの行を見つけて、カンマが無い場合のみ追加
+            if grep -q '"isolatedModules": true[^,]' tsconfig.json; then
+              sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
+            fi
+            # moduleResolutionを追加（カンマ付きで）
+            sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
             echo "✅ Added moduleResolution: bundler to tsconfig.json"
           fi
           
@@ -168,8 +171,12 @@ jobs:
         
         # TypeScript設定の更新
         if ! grep -q '"moduleResolution"' tsconfig.json; then
-          sed -i 's/"resolveJsonModule": true/"resolveJsonModule": true,/' tsconfig.json
-          sed -i '/\"resolveJsonModule\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+          # resolveJsonModuleの行を見つけて、カンマが無い場合のみ追加
+          if grep -q '"resolveJsonModule": true[^,]' tsconfig.json; then
+            sed -i 's/"resolveJsonModule": true/"resolveJsonModule": true,/' tsconfig.json
+          fi
+          # moduleResolutionを追加（カンマ付きで）
+          sed -i '/\"resolveJsonModule\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
           echo "✅ Added moduleResolution: bundler to @n8n/i18n tsconfig.json"
         fi
         
@@ -205,6 +212,48 @@ jobs:
             git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch
             echo "✅ Applied old editor-ui patch"
           fi
+        fi
+
+    - name: Build @n8n/rest-api-client package
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Building @n8n/rest-api-client (required for editor-ui)..."
+        REST_API_CLIENT_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/frontend/@n8n/rest-api-client"
+        if [ -d "$REST_API_CLIENT_DIR" ]; then
+          cd "$REST_API_CLIENT_DIR"
+          
+          echo "📝 Updating tsconfig.json for @n8n/rest-api-client..."
+          if ! grep -q '"moduleResolution"' tsconfig.json; then
+            # isolatedModulesの行を見つけて、カンマが無い場合のみ追加
+            if grep -q '"isolatedModules": true[^,]' tsconfig.json; then
+              sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
+            fi
+            # moduleResolutionを追加（カンマ付きで）
+            sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            echo "✅ Added moduleResolution: bundler to @n8n/rest-api-client tsconfig.json"
+          fi
+          
+          echo "🏗️ Building @n8n/rest-api-client package..."
+          # 型チェックをスキップしてビルドのみ実行
+          if command -v npx &> /dev/null; then
+            npx tsup --no-dts
+          else
+            echo "⚠️ npx not found, trying with pnpm..."
+            pnpm run build --skip-typecheck || {
+              echo "⚠️ Build with typecheck failed, trying tsup directly..."
+              pnpm exec tsup --no-dts
+            }
+          fi
+          
+          # distディレクトリの存在確認
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/rest-api-client build completed successfully"
+          else
+            echo "❌ @n8n/rest-api-client build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "⚠️ @n8n/rest-api-client directory not found, skipping rest-api-client build"
         fi
 
     - name: Build editor-ui

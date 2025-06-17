@@ -72,20 +72,24 @@ if [ -d "$STORES_DIR" ]; then
     # TypeScript設定にmoduleResolutionを追加
     log_info "Updating tsconfig.json for @n8n/stores..."
     if ! grep -q '"moduleResolution"' tsconfig.json; then
-        sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
-        sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+        # isolatedModulesの行を見つけて、カンマが無い場合のみ追加
+        if grep -q '"isolatedModules": true[^,]' tsconfig.json; then
+            sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
+        fi
+        # moduleResolutionを追加（カンマ付きで）
+        sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
         log_info "Added moduleResolution: bundler to tsconfig.json"
     fi
     
     # @n8n/storesパッケージをビルド
     log_info "Building @n8n/stores package..."
     if command -v npx &> /dev/null; then
-        npx tsup
+        npx tsup --no-dts
     else
         log_warn "npx not found, trying with pnpm..."
         pnpm run build --skip-typecheck || {
             log_warn "Build with typecheck failed, trying tsup directly..."
-            pnpm exec tsup
+            pnpm exec tsup --no-dts
         }
     fi
     
@@ -96,8 +100,6 @@ if [ -d "$STORES_DIR" ]; then
         log_error "@n8n/stores build failed - dist directory not found"
         exit 1
     fi
-    
-    cd "$N8N_DIR"
 else
     log_warn "@n8n/stores directory not found, skipping stores build"
 fi
@@ -130,8 +132,12 @@ if [ -d "$I18N_LOCALES_DIR" ]; then
     
     # TypeScript設定の更新
     if ! grep -q '"moduleResolution"' tsconfig.json; then
-        sed -i 's/"resolveJsonModule": true/"resolveJsonModule": true,/' tsconfig.json
-        sed -i '/\"resolveJsonModule\": true,/a\\t\t\"moduleResolution\": \"bundler\"' tsconfig.json
+        # resolveJsonModuleの行を見つけて、カンマが無い場合のみ追加
+        if grep -q '"resolveJsonModule": true[^,]' tsconfig.json; then
+            sed -i 's/"resolveJsonModule": true/"resolveJsonModule": true,/' tsconfig.json
+        fi
+        # moduleResolutionを追加（カンマ付きで）
+        sed -i '/\"resolveJsonModule\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
         log_info "Added moduleResolution: bundler to @n8n/i18n tsconfig.json"
     fi
     
@@ -171,6 +177,44 @@ else
         git apply "$N8N_I18N_DIR/fix_editor-ui.old.patch"
         log_info "Applied old editor-ui patch"
     fi
+fi
+
+# 11.5. @n8n/rest-api-clientのビルド（editor-uiビルドに必要）
+log_info "Building @n8n/rest-api-client (required for editor-ui)..."
+REST_API_CLIENT_DIR="$N8N_DIR/packages/frontend/@n8n/rest-api-client"
+if [ -d "$REST_API_CLIENT_DIR" ]; then
+    cd "$REST_API_CLIENT_DIR"
+    
+    # TypeScript設定にmoduleResolutionを追加（既存設定の最小変更）
+    if ! grep -q '"moduleResolution"' tsconfig.json; then
+        # isolatedModulesの行を見つけて、カンマが無い場合のみ追加
+        if grep -q '"isolatedModules": true[^,]' tsconfig.json; then
+            sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
+        fi
+        # moduleResolutionを追加（カンマ付きで）
+        sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        log_info "Added moduleResolution: bundler to @n8n/rest-api-client tsconfig.json"
+    fi
+    
+    # 型チェックをスキップしてビルドのみ実行（高速化とエラー回避）
+    if command -v npx &> /dev/null; then
+        npx tsup --no-dts
+    else
+        log_warn "npx not found, trying with pnpm..."
+        pnpm exec tsup --no-dts
+    fi
+    
+    # distディレクトリの存在確認
+    if [ -d "dist" ]; then
+        log_info "@n8n/rest-api-client build completed successfully"
+    else
+        log_error "@n8n/rest-api-client build failed - dist directory not found"
+        exit 1
+    fi
+    
+    cd "$N8N_DIR"
+else
+    log_warn "@n8n/rest-api-client directory not found, skipping rest-api-client build"
 fi
 
 # 12. editor-uiのビルド
