@@ -217,6 +217,34 @@ else
     log_warn "@n8n/rest-api-client directory not found, skipping rest-api-client build"
 fi
 
+# 11.6. @n8n/vitest-configのビルド（editor-uiビルドに必要）
+log_info "Building @n8n/vitest-config (required for editor-ui)..."
+VITEST_CONFIG_DIR="$N8N_DIR/packages/@n8n/vitest-config"
+if [ -d "$VITEST_CONFIG_DIR" ]; then
+    cd "$VITEST_CONFIG_DIR"
+    
+    # TypeScriptビルドを実行
+    log_info "Building @n8n/vitest-config package..."
+    if command -v npx &> /dev/null; then
+        npx tsc -p tsconfig.build.json
+    else
+        log_warn "npx not found, trying with pnpm..."
+        pnpm build
+    fi
+    
+    # distディレクトリの存在確認
+    if [ -d "dist" ]; then
+        log_info "@n8n/vitest-config build completed successfully"
+    else
+        log_error "@n8n/vitest-config build failed - dist directory not found"
+        exit 1
+    fi
+    
+    cd "$N8N_DIR"
+else
+    log_warn "@n8n/vitest-config directory not found, skipping vitest-config build"
+fi
+
 # 12. editor-uiのビルド
 log_info "Building editor-ui..."
 cd "$EDITOR_UI_DIR"

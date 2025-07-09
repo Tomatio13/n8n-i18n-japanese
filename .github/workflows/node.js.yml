@@ -256,6 +256,34 @@ jobs:
           echo "⚠️ @n8n/rest-api-client directory not found, skipping rest-api-client build"
         fi
 
+    - name: Build @n8n/vitest-config package
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Building @n8n/vitest-config (required for editor-ui)..."
+        VITEST_CONFIG_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/vitest-config"
+        if [ -d "$VITEST_CONFIG_DIR" ]; then
+          cd "$VITEST_CONFIG_DIR"
+          
+          echo "🏗️ Building @n8n/vitest-config package..."
+          # TypeScriptビルドを実行
+          if command -v npx &> /dev/null; then
+            npx tsc -p tsconfig.build.json
+          else
+            echo "⚠️ npx not found, trying with pnpm..."
+            pnpm build
+          fi
+          
+          # distディレクトリの存在確認
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/vitest-config build completed successfully"
+          else
+            echo "❌ @n8n/vitest-config build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "⚠️ @n8n/vitest-config directory not found, skipping vitest-config build"
+        fi
+
     - name: Build editor-ui
       if: steps.check_tag.outputs.exists == 'false'
       run: |
