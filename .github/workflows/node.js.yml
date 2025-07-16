@@ -115,9 +115,97 @@ jobs:
         done
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
-    - name: Build n8n-workflow package
+    - name: Build packages in dependency order
       if: steps.check_tag.outputs.exists == 'false'
       run: |
+        echo "🔧 Building packages in correct dependency order: @n8n/di → @n8n/config → n8n-workflow..."
+        
+        # 1. @n8n/diパッケージのビルド（@n8n/configの依存関係）
+        echo "🔧 Building @n8n/di package (required for @n8n/config)..."
+        DI_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/di"
+        if [ -d "$DI_DIR" ]; then
+          cd "$DI_DIR"
+          
+          echo "📝 Updating tsconfig.json for @n8n/di..."
+          if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
+            # compilerOptionsセクション内でmoduleResolutionを追加
+            if grep -q '"baseUrl"' tsconfig.json; then
+              sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            elif grep -q '"rootDir"' tsconfig.json; then
+              sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            fi
+            echo "✅ Added moduleResolution: bundler to @n8n/di tsconfig.json"
+          else
+            echo "📝 moduleResolution already exists or tsconfig.json not found"
+          fi
+          
+          echo "🏗️ Building @n8n/di package..."
+          pnpm install --frozen-lockfile
+          
+          if [ -f "tsconfig.build.json" ]; then
+            if command -v npx &> /dev/null; then
+              npx tsc -p tsconfig.build.json
+            else
+              pnpm build
+            fi
+          else
+            pnpm build
+          fi
+          
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/di build completed successfully"
+          else
+            echo "❌ @n8n/di build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "⚠️ @n8n/di directory not found, skipping..."
+        fi
+        
+        # 2. @n8n/configパッケージのビルド（n8n-workflowの依存関係）
+        echo "🔧 Building @n8n/config package (required for n8n-workflow)..."
+        CONFIG_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/config"
+        if [ -d "$CONFIG_DIR" ]; then
+          cd "$CONFIG_DIR"
+          
+          echo "📝 Updating tsconfig.json for @n8n/config..."
+          if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
+            # compilerOptionsセクション内でmoduleResolutionを追加
+            if grep -q '"baseUrl"' tsconfig.json; then
+              sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            elif grep -q '"rootDir"' tsconfig.json; then
+              sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            fi
+            echo "✅ Added moduleResolution: bundler to @n8n/config tsconfig.json"
+          else
+            echo "📝 moduleResolution already exists or tsconfig.json not found"
+          fi
+          
+          echo "🏗️ Building @n8n/config package..."
+          pnpm install --frozen-lockfile
+          
+          if [ -f "tsconfig.build.json" ]; then
+            if command -v npx &> /dev/null; then
+              npx tsc -p tsconfig.build.json
+            else
+              pnpm build
+            fi
+          else
+            pnpm build
+          fi
+          
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/config build completed successfully"
+          else
+            echo "❌ @n8n/config build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "❌ @n8n/config directory not found: $CONFIG_DIR"
+          exit 1
+        fi
+        
+        # 3. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
         echo "🔧 Building n8n-workflow package (required for all other packages)..."
         WORKFLOW_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/workflow"
         if [ -d "$WORKFLOW_DIR" ]; then
@@ -126,12 +214,14 @@ jobs:
           echo "📝 Updating tsconfig.json for n8n-workflow..."
           if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
             # compilerOptionsセクション内でmoduleResolutionを追加
-            if grep -q '"target"' tsconfig.json; then
-              sed -i '/\"target\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            elif grep -q '"module"' tsconfig.json; then
-              sed -i '/\"module\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            if grep -q '"baseUrl"' tsconfig.json; then
+              sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+            elif grep -q '"rootDir"' tsconfig.json; then
+              sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
             fi
             echo "✅ Added moduleResolution: bundler to n8n-workflow tsconfig.json"
+          else
+            echo "📝 moduleResolution already exists or tsconfig.json not found"
           fi
           
           echo "🏗️ Building n8n-workflow package..."
