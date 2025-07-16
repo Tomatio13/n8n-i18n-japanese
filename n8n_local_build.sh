@@ -101,17 +101,32 @@ else
     log_warn "No pnpm workspace found - this may cause build issues"
 fi
 
-# 7.5. ワークスペース全体の依存関係ビルド（n8n-workflowなど基本パッケージ用）
-log_info "Building workspace dependencies to resolve n8n-workflow and core packages..."
+# 7.5. 依存関係順序でのパッケージビルド（@n8n/di → @n8n/config → n8n-workflowの順）
+log_info "Building packages in correct dependency order..."
 cd "$N8N_DIR"
 
-# n8n-workflowパッケージの直接ビルド（他のパッケージの依存関係として必要）
-log_info "Building core n8n packages first..."
-if [ -d "packages/workflow" ]; then
-    cd "packages/workflow"
-    log_info "Building n8n-workflow package..."
+# 1. @n8n/diパッケージのビルド（@n8n/configの依存関係）
+log_info "🔧 Building @n8n/di package (required for @n8n/config)..."
+DI_DIR="$N8N_DIR/packages/@n8n/di"
+if [ -d "$DI_DIR" ]; then
+    cd "$DI_DIR"
     
-    # TypeScript設定の確認
+    log_info "📝 Updating tsconfig.json for @n8n/di..."
+    if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
+        # compilerOptionsセクション内でmoduleResolutionを追加
+        if grep -q '"baseUrl"' tsconfig.json; then
+            sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        elif grep -q '"rootDir"' tsconfig.json; then
+            sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        fi
+        log_info "✅ Added moduleResolution: bundler to @n8n/di tsconfig.json"
+    else
+        log_info "📝 moduleResolution already exists or tsconfig.json not found"
+    fi
+    
+    log_info "🏗️ Building @n8n/di package..."
+    pnpm install --frozen-lockfile
+    
     if [ -f "tsconfig.build.json" ]; then
         if command -v npx &> /dev/null; then
             npx tsc -p tsconfig.build.json
@@ -123,15 +138,117 @@ if [ -d "packages/workflow" ]; then
     fi
     
     if [ -d "dist" ]; then
-        log_info "n8n-workflow package built successfully"
+        log_info "✅ @n8n/di build completed successfully"
     else
-        log_warn "n8n-workflow build may have issues, continuing..."
+        log_error "❌ @n8n/di build failed - dist directory not found"
+        exit 1
     fi
     cd "$N8N_DIR"
+else
+    log_warn "⚠️ @n8n/di directory not found, skipping..."
 fi
 
-# 他の基本パッケージも事前ビルド
-log_info "Pre-building essential packages..."
+# 2. @n8n/configパッケージのビルド（n8n-workflowの依存関係）
+log_info "🔧 Building @n8n/config package (required for n8n-workflow)..."
+CONFIG_DIR="$N8N_DIR/packages/@n8n/config"
+if [ -d "$CONFIG_DIR" ]; then
+    cd "$CONFIG_DIR"
+    
+    log_info "📝 Updating tsconfig.json for @n8n/config..."
+    if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
+        # compilerOptionsセクション内でmoduleResolutionを追加
+        if grep -q '"baseUrl"' tsconfig.json; then
+            sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        elif grep -q '"rootDir"' tsconfig.json; then
+            sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        fi
+        log_info "✅ Added moduleResolution: bundler to @n8n/config tsconfig.json"
+    else
+        log_info "📝 moduleResolution already exists or tsconfig.json not found"
+    fi
+    
+    log_info "🏗️ Building @n8n/config package..."
+    pnpm install --frozen-lockfile
+    
+    if [ -f "tsconfig.build.json" ]; then
+        if command -v npx &> /dev/null; then
+            npx tsc -p tsconfig.build.json
+        else
+            pnpm build
+        fi
+    else
+        pnpm build
+    fi
+    
+    if [ -d "dist" ]; then
+        log_info "✅ @n8n/config build completed successfully"
+    else
+        log_error "❌ @n8n/config build failed - dist directory not found"
+        exit 1
+    fi
+    cd "$N8N_DIR"
+else
+    log_error "❌ @n8n/config directory not found: $CONFIG_DIR"
+    exit 1
+fi
+
+# 3. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
+log_info "🔧 Building n8n-workflow package (required for all other packages)..."
+WORKFLOW_DIR="$N8N_DIR/packages/workflow"
+if [ -d "$WORKFLOW_DIR" ]; then
+    cd "$WORKFLOW_DIR"
+    
+    log_info "📝 Updating tsconfig.json for n8n-workflow..."
+    if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
+        # compilerOptionsセクション内でmoduleResolutionを追加
+        if grep -q '"baseUrl"' tsconfig.json; then
+            sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        elif grep -q '"rootDir"' tsconfig.json; then
+            sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        fi
+        log_info "✅ Added moduleResolution: bundler to n8n-workflow tsconfig.json"
+    else
+        log_info "📝 moduleResolution already exists or tsconfig.json not found"
+    fi
+    
+    log_info "🏗️ Building n8n-workflow package..."
+    # 依存関係の再確認
+    pnpm install --frozen-lockfile
+    
+    # 複数のビルド方法を試行
+    if [ -f "tsconfig.build.json" ]; then
+        log_info "📝 Building with tsconfig.build.json..."
+        if command -v npx &> /dev/null; then
+            npx tsc -p tsconfig.build.json
+        else
+            pnpm exec tsc -p tsconfig.build.json
+        fi
+    elif [ -f "package.json" ] && grep -q '"build"' package.json; then
+        log_info "📝 Building with pnpm build..."
+        pnpm build
+    else
+        log_info "📝 Building with direct TypeScript compilation..."
+        if command -v npx &> /dev/null; then
+            npx tsc
+        else
+            pnpm exec tsc
+        fi
+    fi
+    
+    if [ -d "dist" ]; then
+        log_info "✅ n8n-workflow build completed successfully"
+    else
+        log_error "❌ n8n-workflow build failed - dist directory not found"
+        exit 1
+    fi
+    cd "$N8N_DIR"
+else
+    log_error "❌ n8n-workflow directory not found: $WORKFLOW_DIR"
+    exit 1
+fi
+
+# 4. 他の基本パッケージも事前ビルド
+log_info "Pre-building other essential packages..."
 ESSENTIAL_PACKAGES=("packages/core" "packages/cli")
 for pkg in "${ESSENTIAL_PACKAGES[@]}"; do
     if [ -d "$pkg" ]; then
@@ -331,48 +448,8 @@ else
     log_warn "@n8n/vitest-config directory not found, skipping vitest-config build"
 fi
 
-# 11.7. n8n-workflowパッケージのビルド（editor-uiビルドに必要）
-log_info "Building n8n-workflow package (required for editor-ui)..."
-WORKFLOW_DIR="$N8N_DIR/packages/workflow"
-if [ -d "$WORKFLOW_DIR" ]; then
-    cd "$WORKFLOW_DIR"
-    
-    # TypeScript設定の確認と修正
-    log_info "Checking n8n-workflow TypeScript configuration..."
-    if ! grep -q '"moduleResolution"' tsconfig.json; then
-        # esModuleInteropの行を見つけて、カンマが無い場合のみ追加
-        if grep -q '"esModuleInterop": true[^,]' tsconfig.json; then
-            sed -i 's/"esModuleInterop": true/"esModuleInterop": true,/' tsconfig.json
-        fi
-        # moduleResolutionを追加（カンマ付きで）
-        sed -i '/\"esModuleInterop\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-        log_info "Added moduleResolution: bundler to n8n-workflow tsconfig.json"
-    fi
-    
-    # 依存関係の確認とインストール
-    pnpm install --frozen-lockfile
-    
-    # n8n-workflowパッケージをビルド
-    log_info "Building n8n-workflow package..."
-    if command -v npx &> /dev/null; then
-        npx tsc -p tsconfig.build.json
-    else
-        log_warn "npx not found, trying with pnpm..."
-        pnpm build
-    fi
-    
-    # distディレクトリの存在確認
-    if [ -d "dist" ]; then
-        log_info "n8n-workflow build completed successfully"
-    else
-        log_error "n8n-workflow build failed - dist directory not found"
-        exit 1
-    fi
-    
-    cd "$N8N_DIR"
-else
-    log_warn "n8n-workflow directory not found, skipping workflow build"
-fi
+# 11.7. n8n-workflowパッケージは既にビルド済み（7.5で実行済み）
+log_info "n8n-workflow package already built in dependency order section (7.5)"
 
 # 11.8. n8n-coreパッケージのビルド（editor-uiビルドに必要）
 log_info "Building n8n-core package (required for editor-ui)..."
