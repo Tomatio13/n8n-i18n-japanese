@@ -61,7 +61,93 @@ fi
 # 7. 依存関係のインストール
 log_info "Installing dependencies..."
 cd "$N8N_DIR"
-pnpm install --frozen-lockfile
+
+# pnpmのバージョン確認と最適化設定
+log_info "Configuring pnpm for optimal performance..."
+if command -v pnpm &> /dev/null; then
+    PNPM_VERSION=$(pnpm --version)
+    log_info "Using pnpm version: $PNPM_VERSION"
+    
+    # pnpmの設定最適化
+    pnpm config set auto-install-peers true
+    pnpm config set strict-peer-dependencies false
+    pnpm config set shamefully-hoist true
+else
+    log_error "pnpm not found. Please install pnpm first."
+    exit 1
+fi
+
+# 依存関係インストール（リトライ機能付き）
+log_info "Installing dependencies with retry mechanism..."
+for i in {1..3}; do
+    if pnpm install --frozen-lockfile --prefer-offline; then
+        log_info "Dependencies installed successfully on attempt $i"
+        break
+    else
+        log_warn "Dependency installation failed on attempt $i"
+        if [ $i -eq 3 ]; then
+            log_error "Failed to install dependencies after 3 attempts"
+            exit 1
+        fi
+        sleep 5
+    fi
+done
+
+# n8nワークスペースの確認
+log_info "Verifying n8n workspace configuration..."
+if [ -f "pnpm-workspace.yaml" ]; then
+    log_info "Found pnpm workspace configuration"
+else
+    log_warn "No pnpm workspace found - this may cause build issues"
+fi
+
+# 7.5. ワークスペース全体の依存関係ビルド（n8n-workflowなど基本パッケージ用）
+log_info "Building workspace dependencies to resolve n8n-workflow and core packages..."
+cd "$N8N_DIR"
+
+# n8n-workflowパッケージの直接ビルド（他のパッケージの依存関係として必要）
+log_info "Building core n8n packages first..."
+if [ -d "packages/workflow" ]; then
+    cd "packages/workflow"
+    log_info "Building n8n-workflow package..."
+    
+    # TypeScript設定の確認
+    if [ -f "tsconfig.build.json" ]; then
+        if command -v npx &> /dev/null; then
+            npx tsc -p tsconfig.build.json
+        else
+            pnpm build
+        fi
+    else
+        pnpm build
+    fi
+    
+    if [ -d "dist" ]; then
+        log_info "n8n-workflow package built successfully"
+    else
+        log_warn "n8n-workflow build may have issues, continuing..."
+    fi
+    cd "$N8N_DIR"
+fi
+
+# 他の基本パッケージも事前ビルド
+log_info "Pre-building essential packages..."
+ESSENTIAL_PACKAGES=("packages/core" "packages/cli")
+for pkg in "${ESSENTIAL_PACKAGES[@]}"; do
+    if [ -d "$pkg" ]; then
+        cd "$pkg"
+        pkg_name=$(basename "$pkg")
+        log_info "Building $pkg_name package..."
+        
+        if command -v npx &> /dev/null && [ -f "tsconfig.build.json" ]; then
+            npx tsc -p tsconfig.build.json
+        else
+            pnpm build 2>/dev/null || log_warn "$pkg_name build had warnings, continuing..."
+        fi
+        
+        cd "$N8N_DIR"
+    fi
+done
 
 # 8. @n8n/storesパッケージのTypeScript設定修正とビルド
 log_info "Fixing @n8n/stores TypeScript configuration and building..."
@@ -245,9 +331,128 @@ else
     log_warn "@n8n/vitest-config directory not found, skipping vitest-config build"
 fi
 
+# 11.7. n8n-workflowパッケージのビルド（editor-uiビルドに必要）
+log_info "Building n8n-workflow package (required for editor-ui)..."
+WORKFLOW_DIR="$N8N_DIR/packages/workflow"
+if [ -d "$WORKFLOW_DIR" ]; then
+    cd "$WORKFLOW_DIR"
+    
+    # TypeScript設定の確認と修正
+    log_info "Checking n8n-workflow TypeScript configuration..."
+    if ! grep -q '"moduleResolution"' tsconfig.json; then
+        # esModuleInteropの行を見つけて、カンマが無い場合のみ追加
+        if grep -q '"esModuleInterop": true[^,]' tsconfig.json; then
+            sed -i 's/"esModuleInterop": true/"esModuleInterop": true,/' tsconfig.json
+        fi
+        # moduleResolutionを追加（カンマ付きで）
+        sed -i '/\"esModuleInterop\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        log_info "Added moduleResolution: bundler to n8n-workflow tsconfig.json"
+    fi
+    
+    # 依存関係の確認とインストール
+    pnpm install --frozen-lockfile
+    
+    # n8n-workflowパッケージをビルド
+    log_info "Building n8n-workflow package..."
+    if command -v npx &> /dev/null; then
+        npx tsc -p tsconfig.build.json
+    else
+        log_warn "npx not found, trying with pnpm..."
+        pnpm build
+    fi
+    
+    # distディレクトリの存在確認
+    if [ -d "dist" ]; then
+        log_info "n8n-workflow build completed successfully"
+    else
+        log_error "n8n-workflow build failed - dist directory not found"
+        exit 1
+    fi
+    
+    cd "$N8N_DIR"
+else
+    log_warn "n8n-workflow directory not found, skipping workflow build"
+fi
+
+# 11.8. n8n-coreパッケージのビルド（editor-uiビルドに必要）
+log_info "Building n8n-core package (required for editor-ui)..."
+CORE_DIR="$N8N_DIR/packages/core"
+if [ -d "$CORE_DIR" ]; then
+    cd "$CORE_DIR"
+    
+    # TypeScript設定の確認と修正
+    log_info "Checking n8n-core TypeScript configuration..."
+    if ! grep -q '"moduleResolution"' tsconfig.json; then
+        # esModuleInteropの行を見つけて、カンマが無い場合のみ追加
+        if grep -q '"esModuleInterop": true[^,]' tsconfig.json; then
+            sed -i 's/"esModuleInterop": true/"esModuleInterop": true,/' tsconfig.json
+        fi
+        # moduleResolutionを追加（カンマ付きで）
+        sed -i '/\"esModuleInterop\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        log_info "Added moduleResolution: bundler to n8n-core tsconfig.json"
+    fi
+    
+    # 依存関係の確認とインストール
+    pnpm install --frozen-lockfile
+    
+    # n8n-coreパッケージをビルド
+    log_info "Building n8n-core package..."
+    if command -v npx &> /dev/null; then
+        npx tsc -p tsconfig.build.json
+    else
+        log_warn "npx not found, trying with pnpm..."
+        pnpm build
+    fi
+    
+    # distディレクトリの存在確認
+    if [ -d "dist" ]; then
+        log_info "n8n-core build completed successfully"
+    else
+        log_error "n8n-core build failed - dist directory not found"
+        exit 1
+    fi
+    
+    cd "$N8N_DIR"
+else
+    log_warn "n8n-core directory not found, skipping core build"
+fi
+
 # 12. editor-uiのビルド
 log_info "Building editor-ui..."
 cd "$EDITOR_UI_DIR"
+
+# TypeScript設定の確認と修正（Vite 6.x対応）
+log_info "Checking editor-ui TypeScript configuration..."
+if [ -f "tsconfig.json" ]; then
+    if ! grep -q '"moduleResolution"' tsconfig.json; then
+        # compilerOptionsセクション内の適切な位置にmoduleResolutionを追加
+        if grep -q '"strict": true[^,]' tsconfig.json; then
+            sed -i 's/"strict": true/"strict": true,/' tsconfig.json
+        fi
+        # moduleResolutionを追加（カンマ付きで）
+        sed -i '/\"strict\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+        log_info "Added moduleResolution: bundler to editor-ui tsconfig.json"
+    fi
+fi
+
+# Vite設定の確認と修正（n8n-workflowパッケージ解決問題対応）
+log_info "Checking editor-ui Vite configuration..."
+if [ -f "vite.config.ts" ]; then
+    # vite.config.tsにoptimizeDepsを追加してn8n-workflowの解決を改善
+    if ! grep -q "optimizeDeps" vite.config.ts; then
+        # defineConfigの内部に設定を追加
+        sed -i '/export default defineConfig/,/^});/s/});/\toptimizeDeps: {\
+\t\tinclude: ["n8n-workflow"],\
+\t\texclude: []\
+\t},\
+});/' vite.config.ts
+        log_info "Added optimizeDeps configuration to vite.config.ts"
+    fi
+fi
+
+# 依存関係の再確認とインストール
+pnpm install --frozen-lockfile
+
 pnpm build
 
 # 13. 成果物のパッケージ化
