@@ -126,18 +126,7 @@ jobs:
         if [ -d "$DI_DIR" ]; then
           cd "$DI_DIR"
           
-          echo "📝 Updating tsconfig.json for @n8n/di..."
-          if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
-            # compilerOptionsセクション内でmoduleResolutionを追加
-            if grep -q '"baseUrl"' tsconfig.json; then
-              sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            elif grep -q '"rootDir"' tsconfig.json; then
-              sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            fi
-            echo "✅ Added moduleResolution: bundler to @n8n/di tsconfig.json"
-          else
-            echo "📝 moduleResolution already exists or tsconfig.json not found"
-          fi
+          echo "📝 Using existing tsconfig.json for @n8n/di (no modifications needed)..."
           
           echo "🏗️ Building @n8n/di package..."
           pnpm install --frozen-lockfile
@@ -168,18 +157,7 @@ jobs:
         if [ -d "$CONFIG_DIR" ]; then
           cd "$CONFIG_DIR"
           
-          echo "📝 Updating tsconfig.json for @n8n/config..."
-          if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
-            # compilerOptionsセクション内でmoduleResolutionを追加
-            if grep -q '"baseUrl"' tsconfig.json; then
-              sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            elif grep -q '"rootDir"' tsconfig.json; then
-              sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            fi
-            echo "✅ Added moduleResolution: bundler to @n8n/config tsconfig.json"
-          else
-            echo "📝 moduleResolution already exists or tsconfig.json not found"
-          fi
+          echo "📝 Using existing tsconfig.json for @n8n/config (no modifications needed)..."
           
           echo "🏗️ Building @n8n/config package..."
           pnpm install --frozen-lockfile
@@ -211,18 +189,7 @@ jobs:
         if [ -d "$WORKFLOW_DIR" ]; then
           cd "$WORKFLOW_DIR"
           
-          echo "📝 Updating tsconfig.json for n8n-workflow..."
-          if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
-            # compilerOptionsセクション内でmoduleResolutionを追加
-            if grep -q '"baseUrl"' tsconfig.json; then
-              sed -i '/\"baseUrl\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            elif grep -q '"rootDir"' tsconfig.json; then
-              sed -i '/\"rootDir\":/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
-            fi
-            echo "✅ Added moduleResolution: bundler to n8n-workflow tsconfig.json"
-          else
-            echo "📝 moduleResolution already exists or tsconfig.json not found"
-          fi
+          echo "📝 Using existing tsconfig.json for n8n-workflow (no modifications needed)..."
           
           echo "🏗️ Building n8n-workflow package..."
           # 依存関係の再確認
