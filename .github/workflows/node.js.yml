@@ -338,6 +338,29 @@ jobs:
           fi
         fi
 
+    - name: Build @n8n/vitest-config (required for editor-ui)
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Building @n8n/vitest-config (required for editor-ui)..."
+        VITEST_CONFIG_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/vitest-config"
+        if [ -d "$VITEST_CONFIG_DIR" ]; then
+          cd "$VITEST_CONFIG_DIR"
+          pnpm install --frozen-lockfile
+          if [ -f "tsconfig.build.json" ]; then
+            pnpm exec tsc -p tsconfig.build.json || pnpm build
+          else
+            pnpm build
+          fi
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/vitest-config build completed successfully"
+          else
+            echo "❌ @n8n/vitest-config build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "⚠️ @n8n/vitest-config directory not found, skipping"
+        fi
+
     - name: Build workspace with dependency resolution
       if: steps.check_tag.outputs.exists == 'false'
       run: |
