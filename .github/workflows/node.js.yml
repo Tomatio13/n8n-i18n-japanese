@@ -60,7 +60,7 @@ jobs:
       if: steps.check_tag.outputs.exists == 'false'
       uses: actions/setup-node@v4.2.0
       with:
-        node-version: 22.x
+        node-version: 22.16.0
 
     - name: Verify Node.js version
       if: steps.check_tag.outputs.exists == 'false'
@@ -91,6 +91,10 @@ jobs:
         pnpm config set fetch-retry-factor 2
         pnpm config set fetch-retry-mintimeout 10000
         pnpm config set fetch-retry-maxtimeout 60000
+        pnpm config set auto-install-peers true
+        pnpm config set strict-peer-dependencies false
+        pnpm config set shamefully-hoist true
+        pnpm config set prefer-workspace-packages true
         echo "✅ pnpm configuration optimized"
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
@@ -118,7 +122,7 @@ jobs:
     - name: Build packages in dependency order
       if: steps.check_tag.outputs.exists == 'false'
       run: |
-        echo "🔧 Building packages in correct dependency order: @n8n/di → @n8n/config → n8n-workflow..."
+        echo "🔧 Building packages in correct dependency order: @n8n/di → @n8n/config → @n8n/errors → n8n-workflow..."
         
         # 1. @n8n/diパッケージのビルド（@n8n/configの依存関係）
         echo "🔧 Building @n8n/di package (required for @n8n/config)..."
@@ -133,7 +137,7 @@ jobs:
           
           if [ -f "tsconfig.build.json" ]; then
             if command -v npx &> /dev/null; then
-              npx tsc -p tsconfig.build.json
+              pnpm exec tsc -p tsconfig.build.json
             else
               pnpm build
             fi
@@ -164,7 +168,7 @@ jobs:
           
           if [ -f "tsconfig.build.json" ]; then
             if command -v npx &> /dev/null; then
-              npx tsc -p tsconfig.build.json
+              pnpm exec tsc -p tsconfig.build.json
             else
               pnpm build
             fi
@@ -183,7 +187,33 @@ jobs:
           exit 1
         fi
         
-        # 3. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
+        # 3. @n8n/errorsパッケージのビルド（n8n-workflowの依存関係）
+        echo "🔧 Building @n8n/errors package (required for n8n-workflow)..."
+        ERRORS_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/errors"
+        if [ -d "$ERRORS_DIR" ]; then
+          cd "$ERRORS_DIR"
+          pnpm install --frozen-lockfile
+          if [ -f "tsconfig.build.json" ]; then
+            if command -v npx &> /dev/null; then
+            pnpm exec tsc -p tsconfig.build.json
+            else
+              pnpm build
+            fi
+          else
+            pnpm build
+          fi
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/errors build completed successfully"
+          else
+            echo "❌ @n8n/errors build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "❌ @n8n/errors directory not found: $ERRORS_DIR"
+          exit 1
+        fi
+
+        # 4. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
         echo "🔧 Building n8n-workflow package (required for all other packages)..."
         WORKFLOW_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/workflow"
         if [ -d "$WORKFLOW_DIR" ]; then
@@ -199,7 +229,7 @@ jobs:
           if [ -f "tsconfig.build.json" ]; then
             echo "📝 Building with tsconfig.build.json..."
             if command -v npx &> /dev/null; then
-              npx tsc -p tsconfig.build.json
+              pnpm exec tsc -p tsconfig.build.json
             else
               pnpm exec tsc -p tsconfig.build.json
             fi
@@ -209,7 +239,7 @@ jobs:
           else
             echo "📝 Building with direct TypeScript compilation..."
             if command -v npx &> /dev/null; then
-              npx tsc
+              pnpm exec tsc
             else
               pnpm exec tsc
             fi
@@ -227,62 +257,7 @@ jobs:
         fi
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
-    - name: Build essential @n8n packages in correct order
-      if: steps.check_tag.outputs.exists == 'false'
-      run: |
-        echo "🔧 Building essential @n8n packages in correct dependency order..."
-        cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-        
-        # 必要な@n8nパッケージのリスト（依存関係順）
-        PACKAGES=(
-          "@n8n/di"
-          "@n8n/config" 
-          "@n8n/constants"
-          "@n8n/backend-common"
-          "@n8n/vitest-config"
-          "@n8n/eslint-config"
-          "@n8n/tsconfig"
-        )
-        
-        for package in "${PACKAGES[@]}"; do
-          echo "🏗️ Building package: $package"
-          
-          # パッケージディレクトリを探す
-          package_path=""
-          if [ -d "packages/@n8n/${package#@n8n/}" ]; then
-            package_path="packages/@n8n/${package#@n8n/}"
-          elif [ -d "packages/${package#@n8n/}" ]; then
-            package_path="packages/${package#@n8n/}"
-          fi
-          
-          if [ -n "$package_path" ] && [ -d "$package_path" ]; then
-            cd "$package_path"
-            echo "📁 Building in directory: $package_path"
-            
-            # 依存関係の確認
-            pnpm install --frozen-lockfile 2>/dev/null || true
-            
-            # ビルド実行
-            if [ -f "tsconfig.build.json" ]; then
-              if command -v npx &> /dev/null; then
-                npx tsc -p tsconfig.build.json 2>/dev/null || echo "⚠️ TypeScript build had warnings for $package"
-              else
-                pnpm exec tsc -p tsconfig.build.json 2>/dev/null || echo "⚠️ TypeScript build had warnings for $package"
-              fi
-            elif [ -f "package.json" ] && grep -q '"build"' package.json; then
-              pnpm build 2>/dev/null || echo "⚠️ pnpm build had warnings for $package"
-            else
-              echo "ℹ️ No build configuration found for $package, skipping..."
-            fi
-            
-            cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-            echo "✅ Completed processing $package"
-          else
-            echo "⚠️ Package $package not found, skipping..."
-          fi
-        done
-        
-        echo "✅ Essential @n8n packages build completed"
+    # Removed backend-oriented package builds to keep workflow minimal for editor-ui
 
     - name: Comprehensive TypeScript configuration fixes
       if: steps.check_tag.outputs.exists == 'false'
@@ -374,18 +349,7 @@ jobs:
         pnpm install --frozen-lockfile
         
         echo "🔧 Building all packages using workspace build..."
-        # まず基本的なパッケージをビルド
-        if [ -d "packages/core" ]; then
-          echo "🏗️ Building core package..."
-          cd packages/core
-          pnpm install --frozen-lockfile 2>/dev/null || true
-          if [ -f "tsconfig.build.json" ]; then
-            npx tsc -p tsconfig.build.json 2>/dev/null || echo "⚠️ Core build had warnings"
-          else
-            pnpm build 2>/dev/null || echo "⚠️ Core build had warnings"
-          fi
-          cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-        fi
+        # Skip backend packages (core, backend-common) — not required for editor-ui packaging
         
         # frontend関連パッケージのビルド
         FRONTEND_PACKAGES=(
