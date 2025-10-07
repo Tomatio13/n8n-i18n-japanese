@@ -321,21 +321,49 @@ jobs:
           exit 1
         fi
 
-    - name: Apply patches
+    - name: Apply patches (smart detection)
       if: steps.check_tag.outputs.exists == 'false'
       run: |
-        echo "🔧 Applying patches..."
+        echo "🔍 Checking if patches are needed..."
         cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-        if [ "${{ steps.editorui_dir.outputs.flag }}" = "new" ]; then
-          if [ -f "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch" ]; then
-            git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch
-            echo "✅ Applied new editor-ui patch"
+        
+        # パッチが必要かどうかをチェック
+        CREDENTIAL_CONFIG_FILE="${{ steps.editorui_dir.outputs.dir }}/src/components/CredentialEdit/CredentialConfig.vue"
+        PATCH_NEEDED=false
+        
+        if [ -f "$CREDENTIAL_CONFIG_FILE" ]; then
+          # credTranslationのnullチェックが既に存在するかチェック
+          if ! grep -q "if (!credTranslation) return;" "$CREDENTIAL_CONFIG_FILE"; then
+            PATCH_NEEDED=true
+            echo "⚠️ Null check for credTranslation not found - patch is needed"
+          else
+            echo "✅ Null check for credTranslation already exists - patch not needed"
           fi
         else
-          if [ -f "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch" ]; then
-            git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch
-            echo "✅ Applied old editor-ui patch"
+          echo "⚠️ CredentialConfig.vue not found at expected location"
+        fi
+        
+        # パッチが必要な場合のみ適用
+        if [ "$PATCH_NEEDED" = true ]; then
+          echo "🔧 Applying patches..."
+          if [ "${{ steps.editorui_dir.outputs.flag }}" = "new" ]; then
+            if [ -f "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch" ]; then
+              # パッチファイルが実際のパッチ内容を含んでいるかチェック
+              if grep -q "diff --git" "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch"; then
+                git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.patch
+                echo "✅ Applied new editor-ui patch"
+              else
+                echo "ℹ️ Patch file contains no diff content - skipping"
+              fi
+            fi
+          else
+            if [ -f "/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch" ]; then
+              git apply /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/fix_editor-ui.old.patch
+              echo "✅ Applied old editor-ui patch"
+            fi
           fi
+        else
+          echo "ℹ️ Patches not needed for this n8n version - skipping patch application"
         fi
 
     - name: Build @n8n/vitest-config (required for editor-ui)
