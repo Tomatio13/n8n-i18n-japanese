@@ -370,19 +370,47 @@ else
     exit 1
 fi
 
-# 11. パッチの適用
-log_info "Applying patches..."
+# 11. パッチの適用（必要な場合のみ）
+log_info "Checking if patches are needed..."
 cd "$N8N_DIR"
-if [ "$EDITOR_UI_FLAG" = "new" ]; then
-    if [ -f "$N8N_I18N_DIR/fix_editor-ui.patch" ]; then
-        git apply "$N8N_I18N_DIR/fix_editor-ui.patch"
-        log_info "Applied new editor-ui patch"
+
+# パッチが必要かどうかをチェック
+CREDENTIAL_CONFIG_FILE="$EDITOR_UI_DIR/src/components/CredentialEdit/CredentialConfig.vue"
+PATCH_NEEDED=false
+
+if [ -f "$CREDENTIAL_CONFIG_FILE" ]; then
+    # credTranslationのnullチェックが既に存在するかチェック
+    if ! grep -q "if (!credTranslation) return;" "$CREDENTIAL_CONFIG_FILE"; then
+        PATCH_NEEDED=true
+        log_info "Null check for credTranslation not found - patch is needed"
+    else
+        log_info "Null check for credTranslation already exists - patch not needed"
     fi
 else
-    if [ -f "$N8N_I18N_DIR/fix_editor-ui.old.patch" ]; then
-        git apply "$N8N_I18N_DIR/fix_editor-ui.old.patch"
-        log_info "Applied old editor-ui patch"
+    log_warn "CredentialConfig.vue not found at expected location"
+fi
+
+# パッチが必要な場合のみ適用
+if [ "$PATCH_NEEDED" = true ]; then
+    log_info "Applying patches..."
+    if [ "$EDITOR_UI_FLAG" = "new" ]; then
+        if [ -f "$N8N_I18N_DIR/fix_editor-ui.patch" ]; then
+            # パッチファイルが実際のパッチ内容を含んでいるかチェック
+            if grep -q "diff --git" "$N8N_I18N_DIR/fix_editor-ui.patch"; then
+                git apply "$N8N_I18N_DIR/fix_editor-ui.patch"
+                log_info "Applied new editor-ui patch"
+            else
+                log_info "Patch file contains no diff content - skipping"
+            fi
+        fi
+    else
+        if [ -f "$N8N_I18N_DIR/fix_editor-ui.old.patch" ]; then
+            git apply "$N8N_I18N_DIR/fix_editor-ui.old.patch"
+            log_info "Applied old editor-ui patch"
+        fi
     fi
+else
+    log_info "Patches not needed for this n8n version - skipping patch application"
 fi
 
 # 11.5. @n8n/rest-api-clientのビルド（editor-uiビルドに必要）
