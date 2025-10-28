@@ -1,0 +1,70 @@
+import { C as computed, E as createCommentVNode, P as defineComponent, T as createBlock, et as openBlock } from "./vue.runtime.esm-bundler-DDuXT-9r.js";
+import "./_MapCache-CaP4mhI9.js";
+import "./src-DEMmv7aL.js";
+import "./en-BYTsM8fR.js";
+import "./preload-helper-CR0ecmWK.js";
+import "./_plugin-vue_export-helper-BwBpWJRZ.js";
+import "./truncate-Zm7rqMgr.js";
+import "./icon-bktrs2EQ.js";
+import "./overlay-Dp9PTQlx.js";
+import "./empty-BuGRxzl4.js";
+import "./useMessage-B0Giqa4b.js";
+import { o as useWorkflowsStore } from "./useTelemetry-DMMCGp2b.js";
+import "./useToast-C1ZpPbXg.js";
+import "./sanitize-html-BuXr7o4T.js";
+import "./path-browserify-DsmB_HMK.js";
+import "./constants-yBDcqULv.js";
+import "./merge-BONzxfgw.js";
+import "./assistant.store-CRW9xRe7.js";
+import "./dateformat-D7TIhVd4.js";
+import "./useDebounce-BDOVCaxX.js";
+import "./useExternalHooks-zp0_PYje.js";
+import "./chatPanel.store-kodFX1JM.js";
+import "./npsSurvey.store-B7_iNEDS.js";
+import "./cloudPlan.store-DVjbdiNL.js";
+import "./templates.store-CPIqYFhQ.js";
+import "./focusPanel.store-CSnLUdy8.js";
+import "./useWorkflowSaving-C4dZ5T6Z.js";
+import "./useRunWorkflow-CQJCbyts.js";
+import "./executions.store-CQlrw6PV.js";
+import "./usePinnedData-CyQ835zq.js";
+import "./nodeCreator.store-NDXvxWTK.js";
+import "./nodeIcon-iL6AFnZi.js";
+import "./useClipboard-Bo6m_x4c.js";
+import "./useCanvasOperations-ezw-xmOV.js";
+import { t as LogsPanel_default } from "./LogsPanel-BOKXPMq0.js";
+import "./folders.store-BcQ6Wp6V.js";
+import "./NodeIcon-BBzZc2Cr.js";
+import "./KeyboardShortcutTooltip-CqWoJrGF.js";
+import "./isEmpty-DsmBaaAQ.js";
+import "./NDVEmptyState-zQlRuQ5F.js";
+import "./externalSecrets.ee.store-BMH2q7Z9.js";
+import "./uniqBy-aD1YpiVl.js";
+import "./schemaPreview.store-H_WmE5oY.js";
+import "./FileSaver.min-D8bnhVIu.js";
+import "./vue-GniKVX87.js";
+import "./vue-json-pretty-BlSK1oxV.js";
+import "./RunDataHtml-BJNWCJaI.js";
+import "./dateFormatter-DFjVBgCR.js";
+import "./useExecutionHelpers-BGFecxse.js";
+import "./useKeybindings-xjSaIY2_.js";
+import "./core-DfWDGJ3H.js";
+import "./VueMarkdown-DZ67GryI.js";
+import "./core-QrkR8HgP.js";
+import "./xml-BZFrCZxf.js";
+import "./AnimatedSpinner-vlvkUC5d.js";
+import "./useLogsTreeExpand-CUSzJzNG.js";
+var DemoFooter_default = /* @__PURE__ */ defineComponent({
+	__name: "DemoFooter",
+	setup(__props) {
+		const workflowsStore = useWorkflowsStore();
+		const hasExecutionData = computed(() => workflowsStore.workflowExecutionData);
+		return (_ctx, _cache) => {
+			return hasExecutionData.value ? (openBlock(), createBlock(LogsPanel_default, {
+				key: 0,
+				"is-read-only": true
+			})) : createCommentVNode("", true);
+		};
+	}
+});
+export { DemoFooter_default as default };
