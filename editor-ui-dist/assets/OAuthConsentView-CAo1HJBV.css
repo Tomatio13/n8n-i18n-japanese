@@ -1,0 +1,205 @@
+/* BEM support Func
+ -------------------------- */
+/* Transition
+-------------------------- */
+/* Color
+-------------------------- */
+/* Link
+-------------------------- */
+/* Border
+-------------------------- */
+/* Outline
+-------------------------- */
+/* Box shadow
+-------------------------- */
+/* Fill
+-------------------------- */
+/* Typography
+-------------------------- */
+/* z-index
+-------------------------- */
+/* Disable base
+-------------------------- */
+/* Icon
+-------------------------- */
+/* Checkbox
+-------------------------- */
+/* Radio
+-------------------------- */
+/* Select
+-------------------------- */
+/* Alert
+-------------------------- */
+/* MessageBox
+-------------------------- */
+/* Message
+-------------------------- */
+/* Notification
+-------------------------- */
+/* Input
+-------------------------- */
+/* Cascader
+-------------------------- */
+/* Group
+-------------------------- */
+/* Tab
+-------------------------- */
+/* Button
+-------------------------- */
+/* cascader
+-------------------------- */
+/* Switch
+-------------------------- */
+/* Dialog
+-------------------------- */
+/* Table
+-------------------------- */
+/* Pagination
+-------------------------- */
+/* Popup
+-------------------------- */
+/* Popover
+-------------------------- */
+/* Tooltip
+-------------------------- */
+/* Tag
+-------------------------- */
+/* Tree
+-------------------------- */
+/* Dropdown
+-------------------------- */
+/* Badge
+-------------------------- */
+/* Card
+--------------------------*/
+/* Slider
+--------------------------*/
+/* Steps
+--------------------------*/
+/* Menu
+--------------------------*/
+/* Rate
+--------------------------*/
+/* DatePicker
+--------------------------*/
+/* Loading
+--------------------------*/
+/* Scrollbar
+--------------------------*/
+/* Carousel
+--------------------------*/
+/* Collapse
+--------------------------*/
+/* Transfer
+--------------------------*/
+/* Header
+  --------------------------*/
+/* Footer
+--------------------------*/
+/* Main
+--------------------------*/
+/* Timeline
+--------------------------*/
+/* Backtop
+--------------------------*/
+/* Link
+--------------------------*/
+/* Calendar
+--------------------------*/
+/* Form
+-------------------------- */
+/* Avatar
+--------------------------*/
+/* Break-point
+--------------------------*/
+/* Break-points
+ -------------------------- */
+/* Scrollbar
+ -------------------------- */
+/* Placeholder
+ -------------------------- */
+/* BEM
+ -------------------------- */
+._overlay_1dgza_123 {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(71, 69, 84, 0.75);
+  z-index: 1000;
+}
+._consent-dialog_1dgza_136 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 500px;
+  max-width: 70%;
+  padding: var(--spacing--lg);
+  background-color: var(--color--background--light-3);
+  border: var(--border);
+  border-radius: var(--radius--lg);
+}
+._header_1dgza_149 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--xs);
+}
+._logo_1dgza_155 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--spacing--2xl);
+  height: var(--spacing--2xl);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+._logo_1dgza_155._n8n_1dgza_164 > div {
+  position: relative;
+  bottom: var(--spacing--5xs);
+}
+._content_1dgza_169 {
+  padding: var(--spacing--lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+}
+._text-content_1dgza_176 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+}
+._permission-list_1dgza_182 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--2xs);
+  padding-left: var(--spacing--lg);
+  list-style-type: disc;
+}
+._permission-list_1dgza_182 li {
+  color: var(--color--text);
+  font-size: var(--font-size--2xs);
+}
+._docs-link_1dgza_194 {
+  color: var(--color--text);
+  font-size: var(--font-size--2xs);
+}
+._footer_1dgza_199 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing--sm);
+}
+._footer_1dgza_199 .notice {
+  margin: 0;
+}
+._footer_1dgza_199 ._button-group_1dgza_209 {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing--2xs);
+}
