@@ -19,7 +19,7 @@ jobs:
       id: latest_release
       run: |
         echo "🔍 Getting latest GitHub release version..."
-        LATEST_VERSION=$(curl -s https://api.github.com/repos/n8n-io/n8n/releases/latest | jq -r '.tag_name')
+        LATEST_VERSION=$(curl -s https://api.github.com/repos/n8n-io/n8n/releases | jq -r '.[0].tag_name')
         echo "✅ Latest release tag: $LATEST_VERSION"
         echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
 

@@ -1,5 +1,0 @@
-Subject: [PATCH] fix: When translation is needed, the page console prompts null data.
----
-# This patch is no longer needed as the fix has been incorporated into n8n core
-# Starting from version n8n@1.114.3, the null check is already present in the code
-# The patch is kept for compatibility with older versions but will be skipped for newer ones
