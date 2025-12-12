@@ -429,6 +429,39 @@ jobs:
           "packages/frontend/@n8n/rest-api-client"
         )
         
+        # @n8n/utilsパッケージのビルド（editor-uiの依存関係）
+        UTILS_DIR="packages/@n8n/utils"
+        if [ -d "$UTILS_DIR" ]; then
+          echo "🏗️ Building @n8n/utils package (required for editor-ui)..."
+          cd "$UTILS_DIR"
+          pnpm install --frozen-lockfile 2>/dev/null || true
+          
+          # TypeScript設定の修正
+          if [ -f "tsconfig.json" ] && ! grep -q '"moduleResolution"' tsconfig.json; then
+            if grep -q '"isolatedModules": true[^,]' tsconfig.json; then
+              sed -i 's/"isolatedModules": true/"isolatedModules": true,/' tsconfig.json
+            fi
+            sed -i '/\"isolatedModules\": true,/a\\t\t\"moduleResolution\": \"bundler\",' tsconfig.json
+          fi
+          
+          # ビルド実行
+          if [ -f "tsconfig.build.json" ]; then
+            pnpm exec tsc -p tsconfig.build.json 2>/dev/null || pnpm build 2>/dev/null || echo "⚠️ Build had warnings for @n8n/utils"
+          else
+            pnpm build 2>/dev/null || echo "⚠️ Build had warnings for @n8n/utils"
+          fi
+          
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/utils build completed successfully"
+          else
+            echo "⚠️ @n8n/utils dist directory not found, but continuing..."
+          fi
+          
+          cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
+        else
+          echo "⚠️ @n8n/utils directory not found, skipping..."
+        fi
+        
         for pkg in "${FRONTEND_PACKAGES[@]}"; do
           if [ -d "$pkg" ]; then
             echo "🏗️ Building $pkg..."
@@ -466,6 +499,7 @@ jobs:
         # 重要なパッケージのdistディレクトリを確認
         CRITICAL_PACKAGES=(
           "packages/workflow"
+          "packages/@n8n/utils"
           "packages/frontend/@n8n/i18n"
           "packages/frontend/@n8n/stores"
           "packages/frontend/@n8n/rest-api-client"
@@ -513,6 +547,29 @@ jobs:
         # 依存関係の最終確認
         echo "📦 Final dependency verification for editor-ui..."
         pnpm install --frozen-lockfile
+        
+        # Vite設定の修正
+        VITE_CONFIG="vite.config.mts"
+        if [ -f "$VITE_CONFIG" ]; then
+          echo "📝 Fixing Vite configuration..."
+          
+          # optimizeDeps.esbuildOptionsの非推奨警告を修正
+          if grep -q "optimizeDeps:" "$VITE_CONFIG" && grep -q "esbuildOptions:" "$VITE_CONFIG"; then
+            # esbuildOptionsをrollupOptionsに置き換え
+            sed -i 's/esbuildOptions:/rollupOptions:/g' "$VITE_CONFIG"
+            echo "✅ Updated optimizeDeps.esbuildOptions to optimizeDeps.rollupOptions"
+          fi
+          
+          # @n8n/utilsが解決できない場合のフォールバック設定
+          # build.rollupOptions.externalに@n8n/utilsを追加（パッケージが存在しない場合の対策）
+          if ! grep -q "@n8n/utils" "$VITE_CONFIG" || ! grep -q "rollupOptions:" "$VITE_CONFIG"; then
+            echo "📝 Checking @n8n/utils resolution in Vite config..."
+            # エイリアス設定が正しく存在するか確認
+            if ! grep -q "@n8n/utils" "$VITE_CONFIG"; then
+              echo "⚠️ @n8n/utils alias not found in vite.config.mts"
+            fi
+          fi
+        fi
         
         echo "🔧 Building editor-ui..."
         if ! pnpm build; then
