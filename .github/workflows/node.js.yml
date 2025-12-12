@@ -19,9 +19,29 @@ jobs:
       id: latest_release
       run: |
         echo "🔍 Getting latest GitHub release version..."
-        LATEST_VERSION=$(curl -s https://api.github.com/repos/n8n-io/n8n/releases | jq -r '.[0].tag_name')
-        echo "✅ Latest release tag: $LATEST_VERSION"
-        echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
+        RESPONSE=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/n8n-io/n8n/releases)
+        
+        # デバッグ: レスポンスの最初の100文字を表示
+        echo "📋 Response preview: ${RESPONSE:0:100}..."
+        
+        # レスポンスが配列かどうか確認
+        if echo "$RESPONSE" | jq -e 'type == "array"' > /dev/null 2>&1; then
+          LATEST_VERSION=$(echo "$RESPONSE" | jq -r '.[0].tag_name')
+          if [ -n "$LATEST_VERSION" ] && [ "$LATEST_VERSION" != "null" ]; then
+            echo "✅ Latest release tag: $LATEST_VERSION"
+            echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Failed to extract tag_name from response"
+            echo "Full response: $RESPONSE"
+            exit 1
+          fi
+        else
+          echo "❌ Response is not an array. Response type: $(echo "$RESPONSE" | jq -r 'type')"
+          echo "Full response: $RESPONSE"
+          exit 1
+        fi
 
     - name: Checkout local
       uses: actions/checkout@v4
