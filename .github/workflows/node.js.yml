@@ -341,6 +341,30 @@ jobs:
           exit 1
         fi
 
+    - name: Apply App.vue locale loader patch
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Ensuring App.vue dynamically loads locale bundles..."
+        APP_PATCH="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/app_locale_loader.patch"
+        APP_VUE="${{ steps.editorui_dir.outputs.dir }}/src/app/App.vue"
+
+        if [ ! -f "$APP_PATCH" ]; then
+          echo "⚠️ app_locale_loader.patch not found at $APP_PATCH"
+          exit 1
+        fi
+
+        if grep -q "runtimeLoadedLocales" "$APP_VUE"; then
+          echo "ℹ️ Locale loader patch already applied - skipping"
+        else
+          cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
+          if git apply "$APP_PATCH"; then
+            echo "✅ Applied locale loader patch to App.vue"
+          else
+            echo "❌ Failed to apply locale loader patch"
+            exit 1
+          fi
+        fi
+
     - name: Apply patches (smart detection)
       if: steps.check_tag.outputs.exists == 'false'
       run: |
