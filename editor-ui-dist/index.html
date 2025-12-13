@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<link rel="icon" href="/{{BASE_PATH}}/favicon.ico" />
+		%CONFIG_TAGS%
+		<link rel="stylesheet" href="/{{BASE_PATH}}/static/prefers-color-scheme.css">
+		<script src="/{{BASE_PATH}}/static/base-path.js" type="text/javascript"></script>
+		<script src="/{{BASE_PATH}}/static/posthog.init.js" type="text/javascript"></script>
+
+		<title>n8n.io - Workflow Automation</title>
+		<script type="module" crossorigin src="/{{BASE_PATH}}/assets/index-C7-3F6c6.js"></script>
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/_plugin-vue_export-helper-BwBpWJRZ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/preload-helper-CR0ecmWK.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/chunk-6z4oVpB-.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/vue.runtime.esm-bundler-tP5dCd7J.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/_MapCache-BMxyEZko.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/truncate-BfTdoaZc.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/icon-Da54nWkZ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/CalendarDate-DxkU3CHY.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/empty-C2SrrehM.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/path-browserify-BnEsEkpq.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/sanitize-html-B9msDoKc.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/en-b3uD8cvU.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/src-C-TA4HUG.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/merge-CWiNuSKW.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/constants-BwijwK3E.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/_baseOrderBy-sGP9Nbn8.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/dateformat-CMLc6OKJ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useDebounce-CwR1JoFJ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useTelemetry-DrgoSbS3.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useExternalHooks-CvM_L6cv.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/nodeIcon-BJS84ESa.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/cloudPlan.store-CZwYYKxh.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/templates.store-TtRlevcv.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/nodeCreator.store-DpH8lgeH.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useStyles-DhM0cpS7.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useToast-yCbLVwaJ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useClipboard-BcJYBZXu.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/usePinnedData-KLwLT0Y_.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/focusPanel.store-CSRIQnMO.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/folders.store-C70ho7PP.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/executions.store-Da3RgP6K.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useCanvasOperations-CDBRMTzj.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/retry-CalJieID.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/overlay-DOoYkR36.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useMessage-BnMV0XU2.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/npsSurvey.store-BjC-JYCK.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useWorkflowSaving-Gdn5mXUq.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useRunWorkflow-24GbuZuL.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/FileSaver.min-BZ3jw69B.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/uniqBy-C2e1QkwQ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/NDVEmptyState-xjzm95wK.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/vue-json-pretty-DsYkKELy.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/assistant.store-BJi7iw3d.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/schemaPreview.store-Gv1w9t0M.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/chatPanel.store-DiLhuiUr.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/dateFormatter-BX-TUWwq.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useExecutionHelpers-BctuaHlh.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/externalSecrets.ee.store-C0YxecPn.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/RunDataHtml-CWUzYFMz.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/isEmpty-tWecf3qp.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/exports-0lA49Fnw.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/vue-CLRzcfGh.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/date-picker-C6j4q55c.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/dialog-DpfL80iN.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/Draggable-DIamkGPA.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/NodeIcon-H1WqEMnW.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useTelemetryContext-CcPt0rUV.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/nodeTransforms-ClTlOmBE.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/TextWithHighlights-bwDYVgOs.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/VirtualSchema-BRCqW_uw.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/VueMarkdown-8m5GTlkL.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ParameterInputList-CaO_mx6C.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/col-DF9WcFKk.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/dataTable.store-DU4SJvEb.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/semver-vfgCJz_d.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/CommunityNodeUpdateInfo-DYT8gUOw.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useActions-BOFZdO26.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/NodeSettings-Daf-U6XL.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/KeyboardShortcutTooltip-BiZXNuMI.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useKeybindings-CzgNtGiU.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useCanvasMapping-CcXcxnHj.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/chart-CsJzkq_n.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/TimeAgo-BJOr7u9t.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/banners.store-CSmcgH1x.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/sso.store-CEtvSD5j.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/roles.store-C3NJH0S2.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/versions.store-DeC-OFFg.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/fileUtils-BIVczUdz.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/constants-D2fYduVh.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/chat.store-CI77_Vtf.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/mcp.constants-BEZmLv14.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/CredentialIcon-lKLc3u7d.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/insights.constants-BoP_B6zb.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/insights.utils-CYfOZI-l.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/insights.store-Cfj7Xbez.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useRecentResources-DWnWKDaI.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/router-DRScQu5_.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ModalDrawer-Cuo1ENa7.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/radio-COIpQBRV.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/_initCloneObject-CNeAm5hD.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/table-Drd6mQtS.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/orderBy-CkbOFfOU.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/sortByProperty-DeupcrDk.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ProjectIcon-Oo3IhRR2.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/apiKeys.store-DI5BG4-i.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/logStreaming.store-BSr651eq.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/usage.store-D5NOcDP4.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/CopyInput-BY3b_Tqw.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/EnterpriseEdition.ee-xENJT-Wo.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/Modal-En13xkmh.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/SaveButton-D-kRB64m.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/WorkflowActivationErrorMessage-BcBeyMft.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ItemsRenderer-g2sdcqlZ.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/usePageRedirectionHelper-05j3DD2p.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useCommandBar-DL44cyZW.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useWorkflowActivate-Cm1giELA.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/CredentialPicker-Cea9qkSG.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/templateTransforms-DjSrT6DX.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/SetupTemplateFormStep-C8Tl7S82.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/personalizedTemplatesV3.store-_H7MUIS8.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/TemplateCard-Cfc0v5_t.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/useMcp-aZ0rflyd.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ProjectCardBadge-O3HUaQkM.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ProjectSharing-Pd0ORIGw.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/auth.eventBus-BUssyoho.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/ExternalSecretsProviderConnectionSwitch.ee-BAi9kl2k.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/sourceControl.eventBus-Bm7GYuuD.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/TagsDropdown-Cr7Yxye4.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/WorkflowTagsDropdown-Ddb5r3Bf.js">
+		<link rel="modulepreload" crossorigin href="/{{BASE_PATH}}/assets/utils-BHrizqMI.js">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/src-B3nS6ibs.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/NDVEmptyState-Bho0_Ev8.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/RunDataHtml-Bu3RZcuV.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/isEmpty-BWJQZhNV.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/Draggable-DfBtatxg.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/NodeIcon-eaW3atZy.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/useTelemetryContext-BpnKRIT7.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/TextWithHighlights-BgbTzzK2.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/VirtualSchema-Bc7tO5Io.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ParameterInputList-CE0gIO5-.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/CommunityNodeUpdateInfo-kPDiipF5.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/NodeSettings-BZYlEBNh.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/KeyboardShortcutTooltip-pRLqnHdh.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/useCanvasMapping-CyDAqgNV.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/banners-UK5wWFEI.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/CredentialIcon-bZrcXcyJ.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/router-zBt63VWY.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ModalDrawer-B-12esvU.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ProjectIcon-DT95ZcDW.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/CopyInput-BiDmlr9B.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/Modal-DNkRJkUt.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/SaveButton-Dc01Y2MA.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ItemsRenderer-Cr6c6uYy.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/useCommandBar-eK4Fv9lH.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/CredentialPicker-CUNAJHH6.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/SetupTemplateFormStep-n3VY06cx.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/TemplateCard-DxDBlS6p.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ProjectCardBadge-XPHWNQHG.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ProjectSharing-DsD3YT5P.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/ExternalSecretsProviderConnectionSwitch-dpp96SMy.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/TagsDropdown-Do1UB2LF.css">
+		<link rel="stylesheet" crossorigin href="/{{BASE_PATH}}/assets/index-DW_qKbOI.css">
+		<script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>
+		<script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+	</head>
+	<body>
+		<noscript>
+			<strong
+				>We're sorry but the n8n Editor-UI doesn't work properly without JavaScript enabled. Please
+				enable it to continue.</strong
+			>
+		</noscript>
+		<div id="app"></div>
+		<script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+		<script nomodule crossorigin id="vite-legacy-polyfill" src="/{{BASE_PATH}}/assets/polyfills-legacy-BCkthkfj.js"></script>
+		<script nomodule crossorigin id="vite-legacy-entry" data-src="/{{BASE_PATH}}/assets/index-legacy-1QU0PJNV.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+	</body>
+</html>
