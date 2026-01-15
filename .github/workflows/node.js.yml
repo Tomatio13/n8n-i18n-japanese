@@ -357,10 +357,12 @@ jobs:
           echo "ℹ️ Locale loader patch already applied - skipping"
         else
           cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-          if git apply "$APP_PATCH"; then
+          if git apply --3way "$APP_PATCH"; then
             echo "✅ Applied locale loader patch to App.vue"
           else
             echo "❌ Failed to apply locale loader patch"
+            echo "🔎 Patch check output:"
+            git apply --check "$APP_PATCH" || true
             exit 1
           fi
         fi
