@@ -277,6 +277,26 @@ jobs:
         fi
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
+    - name: Build @n8n/codemirror-lang-html package
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Building @n8n/codemirror-lang-html package..."
+        CODEMIRROR_HTML_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/codemirror-lang-html"
+        if [ -d "$CODEMIRROR_HTML_DIR" ]; then
+          cd "$CODEMIRROR_HTML_DIR"
+          pnpm install --frozen-lockfile
+          pnpm build
+          if [ -d "dist" ]; then
+            echo "✅ @n8n/codemirror-lang-html build completed successfully"
+          else
+            echo "❌ @n8n/codemirror-lang-html build failed - dist directory not found"
+            exit 1
+          fi
+        else
+          echo "❌ @n8n/codemirror-lang-html directory not found: $CODEMIRROR_HTML_DIR"
+          exit 1
+        fi
+
     # Removed backend-oriented package builds to keep workflow minimal for editor-ui
 
     - name: Comprehensive TypeScript configuration fixes
