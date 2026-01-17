@@ -1,18 +1,18 @@
 diff --git a/packages/frontend/editor-ui/src/app/App.vue b/packages/frontend/editor-ui/src/app/App.vue
-index 116786fc..e6471cde 100644
+index e6e8bbe..73f2e7d 100644
 --- a/packages/frontend/editor-ui/src/app/App.vue
 +++ b/packages/frontend/editor-ui/src/app/App.vue
-@@ -15,7 +15,8 @@ import { useNDVStore } from '@/features/ndv/shared/ndv.store';
- import { useSettingsStore } from '@/app/stores/settings.store';
+@@ -21,7 +21,8 @@ import { useUIStore } from '@/app/stores/ui.store';
+ import { useUsersStore } from '@/features/settings/users/users.store';
  import LoadingView from '@/app/views/LoadingView.vue';
- import { locale } from '@n8n/design-system';
+ import { locale, N8nCommandBar } from '@n8n/design-system';
 -import { setLanguage } from '@n8n/i18n';
 +import { loadLanguage, setLanguage } from '@n8n/i18n';
 +import type { LocaleMessages } from '@n8n/i18n/types';
  // Note: no need to import en.json here; default 'en' is handled via setLanguage
  import { useRootStore } from '@n8n/stores/useRootStore';
  import axios from 'axios';
-@@ -44,6 +45,32 @@ const loading = ref(true);
+@@ -69,6 +70,32 @@ const loading = ref(true);
  const defaultLocale = computed(() => rootStore.defaultLocale);
  const isDemoMode = computed(() => route.name === VIEWS.DEMO);
  const hasContentFooter = ref(false);
@@ -42,10 +42,10 @@ index 116786fc..e6471cde 100644
 +		console.warn(`[i18n] Unable to load locale "${localeCode}"`, error);
 +	}
 +};
+ const appGrid = ref<Element | null>(null);
  
- useTelemetryContext({ ndv_source: computed(() => ndvStore.lastSetActiveNodeSource) });
- 
-@@ -68,6 +95,7 @@ watch(route, (r) => {
+ const showCommandBar = computed(
+@@ -124,6 +151,7 @@ watch(route, (r) => {
  watch(
  	defaultLocale,
  	async (newLocale) => {
