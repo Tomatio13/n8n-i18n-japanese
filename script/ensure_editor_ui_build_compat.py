@@ -59,15 +59,11 @@ def _strip_codemirror_alias_block(content: str) -> tuple[str, bool]:
 	return content, changed
 
 
-def _replace_imports(editor_ui_dir: Path, target_pkg: str) -> bool:
-	changed = False
-	for file_path in list(editor_ui_dir.rglob("*.ts")) + list(editor_ui_dir.rglob("*.vue")):
-		file_content = file_path.read_text(encoding="utf-8")
-		if "@n8n/codemirror-lang-html" in file_content:
-			file_content = file_content.replace("@n8n/codemirror-lang-html", target_pkg)
-			file_path.write_text(file_content, encoding="utf-8")
-			changed = True
-	return changed
+def _find_repo_root(editor_ui_dir: Path) -> Path | None:
+	for candidate in [editor_ui_dir] + list(editor_ui_dir.parents):
+		if (candidate / "pnpm-workspace.yaml").exists() and (candidate / "packages").exists():
+			return candidate
+	return None
 
 
 def ensure_codemirror_resolution(editor_ui_dir: Path, vite_config: Path) -> bool:
@@ -80,7 +76,10 @@ def ensure_codemirror_resolution(editor_ui_dir: Path, vite_config: Path) -> bool
 	content, did_change = _strip_codemirror_alias_block(content)
 	changed = changed or did_change
 
-	root_dir = editor_ui_dir.parents[3]
+	root_dir = _find_repo_root(editor_ui_dir)
+	if root_dir is None:
+		print("⚠️ Unable to locate repo root for codemirror resolution", file=sys.stderr)
+		return changed
 	workspace_pkg = root_dir / "packages" / "@n8n" / "codemirror-lang-html"
 	workspace_entry = workspace_pkg / "src" / "html.ts"
 	node_pkg = root_dir / "node_modules" / "@n8n" / "codemirror-lang-html"
@@ -93,11 +92,15 @@ def ensure_codemirror_resolution(editor_ui_dir: Path, vite_config: Path) -> bool
 	elif node_entry:
 		resolution_mode = ("alias", node_entry)
 	elif fallback_entry:
-		resolution_mode = ("import", "codemirror-lang-html-n8n")
+		resolution_mode = ("alias", fallback_entry)
 	else:
-		raise RuntimeError(
-			"Neither @n8n/codemirror-lang-html nor codemirror-lang-html-n8n found in workspace or node_modules."
+		print(
+			"⚠️ Neither @n8n/codemirror-lang-html nor codemirror-lang-html-n8n found in workspace or node_modules.",
+			file=sys.stderr,
 		)
+		if changed:
+			vite_config.write_text(content, encoding="utf-8")
+		return changed
 
 	if resolution_mode[0] == "alias":
 		alias_path = resolution_mode[1]
@@ -128,9 +131,6 @@ def ensure_codemirror_resolution(editor_ui_dir: Path, vite_config: Path) -> bool
 		content = content.replace(alias_anchor, alias_anchor + "\tcodemirrorHtmlAlias,\n", 1)
 		changed = True
 
-	if resolution_mode[0] == "import":
-		changed = _replace_imports(editor_ui_dir, resolution_mode[1]) or changed
-
 	if changed:
 		vite_config.write_text(content, encoding="utf-8")
 	return changed
@@ -145,7 +145,10 @@ def main() -> int:
 	changed = False
 
 	changed |= update_i18n_hmr(editor_ui_dir / "src/app/dev/i18nHmr.ts")
-	changed |= ensure_codemirror_resolution(editor_ui_dir, editor_ui_dir / "vite.config.mts")
+	try:
+		changed |= ensure_codemirror_resolution(editor_ui_dir, editor_ui_dir / "vite.config.mts")
+	except RuntimeError as exc:
+		print(f"⚠️ {exc}", file=sys.stderr)
 
 	if changed:
 		print("Applied editor-ui compatibility updates")
