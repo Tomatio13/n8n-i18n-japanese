@@ -51,32 +51,36 @@ def ensure_codemirror_alias(path: Path) -> bool:
 		"\t: { find: '@n8n/codemirror-lang-html', replacement: 'codemirror-lang-html-n8n' };\n"
 	)
 
+	alias_anchor = "const alias = [\n"
+	if alias_anchor not in content:
+		raise RuntimeError("Could not find alias array anchor to insert codemirror alias.")
+
 	if "codemirrorHtmlAlias" in content:
-		pattern = re.compile(
-			r"const codemirrorHtmlPackageDir = .*?codemirrorHtmlAlias = .*?;\n",
-			re.DOTALL,
-		)
+		# Replace any existing block before the alias array to avoid stale paths
+		pattern = re.compile(r"const codemirrorHtmlPackageDir = [\\s\\S]*?const alias = \\[\n")
 		if pattern.search(content):
-			content = pattern.sub(alias_block, content, count=1)
+			content = pattern.sub(alias_block + alias_anchor, content, count=1)
 			changed = True
 		else:
-			raise RuntimeError("Could not find existing codemirrorHtmlAlias block to update.")
+			# Fallback: update any direct src directory replacement
+			content = content.replace(
+				"replacement: resolve(codemirrorHtmlPackageDir, 'src')",
+				"replacement: codemirrorHtmlSrcIndex",
+			)
+			changed = True
 	else:
 		anchor = "const packagesDir = resolve(__dirname, '..', '..');\n"
 		if anchor not in content:
 			raise RuntimeError("Could not find packagesDir anchor to insert codemirror alias.")
 
-		insert = anchor + "\n"
-		insert += alias_block
+		insert = anchor + "\n" + alias_block
 		content = content.replace(anchor, insert, 1)
-		changed = True
-
-	alias_anchor = "const alias = [\n"
-	if alias_anchor in content and "codemirrorHtmlAlias" in content:
 		content = content.replace(alias_anchor, alias_anchor + "\tcodemirrorHtmlAlias,\n", 1)
 		changed = True
-	else:
-		raise RuntimeError("Could not find alias array anchor to insert codemirror alias.")
+
+	if "codemirrorHtmlAlias" in content and "\tcodemirrorHtmlAlias,\n" not in content:
+		content = content.replace(alias_anchor, alias_anchor + "\tcodemirrorHtmlAlias,\n", 1)
+		changed = True
 
 	if changed:
 		path.write_text(content, encoding="utf-8")
