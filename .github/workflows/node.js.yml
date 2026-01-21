@@ -590,6 +590,18 @@ jobs:
         # 依存関係の最終確認
         echo "📦 Final dependency verification for editor-ui..."
         pnpm install --frozen-lockfile
+
+        # Ensure codemirror-lang-html is built (dist/index.js) before aliasing
+        CODEMIRROR_HTML_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/codemirror-lang-html"
+        if [ -d "$CODEMIRROR_HTML_DIR" ]; then
+          if [ ! -f "$CODEMIRROR_HTML_DIR/dist/index.js" ]; then
+            echo "🛠️ Building @n8n/codemirror-lang-html (missing dist)..."
+            cd "$CODEMIRROR_HTML_DIR"
+            pnpm install --frozen-lockfile
+            pnpm build
+            cd ${{ steps.editorui_dir.outputs.dir }}
+          fi
+        fi
         
         # Vite設定の修正
         VITE_CONFIG="vite.config.mts"

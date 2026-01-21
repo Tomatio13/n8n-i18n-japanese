@@ -24,8 +24,8 @@ N8N_I18N_DIR="$WORK_DIR"
 N8N_DIR="$WORK_DIR/n8n"
 LANGUAGES_DIR="$WORK_DIR/languages"
 
-# n8nバージョン指定（2.0.2）
-N8N_VERSION="n8n@2.0.2"
+# n8nバージョン指定（2.5.0）
+N8N_VERSION="n8n@2.5.0"
 LATEST_VERSION="$N8N_VERSION"
 log_info "Using n8n version: $LATEST_VERSION"
 
