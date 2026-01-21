@@ -590,6 +590,15 @@ if [ -f "$VITE_CONFIG" ]; then
     fi
 fi
 
+# editor-ui互換性パッチ（codemirror html / i18n HMR）
+COMPAT_SCRIPT="$N8N_I18N_DIR/script/ensure_editor_ui_build_compat.py"
+if [ -f "$COMPAT_SCRIPT" ]; then
+    log_info "Applying editor-ui compatibility updates..."
+    python3 "$COMPAT_SCRIPT" "$EDITOR_UI_DIR"
+else
+    log_warn "Compatibility script not found - skipping editor-ui compatibility updates"
+fi
+
 # 依存関係の再確認とインストール
 log_info "Installing editor-ui dependencies..."
 pnpm install --frozen-lockfile

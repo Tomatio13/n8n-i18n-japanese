@@ -595,6 +595,15 @@ jobs:
           fi
         fi
         
+        # editor-ui互換性パッチ（codemirror html / i18n HMR）
+        COMPAT_SCRIPT="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/script/ensure_editor_ui_build_compat.py"
+        if [ -f "$COMPAT_SCRIPT" ]; then
+          echo "🛠️ Applying editor-ui compatibility updates..."
+          python3 "$COMPAT_SCRIPT" "${{ steps.editorui_dir.outputs.dir }}"
+        else
+          echo "⚠️ Compatibility script not found at $COMPAT_SCRIPT"
+        fi
+        
         echo "🔧 Building editor-ui..."
         if ! pnpm build; then
           echo "⚠️ Initial build failed, trying with error recovery..."
