@@ -440,20 +440,20 @@ fi
 
 # 11.1. editor-uiの言語読み込みパッチ適用
 log_info "Ensuring editor-ui dynamically loads locale bundles..."
-APP_LOCALE_PATCH="$N8N_I18N_DIR/app_locale_loader.patch"
+APP_LOCALE_SCRIPT="$N8N_I18N_DIR/script/ensure_app_locale_loader.py"
 APP_VUE_PATH="$EDITOR_UI_DIR/src/app/App.vue"
-if [ -f "$APP_LOCALE_PATCH" ]; then
+if [ -f "$APP_LOCALE_SCRIPT" ]; then
     if grep -q "runtimeLoadedLocales" "$APP_VUE_PATH"; then
         log_info "Locale loader patch already applied - skipping"
     else
-        if git apply "$APP_LOCALE_PATCH"; then
-            log_info "Applied locale loader patch to App.vue"
+        if python3 "$APP_LOCALE_SCRIPT" "$APP_VUE_PATH"; then
+            log_info "Applied locale loader updates to App.vue"
         else
-            log_warn "Failed to apply locale loader patch (App.vue may have changed upstream)"
+            log_warn "Failed to update App.vue locale loader (App.vue may have changed upstream)"
         fi
     fi
 else
-    log_warn "app_locale_loader.patch not found in repository root - skipping locale patch"
+    log_warn "Locale loader script not found in repository root - skipping locale update"
 fi
 
 # 11.5. @n8n/rest-api-clientのビルド（editor-uiビルドに必要）

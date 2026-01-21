@@ -345,11 +345,11 @@ jobs:
       if: steps.check_tag.outputs.exists == 'false'
       run: |
         echo "🔧 Ensuring App.vue dynamically loads locale bundles..."
-        APP_PATCH="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/app_locale_loader.patch"
+        APP_SCRIPT="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n-i18n-japanese/script/ensure_app_locale_loader.py"
         APP_VUE="${{ steps.editorui_dir.outputs.dir }}/src/app/App.vue"
 
-        if [ ! -f "$APP_PATCH" ]; then
-          echo "⚠️ app_locale_loader.patch not found at $APP_PATCH"
+        if [ ! -f "$APP_SCRIPT" ]; then
+          echo "⚠️ Locale loader script not found at $APP_SCRIPT"
           exit 1
         fi
 
@@ -357,12 +357,10 @@ jobs:
           echo "ℹ️ Locale loader patch already applied - skipping"
         else
           cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-          if git apply --3way "$APP_PATCH"; then
-            echo "✅ Applied locale loader patch to App.vue"
+          if python3 "$APP_SCRIPT" "$APP_VUE"; then
+            echo "✅ Applied locale loader updates to App.vue"
           else
-            echo "❌ Failed to apply locale loader patch"
-            echo "🔎 Patch check output:"
-            git apply --check "$APP_PATCH" || true
+            echo "❌ Failed to update App.vue locale loader"
             exit 1
           fi
         fi
