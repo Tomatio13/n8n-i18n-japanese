@@ -81,14 +81,17 @@ def ensure_codemirror_resolution(editor_ui_dir: Path, vite_config: Path) -> bool
 		print("⚠️ Unable to locate repo root for codemirror resolution", file=sys.stderr)
 		return changed
 	workspace_pkg = root_dir / "packages" / "@n8n" / "codemirror-lang-html"
-	workspace_entry = workspace_pkg / "src" / "html.ts"
+	workspace_dist_entry = workspace_pkg / "dist" / "index.js"
+	workspace_src_entry = workspace_pkg / "src" / "html.ts"
 	node_pkg = root_dir / "node_modules" / "@n8n" / "codemirror-lang-html"
 	node_entry = _read_package_entry(node_pkg)
 	fallback_pkg = root_dir / "node_modules" / "codemirror-lang-html-n8n"
 	fallback_entry = _read_package_entry(fallback_pkg)
 
-	if workspace_entry.exists():
-		resolution_mode = ("alias", str(workspace_entry.resolve()))
+	if workspace_dist_entry.exists():
+		resolution_mode = ("alias", str(workspace_dist_entry.resolve()))
+	elif workspace_src_entry.exists():
+		resolution_mode = ("alias", str(workspace_src_entry.resolve()))
 	elif node_entry:
 		resolution_mode = ("alias", node_entry)
 	elif fallback_entry:

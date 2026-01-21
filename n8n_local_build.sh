@@ -526,6 +526,27 @@ else
     log_warn "⚠️ @n8n/utils directory not found, skipping..."
 fi
 
+# 11.7. @n8n/codemirror-lang-htmlパッケージのビルド（editor-uiの依存関係）
+log_info "Building @n8n/codemirror-lang-html package (required for editor-ui)..."
+CODEMIRROR_HTML_DIR="$N8N_DIR/packages/@n8n/codemirror-lang-html"
+if [ -d "$CODEMIRROR_HTML_DIR" ]; then
+    cd "$CODEMIRROR_HTML_DIR"
+    
+    pnpm install --frozen-lockfile
+    pnpm build
+    
+    if [ -d "dist" ]; then
+        log_info "✅ @n8n/codemirror-lang-html build completed successfully"
+    else
+        log_error "@n8n/codemirror-lang-html build failed - dist directory not found"
+        exit 1
+    fi
+    
+    cd "$N8N_DIR"
+else
+    log_warn "@n8n/codemirror-lang-html directory not found, skipping"
+fi
+
 # 11.7. @n8n/vitest-configのビルド（editor-uiビルドに必要）
 log_info "Building @n8n/vitest-config (required for editor-ui)..."
 VITEST_CONFIG_DIR="$N8N_DIR/packages/@n8n/vitest-config"
