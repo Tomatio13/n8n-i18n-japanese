@@ -26,8 +26,6 @@ def ensure_codemirror_alias(path: Path) -> bool:
 		return False
 
 	content = path.read_text(encoding="utf-8")
-	if "codemirror-lang-html" in content:
-		return False
 
 	changed = False
 
@@ -43,20 +41,35 @@ def ensure_codemirror_alias(path: Path) -> bool:
 		else:
 			raise RuntimeError("Could not find path import to insert fs existsSync.")
 
-	anchor = "const packagesDir = resolve(__dirname, '..', '..');\n"
-	if anchor in content and "codemirrorHtmlAlias" not in content:
-		insert = (
-			anchor
-			+ "\n"
-			+ "const codemirrorHtmlPackageDir = resolve(packagesDir, '@n8n', 'codemirror-lang-html');\n"
-			+ "const codemirrorHtmlAlias = existsSync(codemirrorHtmlPackageDir)\n"
-			+ "\t? { find: '@n8n/codemirror-lang-html', replacement: resolve(codemirrorHtmlPackageDir, 'src') }\n"
-			+ "\t: { find: '@n8n/codemirror-lang-html', replacement: 'codemirror-lang-html-n8n' };\n"
+	alias_block = (
+		"const codemirrorHtmlPackageDir = resolve(packagesDir, '@n8n', 'codemirror-lang-html');\n"
+		"const codemirrorHtmlSrcIndex = resolve(codemirrorHtmlPackageDir, 'src', 'index.ts');\n"
+		"const codemirrorHtmlEntry =\n"
+		"\texistsSync(codemirrorHtmlSrcIndex) ? codemirrorHtmlSrcIndex : null;\n"
+		"const codemirrorHtmlAlias = codemirrorHtmlEntry\n"
+		"\t? { find: '@n8n/codemirror-lang-html', replacement: codemirrorHtmlEntry }\n"
+		"\t: { find: '@n8n/codemirror-lang-html', replacement: 'codemirror-lang-html-n8n' };\n"
+	)
+
+	if "codemirrorHtmlAlias" in content:
+		pattern = re.compile(
+			r"const codemirrorHtmlPackageDir = .*?codemirrorHtmlAlias = .*?;\n",
+			re.DOTALL,
 		)
+		if pattern.search(content):
+			content = pattern.sub(alias_block, content, count=1)
+			changed = True
+		else:
+			raise RuntimeError("Could not find existing codemirrorHtmlAlias block to update.")
+	else:
+		anchor = "const packagesDir = resolve(__dirname, '..', '..');\n"
+		if anchor not in content:
+			raise RuntimeError("Could not find packagesDir anchor to insert codemirror alias.")
+
+		insert = anchor + "\n"
+		insert += alias_block
 		content = content.replace(anchor, insert, 1)
 		changed = True
-	else:
-		raise RuntimeError("Could not find packagesDir anchor to insert codemirror alias.")
 
 	alias_anchor = "const alias = [\n"
 	if alias_anchor in content and "codemirrorHtmlAlias" in content:
