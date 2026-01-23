@@ -1,0 +1,39 @@
+;
+(function () {
+  System.register(["./vue.runtime.esm-bundler-legacy--Sn1h8On.js", "./_MapCache-legacy-8OcfWMWH.js", "./src-legacy-CqaaMy6r.js", "./en-legacy-DJK4SpPN.js", "./preload-helper-legacy-CXRjoQ0T.js", "./_plugin-vue_export-helper-legacy-DZMI5HPp.js", "./truncate-legacy-COQs_hNk.js", "./icon-legacy-BBcLFUR7.js", "./overlay-legacy-C5eIW3LW.js", "./empty-legacy-DFAcggMu.js", "./useMessage-legacy-BW-CeYwb.js", "./useTelemetry-legacy-DRbFTEPe.js", "./useToast-legacy-DFHug49l.js", "./sanitize-html-legacy-C2e3AnhY.js", "./CalendarDate-legacy-BUvNgcoo.js", "./constants-legacy-BnN5j0Of.js", "./merge-legacy-Bk31cAi2.js", "./assistant.store-legacy-CUYyVmDh.js", "./_baseOrderBy-legacy-Helkyheh.js", "./dateformat-legacy-COtwsT2o.js", "./useDebounce-legacy-vbPtOpN1.js", "./useExternalHooks-legacy-cRYXgFRw.js", "./useStyles-legacy-CBz5KLcN.js", "./chatPanel.store-legacy-CeS-upSx.js", "./npsSurvey.store-legacy-Q5270ueJ.js", "./cloudPlan.store-legacy-DSxOgyF2.js", "./templates.store-legacy-COMhIBM_.js", "./focusPanel.store-legacy-DusQaRaH.js", "./useWorkflowSaving-legacy-Dq2J0c0I.js", "./retry-legacy-B42G2wo4.js", "./executions.store-legacy-DjLRUG05.js", "./useRunWorkflow-legacy-B3yEnVQV.js", "./usePinnedData-legacy-CTnrlng4.js", "./nodeCreator.store-legacy-sgQV_e2e.js", "./nodeIcon-legacy-6VM1SPil.js", "./useClipboard-legacy-BwBYkCQ-.js", "./useCanvasOperations-legacy-DJTHHHri.js", "./LogsPanel-legacy-B-6O4-0e.js", "./folders.store-legacy-DMaO_v_N.js", "./NodeIcon-legacy-CZeTeOCV.js", "./KeyboardShortcutTooltip-legacy-Bfi5Id0D.js", "./isEmpty-legacy-BNbfS6F1.js", "./NDVEmptyState-legacy-DrLNao3O.js", "./externalSecrets.ee.store-legacy-C4lRdyse.js", "./uniqBy-legacy-D85i6pHx.js", "./RunDataHtml-legacy-250--9xW.js", "./VueMarkdown-legacy-S4e6uB-V.js", "./schemaPreview.store-legacy-DXqgJCTm.js", "./FileSaver.min-legacy-0SsKJJ7L.js", "./vue-json-pretty-legacy-DEs9LQ9L.js", "./dateFormatter-legacy-4CGynHJz.js", "./useExecutionHelpers-legacy-DWK5_MUe.js", "./fileUtils-legacy-AaxU-aoB.js", "./useKeybindings-legacy-DA70lviA.js", "./core-legacy-CE24FyzQ.js", "./ChatFile-legacy-5tjvkOZY.js", "./xml-legacy-Bml4tBFF.js", "./AnimatedSpinner-legacy-Bc8CRgqr.js", "./useLogsTreeExpand-legacy-dYtEPcno.js", "./core-legacy-DSRhYczf.js"], function (_export, _context) {
+    "use strict";
+
+    var computed, createCommentVNode, defineComponent, createBlock, openBlock, useWorkflowsStore, LogsPanel_default, DemoFooter_vue_vue_type_script_setup_true_lang_default, DemoFooter_default;
+    return {
+      setters: [function (_vueRuntimeEsmBundlerLegacy003Js) {
+        computed = _vueRuntimeEsmBundlerLegacy003Js.C;
+        createCommentVNode = _vueRuntimeEsmBundlerLegacy003Js.E;
+        defineComponent = _vueRuntimeEsmBundlerLegacy003Js.P;
+        createBlock = _vueRuntimeEsmBundlerLegacy003Js.T;
+        openBlock = _vueRuntimeEsmBundlerLegacy003Js.et;
+      }, function (_MapCacheLegacy005Js) {}, function (_srcLegacy007Js) {}, function (_enLegacy00bJs) {}, function (_preloadHelperLegacy00dJs) {}, function (_pluginVue_exportHelperLegacy00fJs) {}, function (_truncateLegacy00hJs) {}, function (_iconLegacy00nJs) {}, function (_overlayLegacy00rJs) {}, function (_emptyLegacy00vJs) {}, function (_useMessageLegacy00xJs) {}, function (_useTelemetryLegacy00HJs) {
+        useWorkflowsStore = _useTelemetryLegacy00HJs.o;
+      }, function (_useToastLegacy00JJs) {}, function (_sanitizeHtmlLegacy00LJs) {}, function (_CalendarDateLegacy00NJs) {}, function (_constantsLegacy00VJs) {}, function (_mergeLegacy00XJs) {}, function (_assistantStoreLegacy00ZJs) {}, function (_baseOrderByLegacy00$Js) {}, function (_dateformatLegacy011Js) {}, function (_useDebounceLegacy013Js) {}, function (_useExternalHooksLegacy015Js) {}, function (_useStylesLegacy017Js) {}, function (_chatPanelStoreLegacy019Js) {}, function (_npsSurveyStoreLegacy01dJs) {}, function (_cloudPlanStoreLegacy01fJs) {}, function (_templatesStoreLegacy01hJs) {}, function (_focusPanelStoreLegacy01jJs) {}, function (_useWorkflowSavingLegacy01lJs) {}, function (_retryLegacy01nJs) {}, function (_executionsStoreLegacy01pJs) {}, function (_useRunWorkflowLegacy01rJs) {}, function (_usePinnedDataLegacy01tJs) {}, function (_nodeCreatorStoreLegacy01vJs) {}, function (_nodeIconLegacy01xJs) {}, function (_useClipboardLegacy01zJs) {}, function (_useCanvasOperationsLegacy01BJs) {}, function (_LogsPanelLegacy01DJs) {
+        LogsPanel_default = _LogsPanelLegacy01DJs.t;
+      }, function (_foldersStoreLegacy01FJs) {}, function (_NodeIconLegacy01HJs) {}, function (_KeyboardShortcutTooltipLegacy01JJs) {}, function (_isEmptyLegacy023Js) {}, function (_NDVEmptyStateLegacy025Js) {}, function (_externalSecretsEeStoreLegacy029Js) {}, function (_uniqByLegacy02bJs) {}, function (_RunDataHtmlLegacy02pJs) {}, function (_VueMarkdownLegacy02tJs) {}, function (_schemaPreviewStoreLegacy02DJs) {}, function (_FileSaverMinLegacy02JJs) {}, function (_vueJsonPrettyLegacy02LJs) {}, function (_dateFormatterLegacy02NJs) {}, function (_useExecutionHelpersLegacy02PJs) {}, function (_fileUtilsLegacy03rJs) {}, function (_useKeybindingsLegacy03NJs) {}, function (_coreLegacy03$Js) {}, function (_ChatFileLegacy05dJs) {}, function (_xmlLegacy05tJs) {}, function (_AnimatedSpinnerLegacy05DJs) {}, function (_useLogsTreeExpandLegacy06TJs) {}, function (_coreLegacy06VJs) {}],
+      execute: function () {
+        //#region src/features/execution/logs/components/DemoFooter.vue?vue&type=script&setup=true&lang.ts
+        DemoFooter_vue_vue_type_script_setup_true_lang_default = /* @__PURE__ */defineComponent({
+          __name: "DemoFooter",
+          setup(__props) {
+            const workflowsStore = useWorkflowsStore();
+            const hasExecutionData = computed(() => workflowsStore.workflowExecutionData);
+            return (_ctx, _cache) => {
+              return hasExecutionData.value ? (openBlock(), createBlock(LogsPanel_default, {
+                key: 0,
+                "is-read-only": true
+              })) : createCommentVNode("", true);
+            };
+          }
+        }); //#endregion
+        //#region src/features/execution/logs/components/DemoFooter.vue
+        _export("default", DemoFooter_default = DemoFooter_vue_vue_type_script_setup_true_lang_default); //#endregion
+      }
+    };
+  });
+})();
