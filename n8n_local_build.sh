@@ -204,7 +204,35 @@ else
     exit 1
 fi
 
-# 4. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
+# 4. @n8n/expression-runtimeパッケージのビルド（n8n-workflowの依存関係）
+log_info "🔧 Building @n8n/expression-runtime package (required for n8n-workflow)..."
+EXPRESSION_RUNTIME_DIR="$N8N_DIR/packages/@n8n/expression-runtime"
+if [ -d "$EXPRESSION_RUNTIME_DIR" ]; then
+    cd "$EXPRESSION_RUNTIME_DIR"
+
+    log_info "📝 Using existing tsconfig.json for @n8n/expression-runtime..."
+
+    log_info "🏗️ Building @n8n/expression-runtime package..."
+    pnpm install --frozen-lockfile
+
+    if [ -f "tsconfig.build.json" ]; then
+        pnpm exec tsc -p tsconfig.build.json
+    else
+        pnpm build
+    fi
+
+    if [ -d "dist" ]; then
+        log_info "✅ @n8n/expression-runtime build completed successfully"
+    else
+        log_error "❌ @n8n/expression-runtime build failed - dist directory not found"
+        exit 1
+    fi
+    cd "$N8N_DIR"
+else
+    log_warn "⚠️ @n8n/expression-runtime directory not found, skipping (may not be needed for this version)..."
+fi
+
+# 5. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
 log_info "🔧 Building n8n-workflow package (required for all other packages)..."
 WORKFLOW_DIR="$N8N_DIR/packages/workflow"
 if [ -d "$WORKFLOW_DIR" ]; then
