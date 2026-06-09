@@ -80,7 +80,7 @@ jobs:
       if: steps.check_tag.outputs.exists == 'false'
       uses: actions/setup-node@v4.2.0
       with:
-        node-version: 22.16.0
+        node-version: 22.22.0
 
     - name: Verify Node.js version
       if: steps.check_tag.outputs.exists == 'false'
@@ -139,169 +139,29 @@ jobs:
         done
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
-    - name: Build packages in dependency order
+    - name: Build backend workspace dependencies with Turbo
       if: steps.check_tag.outputs.exists == 'false'
       run: |
-        echo "🔧 Building packages in correct dependency order: @n8n/di → @n8n/config → @n8n/errors → n8n-workflow..."
-        
-        # 1. @n8n/diパッケージのビルド（@n8n/configの依存関係）
-        echo "🔧 Building @n8n/di package (required for @n8n/config)..."
-        DI_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/di"
-        if [ -d "$DI_DIR" ]; then
-          cd "$DI_DIR"
-          
-          echo "📝 Using existing tsconfig.json for @n8n/di (no modifications needed)..."
-          
-          echo "🏗️ Building @n8n/di package..."
-          pnpm install --frozen-lockfile
-          
-          if [ -f "tsconfig.build.json" ]; then
-            if command -v npx &> /dev/null; then
-              pnpm exec tsc -p tsconfig.build.json
-            else
-              pnpm build
-            fi
+        echo "🔧 Building n8n-workflow and its transitive workspace dependencies with Turbo..."
+        cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
+        pnpm exec turbo run build --filter=n8n-workflow
+
+        REQUIRED_DIRS=(
+          "packages/@n8n/constants/dist"
+          "packages/@n8n/di/dist"
+          "packages/@n8n/config/dist"
+          "packages/@n8n/errors/dist"
+          "packages/workflow/dist"
+        )
+
+        for required_dir in "${REQUIRED_DIRS[@]}"; do
+          if [ -d "$required_dir" ]; then
+            echo "✅ Found $required_dir"
           else
-            pnpm build
-          fi
-          
-          if [ -d "dist" ]; then
-            echo "✅ @n8n/di build completed successfully"
-          else
-            echo "❌ @n8n/di build failed - dist directory not found"
+            echo "❌ Missing expected build output: $required_dir"
             exit 1
           fi
-        else
-          echo "⚠️ @n8n/di directory not found, skipping..."
-        fi
-        
-        # 2. @n8n/configパッケージのビルド（n8n-workflowの依存関係）
-        echo "🔧 Building @n8n/config package (required for n8n-workflow)..."
-        CONFIG_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/config"
-        if [ -d "$CONFIG_DIR" ]; then
-          cd "$CONFIG_DIR"
-          
-          echo "📝 Using existing tsconfig.json for @n8n/config (no modifications needed)..."
-          
-          echo "🏗️ Building @n8n/config package..."
-          pnpm install --frozen-lockfile
-          
-          if [ -f "tsconfig.build.json" ]; then
-            if command -v npx &> /dev/null; then
-              pnpm exec tsc -p tsconfig.build.json
-            else
-              pnpm build
-            fi
-          else
-            pnpm build
-          fi
-          
-          if [ -d "dist" ]; then
-            echo "✅ @n8n/config build completed successfully"
-          else
-            echo "❌ @n8n/config build failed - dist directory not found"
-            exit 1
-          fi
-        else
-          echo "❌ @n8n/config directory not found: $CONFIG_DIR"
-          exit 1
-        fi
-        
-        # 3. @n8n/errorsパッケージのビルド（n8n-workflowの依存関係）
-        echo "🔧 Building @n8n/errors package (required for n8n-workflow)..."
-        ERRORS_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/errors"
-        if [ -d "$ERRORS_DIR" ]; then
-          cd "$ERRORS_DIR"
-          pnpm install --frozen-lockfile
-          if [ -f "tsconfig.build.json" ]; then
-            if command -v npx &> /dev/null; then
-            pnpm exec tsc -p tsconfig.build.json
-            else
-              pnpm build
-            fi
-          else
-            pnpm build
-          fi
-          if [ -d "dist" ]; then
-            echo "✅ @n8n/errors build completed successfully"
-          else
-            echo "❌ @n8n/errors build failed - dist directory not found"
-            exit 1
-          fi
-        else
-          echo "❌ @n8n/errors directory not found: $ERRORS_DIR"
-          exit 1
-        fi
-
-        # 4. @n8n/expression-runtimeパッケージのビルド（n8n-workflowの依存関係）
-        echo "🔧 Building @n8n/expression-runtime package (required for n8n-workflow)..."
-        EXPRESSION_RUNTIME_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/@n8n/expression-runtime"
-        if [ -d "$EXPRESSION_RUNTIME_DIR" ]; then
-          cd "$EXPRESSION_RUNTIME_DIR"
-
-          echo "📝 Using existing tsconfig.json for @n8n/expression-runtime..."
-
-          echo "🏗️ Building @n8n/expression-runtime package..."
-          pnpm install --frozen-lockfile
-
-          if [ -f "tsconfig.build.json" ]; then
-            pnpm exec tsc -p tsconfig.build.json
-          else
-            pnpm build
-          fi
-
-          if [ -d "dist" ]; then
-            echo "✅ @n8n/expression-runtime build completed successfully"
-          else
-            echo "❌ @n8n/expression-runtime build failed - dist directory not found"
-            exit 1
-          fi
-        else
-          echo "⚠️ @n8n/expression-runtime directory not found, skipping (may not be needed for this version)..."
-        fi
-
-        # 5. n8n-workflowパッケージのビルド（他のパッケージの依存関係として必要）
-        echo "🔧 Building n8n-workflow package (required for all other packages)..."
-        WORKFLOW_DIR="/home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n/packages/workflow"
-        if [ -d "$WORKFLOW_DIR" ]; then
-          cd "$WORKFLOW_DIR"
-          
-          echo "📝 Using existing tsconfig.json for n8n-workflow (no modifications needed)..."
-          
-          echo "🏗️ Building n8n-workflow package..."
-          # 依存関係の再確認
-          pnpm install --frozen-lockfile
-          
-          # 複数のビルド方法を試行
-          if [ -f "tsconfig.build.json" ]; then
-            echo "📝 Building with tsconfig.build.json..."
-            if command -v npx &> /dev/null; then
-              pnpm exec tsc -p tsconfig.build.json
-            else
-              pnpm exec tsc -p tsconfig.build.json
-            fi
-          elif [ -f "package.json" ] && grep -q '"build"' package.json; then
-            echo "📝 Building with pnpm build..."
-            pnpm build
-          else
-            echo "📝 Building with direct TypeScript compilation..."
-            if command -v npx &> /dev/null; then
-              pnpm exec tsc
-            else
-              pnpm exec tsc
-            fi
-          fi
-          
-          if [ -d "dist" ]; then
-            echo "✅ n8n-workflow build completed successfully"
-          else
-            echo "❌ n8n-workflow build failed - dist directory not found"
-            exit 1
-          fi
-        else
-          echo "❌ n8n-workflow directory not found: $WORKFLOW_DIR"
-          exit 1
-        fi
+        done
       working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
     # Removed backend-oriented package builds to keep workflow minimal for editor-ui
