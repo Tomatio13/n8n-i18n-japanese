@@ -1,0 +1,226 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/RunDataJsonActions-Bv2nkLeP.js","assets/_plugin-vue_export-helper-CRUgzHrM.js","assets/chunk-CC9Q-vWm.js","assets/src-C5pVctwy.js","assets/get-BhjKx_h8.js","assets/_MapCache-jyC_fKGz.js","assets/vue.runtime.esm-bundler-Bs4WIMNP.js","assets/CalendarDate-BSqfMJxT.js","assets/core-C7pkE2ut.js","assets/sanitize-html-BaqGdh_E.js","assets/__vite-browser-external-DqWp3dHg.js","assets/en-BV30EGiU.js","assets/src-CtXJay5h.css","assets/workflowDocument.store-BiHUDiZn.js","assets/constants-ClB6ch9-.js","assets/merge-3ajC1zY3.js","assets/expression-runtime-stub-p3JeQOhZ.js","assets/useRootStore-BfWiuekg.js","assets/settings.store-C06GXHb6.js","assets/_baseOrderBy-COnQB8g6.js","assets/useDebounce-CbnD9O42.js","assets/useDocumentTitle-DNSiurhv.js","assets/users.store-BenvD2HN.js","assets/workflowsList.store-0XVU0y8w.js","assets/dateformat-CXb8nuvK.js","assets/useToast-Cna9VSrc.js","assets/useExternalHooks-DjreEuko.js","assets/useStyles-D49OA95F.js","assets/useClipboard-DwVKjjYA.js","assets/useInjectWorkflowId-rEeF8psT.js","assets/useNodeHelpers-DjKEV9sG.js","assets/useLoadingService-szNGC1b6.js","assets/usePrivateCredentials-CXghw_-l.js","assets/usePinnedData-BWSfasG1.js","assets/RunDataJsonActions-m_br2IQe.css"])))=>i.map(i=>d[i]);
+import { $ as openBlock, E as createElementBlock, Gt as unref, It as ref, M as defineAsyncComponent, N as defineComponent, S as computed, T as createCommentVNode, bt as withCtx, j as createVNode, v as Suspense, vn as normalizeClass, w as createBlock } from "./vue.runtime.esm-bundler-Bs4WIMNP.js";
+import { p as useElementSize } from "./core-C7pkE2ut.js";
+import { d as __vitePreload } from "./get-BhjKx_h8.js";
+import { t as _plugin_vue_export_helper_default } from "./_plugin-vue_export-helper-CRUgzHrM.js";
+import { V as nonExistingJsonPath } from "./constants-ClB6ch9-.js";
+import { Gn as executionDataToJson, Mi as isString, Wt as injectNDVStore, a as injectWorkflowDocumentStore, bt as getMappedExpression } from "./workflowDocument.store-BiHUDiZn.js";
+import { p as useTelemetry } from "./users.store-BenvD2HN.js";
+import { T as shorten } from "./workflowsList.store-0XVU0y8w.js";
+import { t as useExternalHooks } from "./useExternalHooks-DjreEuko.js";
+import { t as Draggable_default } from "./Draggable-BPlxZ_8_.js";
+import { t as TextWithHighlights_default } from "./TextWithHighlights-EEIjWJUb.js";
+import { n as MappingPill_default, t as useTelemetryContext } from "./useTelemetryContext-BGKcaISW.js";
+import { t as P } from "./vue-json-pretty-DJGaBtY4.js";
+//#region src/features/ndv/runData/components/RunDataJson.vue?vue&type=script&setup=true&lang.ts
+var RunDataJson_vue_vue_type_script_setup_true_lang_default = /* @__PURE__ */ defineComponent({
+	__name: "RunDataJson",
+	props: {
+		editMode: { default: () => ({}) },
+		pushRef: {},
+		paneType: {},
+		node: {},
+		inputData: {},
+		mappingEnabled: { type: Boolean },
+		distanceFromActive: {},
+		outputIndex: {},
+		runIndex: {},
+		totalRuns: {},
+		search: {},
+		compact: { type: Boolean },
+		execution: {}
+	},
+	setup(__props) {
+		const LazyRunDataJsonActions = defineAsyncComponent(async () => await __vitePreload(() => import("./RunDataJsonActions-Bv2nkLeP.js"), __vite__mapDeps([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34])));
+		const props = __props;
+		const ndvStore = injectNDVStore();
+		const workflowDocumentStore = injectWorkflowDocumentStore();
+		const externalHooks = useExternalHooks();
+		const telemetry = useTelemetry();
+		const telemetryContext = useTelemetryContext();
+		const selectedJsonPath = ref(nonExistingJsonPath);
+		const draggingPath = ref(null);
+		const jsonDataContainer = ref(null);
+		const { height } = useElementSize(jsonDataContainer);
+		const jsonData = computed(() => executionDataToJson(props.inputData));
+		const highlight = computed(() => ndvStore.value.highlightDraggables);
+		const getShortKey = (el) => {
+			if (!el) return "";
+			return shorten(el.dataset.name ?? "", 16, 2);
+		};
+		const getJsonParameterPath = (path) => {
+			const subPath = path.replace(/^(\["?\d"?])/, "");
+			return getMappedExpression({
+				nodeName: props.node.name,
+				distanceFromActive: props.distanceFromActive,
+				path: subPath,
+				binaryMode: workflowDocumentStore?.value?.settings?.binaryMode
+			});
+		};
+		const canDraggableDrop = computed(() => ndvStore.value.canDraggableDrop);
+		const draggableStickyPosition = computed(() => ndvStore.value.draggableStickyPos);
+		const onDragStart = (el, data) => {
+			if (el?.dataset.path) draggingPath.value = el.dataset.path;
+			ndvStore.value.draggableStartDragging({
+				type: "mapping",
+				data: data ?? "",
+				dimensions: el?.getBoundingClientRect() ?? null
+			});
+			ndvStore.value.resetMappingTelemetry();
+		};
+		const onDragEnd = (el) => {
+			ndvStore.value.draggableStopDragging();
+			draggingPath.value = null;
+			const mappingTelemetry = ndvStore.value.mappingTelemetry;
+			const telemetryPayload = {
+				src_node_type: props.node.type,
+				src_field_name: el.dataset.name ?? "",
+				src_nodes_back: props.distanceFromActive,
+				src_run_index: props.runIndex,
+				src_runs_total: props.totalRuns,
+				src_field_nest_level: el.dataset.depth ?? 0,
+				src_view: "json",
+				src_element: el,
+				success: false,
+				view_shown: telemetryContext.view_shown,
+				...mappingTelemetry
+			};
+			setTimeout(() => {
+				externalHooks.run("runDataJson.onDragEnd", telemetryPayload);
+				telemetry.track("User dragged data for mapping", telemetryPayload);
+			}, 1e3);
+		};
+		const formatKey = (value) => {
+			return isString(value) ? `"${value}"` : JSON.stringify(value);
+		};
+		const formatValue = (value) => {
+			return JSON.stringify(value);
+		};
+		const getListItemName = (path) => {
+			return path.replace(/^(\["?\d"?]\.?)/g, "");
+		};
+		return (_ctx, _cache) => {
+			return openBlock(), createElementBlock("div", {
+				ref_key: "jsonDataContainer",
+				ref: jsonDataContainer,
+				class: normalizeClass([_ctx.$style.jsonDisplay, {
+					[_ctx.$style.highlight]: highlight.value,
+					[_ctx.$style.compact]: props.compact
+				}])
+			}, [(openBlock(), createBlock(Suspense, null, {
+				default: withCtx(() => [!__props.editMode.enabled ? (openBlock(), createBlock(unref(LazyRunDataJsonActions), {
+					key: 0,
+					node: __props.node,
+					"pane-type": __props.paneType,
+					"push-ref": __props.pushRef,
+					"distance-from-active": __props.distanceFromActive,
+					"selected-json-path": selectedJsonPath.value,
+					"json-data": jsonData.value,
+					"output-index": __props.outputIndex,
+					"run-index": __props.runIndex,
+					execution: __props.execution
+				}, null, 8, [
+					"node",
+					"pane-type",
+					"push-ref",
+					"distance-from-active",
+					"selected-json-path",
+					"json-data",
+					"output-index",
+					"run-index",
+					"execution"
+				])) : createCommentVNode("", true)]),
+				_: 1
+			})), createVNode(Draggable_default, {
+				type: "mapping",
+				"target-data-key": "mappable",
+				disabled: !__props.mappingEnabled,
+				"can-drop": canDraggableDrop.value,
+				"sticky-position": draggableStickyPosition.value,
+				onDragstart: onDragStart,
+				onDragend: onDragEnd
+			}, {
+				preview: withCtx(({ canDrop, el }) => [el ? (openBlock(), createBlock(MappingPill_default, {
+					key: 0,
+					html: getShortKey(el),
+					"can-drop": canDrop
+				}, null, 8, ["html", "can-drop"])) : createCommentVNode("", true)]),
+				default: withCtx(() => [createVNode(unref(P), {
+					data: jsonData.value,
+					deep: 10,
+					"show-length": true,
+					"selected-value": selectedJsonPath.value,
+					"root-path": "",
+					"selectable-type": "single",
+					class: "json-data",
+					virtual: true,
+					height: unref(height),
+					"onUpdate:selectedValue": _cache[0] || (_cache[0] = ($event) => selectedJsonPath.value = $event)
+				}, {
+					renderNodeKey: withCtx(({ node }) => [createVNode(TextWithHighlights_default, {
+						content: formatKey(node.key),
+						search: __props.search,
+						"data-target": "mappable",
+						"data-value": getJsonParameterPath(node.path),
+						"data-name": node.key,
+						"data-path": node.path,
+						"data-depth": node.level,
+						class: normalizeClass({
+							[_ctx.$style.mappable]: __props.mappingEnabled,
+							[_ctx.$style.dragged]: draggingPath.value === node.path
+						})
+					}, null, 8, [
+						"content",
+						"search",
+						"data-value",
+						"data-name",
+						"data-path",
+						"data-depth",
+						"class"
+					])]),
+					renderNodeValue: withCtx(({ node }) => [createVNode(TextWithHighlights_default, {
+						content: formatValue(node.content),
+						search: __props.search,
+						"data-target": "mappable",
+						"data-value": getJsonParameterPath(node.path),
+						"data-name": getListItemName(node.path),
+						"data-path": node.path,
+						"data-depth": node.level,
+						class: normalizeClass([{
+							[_ctx.$style.mappable]: __props.mappingEnabled,
+							[_ctx.$style.dragged]: draggingPath.value === node.path
+						}, "ph-no-capture"])
+					}, null, 8, [
+						"content",
+						"search",
+						"data-value",
+						"data-name",
+						"data-path",
+						"data-depth",
+						"class"
+					])]),
+					_: 1
+				}, 8, [
+					"data",
+					"selected-value",
+					"height"
+				])]),
+				_: 1
+			}, 8, [
+				"disabled",
+				"can-drop",
+				"sticky-position"
+			])], 2);
+		};
+	}
+});
+var RunDataJson_vue_vue_type_style_index_0_lang_module_default = {
+	jsonDisplay: "_jsonDisplay_twg9l_125",
+	mappable: "_mappable_twg9l_142",
+	highlight: "_highlight_twg9l_148",
+	dragged: "_dragged_twg9l_149",
+	compact: "_compact_twg9l_154"
+};
+var RunDataJson_default = /* @__PURE__ */ _plugin_vue_export_helper_default(RunDataJson_vue_vue_type_script_setup_true_lang_default, [["__cssModules", { "$style": RunDataJson_vue_vue_type_style_index_0_lang_module_default }]]);
+//#endregion
+export { RunDataJson_default as default };
