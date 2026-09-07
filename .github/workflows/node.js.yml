@@ -19,27 +19,29 @@ jobs:
       id: latest_release
       run: |
         echo "🔍 Getting latest GitHub release version..."
-        RESPONSE=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+        # GitHub の UI で Latest 表示になっている安定版を取得する。
+        # /releases の先頭要素 (. [0]) は、beta の pre-release 公開や stable/beta
+        # チャネルタグの再発行で頻繁に入れ替わるため使わない
+        # (チャネルタグ名をそのまま拾うと、既存タグと一致して常時スキップ、
+        #  あるいは beta をビルドしてしまう)。
+        LATEST_VERSION=$(curl -s -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/n8n-io/n8n/releases)
-        
-        # デバッグ: レスポンスの最初の100文字を表示
-        echo "📋 Response preview: ${RESPONSE:0:100}..."
-        
-        # レスポンスが配列かどうか確認
-        if echo "$RESPONSE" | jq -e 'type == "array"' > /dev/null 2>&1; then
-          LATEST_VERSION=$(echo "$RESPONSE" | jq -r '.[0].tag_name')
-          if [ -n "$LATEST_VERSION" ] && [ "$LATEST_VERSION" != "null" ]; then
-            echo "✅ Latest release tag: $LATEST_VERSION"
-            echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
-          else
-            echo "❌ Failed to extract tag_name from response"
-            echo "Full response: $RESPONSE"
-            exit 1
-          fi
+          https://api.github.com/repos/n8n-io/n8n/releases/latest | jq -r '.tag_name // empty')
+
+        # 念のため n8n@<バージョン> 形式の安定版タグか検証し、違えば一覧から選ぶ
+        if ! echo "$LATEST_VERSION" | grep -qE '^n8n@[0-9]+\.'; then
+          echo "⚠️ /releases/latest returned '$LATEST_VERSION'. Falling back to release list scan..."
+          LATEST_VERSION=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/n8n-io/n8n/releases?per_page=50" | \
+            jq -r '[.[] | select(.draft == false and .prerelease == false and (.tag_name | test("^n8n@[0-9]+\\.")))][0].tag_name // empty')
+        fi
+
+        if [ -n "$LATEST_VERSION" ]; then
+          echo "✅ Latest release tag: $LATEST_VERSION"
+          echo "latest=$LATEST_VERSION" >> $GITHUB_OUTPUT
         else
-          echo "❌ Response is not an array. Response type: $(echo "$RESPONSE" | jq -r 'type')"
-          echo "Full response: $RESPONSE"
+          echo "❌ Failed to extract latest stable release tag"
           exit 1
         fi
 
