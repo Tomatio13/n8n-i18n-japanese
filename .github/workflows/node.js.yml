@@ -172,36 +172,10 @@ jobs:
 
     # Removed backend-oriented package builds to keep workflow minimal for editor-ui
 
-    - name: Comprehensive TypeScript configuration fixes
-      if: steps.check_tag.outputs.exists == 'false'
-      run: |
-        echo "🔧 Applying comprehensive TypeScript configuration fixes for Vite 6.x..."
-        cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
-        
-        # @n8n/*パッケージのTypeScript設定を修正
-        find packages -name "tsconfig.json" -type f | while read -r tsconfig_file; do
-          if [ -f "$tsconfig_file" ] && ! grep -q '"moduleResolution"' "$tsconfig_file"; then
-            echo "📝 Updating $tsconfig_file..."
-            
-            # compilerOptionsセクション内で適切な場所にmoduleResolutionを追加
-            if grep -q '"compilerOptions"' "$tsconfig_file"; then
-              # targetまたはmoduleの後にmoduleResolutionを追加
-              if grep -q '"target"' "$tsconfig_file"; then
-                sed -i '/\"target\":/a\\t\t\"moduleResolution\": \"bundler\",' "$tsconfig_file"
-              elif grep -q '"module"' "$tsconfig_file"; then
-                sed -i '/\"module\":/a\\t\t\"moduleResolution\": \"bundler\",' "$tsconfig_file"
-              elif grep -q '"lib"' "$tsconfig_file"; then
-                sed -i '/\"lib\":/a\\t\t\"moduleResolution\": \"bundler\",' "$tsconfig_file"
-              else
-                # compilerOptionsの最初に追加
-                sed -i '/\"compilerOptions\": {/a\\t\t\"moduleResolution\": \"bundler\",' "$tsconfig_file"
-              fi
-              echo "✅ Updated $tsconfig_file"
-            fi
-          fi
-        done
-        
-        echo "✅ TypeScript configuration fixes completed"
+    # "Comprehensive TypeScript configuration fixes" (moduleResolution: bundler の
+    # 強制挿入) は Vite 6 時代の対応。現行の n8n は tsconfig が整っているため、
+    # これを実行すると module: NodeNext で tsc ビルドするパッケージ
+    # (@n8n/constants, @n8n/errors 等) が TS5095/TS5109 で壊れるため削除した。
 
     - name: Check n8n editor-ui directory structure
       id: editorui_dir
