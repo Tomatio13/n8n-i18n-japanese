@@ -80,7 +80,7 @@ jobs:
       if: steps.check_tag.outputs.exists == 'false'
       uses: actions/setup-node@v4.2.0
       with:
-        node-version: 22.22.0
+        node-version: '24'
 
     - name: Verify Node.js version
       if: steps.check_tag.outputs.exists == 'false'
@@ -471,6 +471,30 @@ jobs:
             fi
           fi
         done
+
+    - name: Build editor-ui workspace dependencies with Turbo
+      if: steps.check_tag.outputs.exists == 'false'
+      run: |
+        echo "🔧 Building editor-ui workspace dependencies with Turbo..."
+        cd /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
+        # .vue 内の bare import (@n8n/design-system 等) の型解決は、tsconfig paths の
+        # ワイルドカードがパッケージ名単体にはマッチしないため node_modules 経由で
+        # 行われる。このため依存パッケージの dist が必須で、本家同様に依存グラフを
+        # 事前ビルドしないと @vue/compiler-sfc が "Failed to resolve import source"
+        # でビルドに失敗する。
+        pnpm exec turbo run build --filter=n8n-editor-ui^...
+        for required_dir in \
+          "packages/frontend/@n8n/design-system/dist" \
+          "packages/@n8n/api-types/dist" \
+          "packages/@n8n/permissions/dist"; do
+          if [ -d "$required_dir" ]; then
+            echo "✅ Found $required_dir"
+          else
+            echo "❌ Missing expected build output: $required_dir"
+            exit 1
+          fi
+        done
+      working-directory: /home/runner/work/n8n-i18n-japanese/n8n-i18n-japanese/n8n
 
     - name: Build editor-ui with enhanced error handling
       if: steps.check_tag.outputs.exists == 'false'
