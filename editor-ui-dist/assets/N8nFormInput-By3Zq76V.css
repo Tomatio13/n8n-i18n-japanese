@@ -1,0 +1,17 @@
+._infoText_1gzw4_1 {
+  margin-top: var(--spacing--2xs);
+  font-size: var(--font-size--2xs);
+  font-weight: var(--font-weight--regular);
+  color: var(--color--text);
+}
+._errors_1gzw4_8 {
+  color: var(--color--danger);
+}
+._errorInput_1gzw4_13 {
+  --input--border-color: var(--color--danger);
+}
+._multiSelectSmallTags_1gzw4_17 .el-tag {
+  height: 24px;
+  padding: 0 8px;
+  line-height: 22px;
+}

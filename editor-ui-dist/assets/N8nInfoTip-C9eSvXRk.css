@@ -1,0 +1,40 @@
+._infoTip_11fej_1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+._base_11fej_5 {
+  font-size: var(--font-size--2xs);
+  line-height: var(--font-size--sm);
+  word-break: normal;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+._base_11fej_5 svg {
+  font-size: var(--font-size--sm);
+}
+._bold_11fej_16 {
+  font-weight: var(--font-weight--medium);
+}
+._note_11fej_20 {
+}
+._note_11fej_20 svg {
+  margin-right: var(--spacing--4xs);
+}
+._tooltipContent_11fej_27 {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+._iconText_11fej_32 {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}

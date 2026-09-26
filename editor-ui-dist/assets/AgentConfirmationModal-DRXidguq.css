@@ -1,0 +1,16 @@
+._content_1gom0_1 {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: var(--spacing--xs);
+}
+._icon_1gom0_8 {
+  flex-shrink: 0;
+  margin-top: var(--spacing--4xs);
+}
+._footer_1gom0_13 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--spacing--2xs);
+}
