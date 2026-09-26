@@ -96,13 +96,20 @@ jobs:
         fi
         echo "✅ Node.js version check passed"
 
-    - name: Setup corepack and pnpm
+    # corepack (0.31) は pnpm 12 の新レイアウト (bin/pnpm.cjs の廃止) に対応しておらず、
+    # "Cannot find module .../corepack/v1/pnpm/<version>/bin/pnpm.cjs" で失敗する。
+    # そのため pnpm/action-setup (pnpm v12 対応済み) でスタンドアロン版を直接導入し、
+    # バージョンは n8n 側 package.json の packageManager フィールドから自動取得する。
+    - name: Setup pnpm
+      if: steps.check_tag.outputs.exists == 'false'
+      uses: pnpm/action-setup@v6.1.0
+      with:
+        package_json_file: ./n8n/package.json
+
+    - name: Verify pnpm installation
       if: steps.check_tag.outputs.exists == 'false'
       run: |
-        echo "🔧 Setting up corepack and pnpm..."
-        npm i -g corepack@0.31
-        corepack enable
-        echo "✅ Corepack and pnpm setup completed"
+        echo "📋 pnpm version: $(pnpm --version)"
 
     - name: Optimize pnpm configuration
       if: steps.check_tag.outputs.exists == 'false'
