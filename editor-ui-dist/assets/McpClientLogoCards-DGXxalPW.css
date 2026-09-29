@@ -1,0 +1,50 @@
+._iconCardContainer_9qxcy_1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+._iconCard_9qxcy_1 {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* fixed white tile so dark brand marks stay visible on the dark theme */
+  background: var(--color--neutral-white);
+  box-shadow: var(--shadow--xs);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+._iconCard_9qxcy_1:nth-child(1) {
+  transform: rotate(-8deg);
+}
+._iconCard_9qxcy_1:nth-child(2) {
+  z-index: 1;
+  margin-top: -0.3rem;
+}
+._iconCard_9qxcy_1:nth-child(3) {
+  transform: rotate(8deg);
+}
+._clientLogo_9qxcy_31 {
+  width: var(--spacing--lg);
+  height: var(--spacing--lg);
+  object-fit: contain;
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity 300ms ease-in-out, filter 300ms ease-in-out;
+}
+._mcpIcon_9qxcy_40 {
+  font-size: var(--spacing--lg);
+  /* the tile is always white, so the MCP glyph must stay dark in both themes */
+  color: var(--color--neutral-black);
+}
+._fading_9qxcy_46 {
+  opacity: 0;
+  filter: blur(4px);
+}
+@media (prefers-reduced-motion: reduce) {
+._clientLogo_9qxcy_31 {
+    transition: none;
+}
+}

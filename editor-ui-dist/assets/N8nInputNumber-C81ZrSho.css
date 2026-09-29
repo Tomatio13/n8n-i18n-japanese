@@ -1,0 +1,185 @@
+/* Focus State
+ -------------------------- */
+._inputNumber_fqc31_3 {
+  --input--height: var(--height--md);
+  --input--radius: var(--radius--3xs);
+  --input--font-size: var(--font-size--sm);
+  --input--padding: var(--spacing--xs);
+  --input--color--background: light-dark(var(--color--neutral-white), var(--color--neutral-950));
+  --input--color--background--disabled: var(--background--disabled);
+  --input--color--text: var(--color--text--shade-1);
+  --input--placeholder--color: var(--color--text--tint-1);
+  --input--color--disabled: var(--color--text--tint-1);
+  --input--placeholder--color--disabled: var(--input--color--disabled);
+  --input--shadow: 0 0 0 0 transparent;
+  --input--shadow--hover: 0 0 0 0 transparent;
+  --input--shadow--focus: 0 0 0 0 transparent;
+  --input--border-color: var(--border-color);
+  --input--border-color--hover: var(--border-color--strong);
+  --input--border-color--focus: var(--focus--border-color);
+  --input--border--shadow: 0 0 0 1px var(--input--border-color);
+  --input--border--shadow--hover: 0 0 0 1px var(--input--border-color--hover);
+  --input--border--shadow--focus: 0 0 0 1px var(--input--border-color--focus);
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 100%;
+  min-height: var(--input--height);
+  border-radius: var(--input--radius);
+  background-color: var(--input--color--background);
+  -webkit-box-shadow: var(--input--shadow), inset var(--input--border--shadow);
+          box-shadow: var(--input--shadow), inset var(--input--border--shadow);
+  font-size: var(--input--font-size);
+  color: var(--input--color--text);
+}
+._inputNumber_fqc31_3:focus-within {
+  outline: var(--focus--border-width) solid var(--focus--outline-color);
+}
+._inputNumber_fqc31_3:hover:not(._isDisabled_fqc31_35):not(:focus-within) {
+  -webkit-box-shadow: var(--input--shadow--hover), inset var(--input--border--shadow--hover);
+          box-shadow: var(--input--shadow--hover), inset var(--input--border--shadow--hover);
+}
+._inputNumber_fqc31_3:focus-within {
+  -webkit-box-shadow: var(--input--shadow--focus), inset var(--input--border--shadow--focus);
+          box-shadow: var(--input--shadow--focus), inset var(--input--border--shadow--focus);
+}
+._isDisabled_fqc31_35 {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+._input_fqc31_3 {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-width: 0;
+  min-height: var(--input--height);
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: var(--input--font-size);
+  color: var(--input--color--text);
+  padding: 0 var(--input--padding);
+}
+._input_fqc31_3::-webkit-input-placeholder {
+  color: var(--input--placeholder--color);
+}
+._input_fqc31_3::-moz-placeholder {
+  color: var(--input--placeholder--color);
+}
+._input_fqc31_3:-ms-input-placeholder {
+  color: var(--input--placeholder--color);
+}
+._input_fqc31_3::-ms-input-placeholder {
+  color: var(--input--placeholder--color);
+}
+._input_fqc31_3::placeholder {
+  color: var(--input--placeholder--color);
+}
+._input_fqc31_3:disabled {
+  cursor: not-allowed;
+  color: var(--input--color--disabled);
+}
+._isControlsBoth_fqc31_66 ._input_fqc31_3 {
+  text-align: center;
+  padding-inline: var(--spacing--3xs);
+}
+._button_fqc31_71 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--icon-color);
+}
+._button_fqc31_71:hover:not(:disabled) {
+  color: var(--icon-color--strong);
+  background-color: var(--background--hover);
+}
+._button_fqc31_71:disabled, ._button_fqc31_71[data-disabled] {
+  cursor: not-allowed;
+  color: var(--icon-color--subtle);
+}
+._buttonDecrement_fqc31_90 {
+  width: var(--input--height);
+  border-right: var(--border-width, 1px) solid var(--input--border-color);
+  border-radius: var(--input--radius) 0 0 var(--input--radius);
+}
+._buttonDecrement_fqc31_90:hover:not(:disabled):not([data-disabled]) {
+  border-right-color: var(--input--border-color--hover);
+}
+._buttonIncrement_fqc31_99 {
+  width: var(--input--height);
+  border-left: var(--border-width, 1px) solid var(--input--border-color);
+  border-radius: 0 var(--input--radius) var(--input--radius) 0;
+}
+._buttonIncrement_fqc31_99:hover:not(:disabled):not([data-disabled]) {
+  border-left-color: var(--input--border-color--hover);
+}
+._controlsWrapper_fqc31_108 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-left: var(--border-width, 1px) solid var(--input--border-color);
+}
+._controlsWrapper_fqc31_108:hover:has(button:not(:disabled):not([data-disabled])) {
+  border-left-color: var(--input--border-color--hover);
+}
+._controlsWrapper_fqc31_108:hover:has(button:not(:disabled):not([data-disabled])) ._buttonUp_fqc31_116 {
+  border-bottom-color: var(--input--border-color--hover);
+}
+._buttonUp_fqc31_116,
+._buttonDown_fqc31_121 {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+._buttonUp_fqc31_116 {
+  border-bottom: var(--border-width, 1px) solid var(--input--border-color);
+  border-radius: 0 var(--input--radius) 0 0;
+}
+._buttonDown_fqc31_121 {
+  border-radius: 0 0 var(--input--radius) 0;
+}
+._mini_fqc31_134 {
+  --input--height: var(--height--xs);
+  --input--radius: var(--radius--3xs);
+  --input--font-size: var(--font-size--2xs);
+  --input--padding: var(--spacing--2xs);
+}
+._small_fqc31_141 {
+  --input--height: var(--height--sm);
+  --input--radius: var(--radius--3xs);
+  --input--font-size: var(--font-size--xs);
+  --input--padding: var(--spacing--2xs);
+}
+._medium_fqc31_148 {
+  --input--height: var(--height--md);
+  --input--radius: var(--radius--3xs);
+  --input--font-size: var(--font-size--sm);
+  --input--padding: var(--spacing--xs);
+}
+._large_fqc31_155 {
+  --input--height: var(--height--lg);
+  --input--radius: var(--radius--2xs);
+  --input--font-size: var(--font-size--sm);
+  --input--padding: var(--spacing--xs);
+}
+._xlarge_fqc31_162 {
+  --input--height: var(--height--xl);
+  --input--radius: var(--radius--2xs);
+  --input--font-size: var(--font-size--md);
+  --input--padding: var(--spacing--xs);
+}

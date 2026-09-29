@@ -1,0 +1,33 @@
+body {
+  background-color: var(--color--background--light-2);
+}
+._container_zl0jk_5 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: var(--spacing--2xl);
+}
+._container_zl0jk_5 > * {
+  width: 352px;
+}
+._formContainer_zl0jk_15 {
+  padding-bottom: var(--spacing--xl);
+}
+._footer_zl0jk_19 {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing--2xs);
+}
+._headerContainer_zl0jk_25 {
+  text-align: center;
+  margin-bottom: var(--spacing--xl);
+}
+._formError_zl0jk_30 input {
+  border-color: var(--color--danger);
+}
+._recoveryCodeLink_zl0jk_34 {
+  text-decoration: underline;
+}
+._infoBox_zl0jk_38 {
+  padding-top: var(--spacing--4xs);
+}

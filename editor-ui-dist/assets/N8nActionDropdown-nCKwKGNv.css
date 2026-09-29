@@ -1,0 +1,76 @@
+._actionDropdownContainer_1qwnh_1 {
+  display: inline-block;
+}
+._activator_1qwnh_5:hover {
+  background-color: var(--color--background);
+}
+._itemContainer_1qwnh_9 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /* Matches the base N8nDropdownMenu item gap so icon-to-label spacing is
+   * consistent across every menu in the app. */
+  gap: var(--spacing--2xs);
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: var(--font-size--2xs);
+  line-height: 18px;
+  padding: var(--spacing--3xs) var(--spacing--2xs);
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+._itemContainer_1qwnh_9._disabled_1qwnh_21 ._shortcut_1qwnh_21 {
+  opacity: 0.3;
+}
+[data-disabled] ._itemContainer_1qwnh_9 {
+  color: inherit;
+}
+
+/* Destructive items (delete, revoke, ...) turn danger-red on hover or keyboard
+ * highlight: the icon and label both inherit the item color, so one rule
+ * covers them, and the token adapts to light/dark themes on its own. */
+._destructive_1qwnh_31:not([data-disabled]):hover, ._destructive_1qwnh_31:not([data-disabled])[data-highlighted], ._destructive_1qwnh_31:not([data-disabled])[aria-selected=true] {
+  color: var(--color--danger);
+}
+._icon_1qwnh_35 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+._icon_1qwnh_35 svg {
+  width: 1.2em !important;
+}
+._label_1qwnh_45 {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+._checkIcon_1qwnh_50 {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+._shortcut_1qwnh_21 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+._clickableBadge_1qwnh_59 {
+  cursor: pointer;
+  pointer-events: auto;
+}

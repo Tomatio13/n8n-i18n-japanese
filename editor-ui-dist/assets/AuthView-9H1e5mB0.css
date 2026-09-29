@@ -1,0 +1,89 @@
+._heading_gqs68_1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: var(--spacing--xl);
+}
+._container_gqs68_7 {
+  background-color: var(--color--background--light-3);
+  padding: var(--spacing--lg);
+  border: var(--border);
+  border-radius: var(--radius--lg);
+  -webkit-box-shadow: 0 4px 16px rgba(99, 77, 255, 0.06);
+          box-shadow: 0 4px 16px rgba(99, 77, 255, 0.06);
+}
+._inputsContainer_gqs68_15 {
+  margin-bottom: var(--spacing--xl);
+}
+._actionContainer_gqs68_19 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+._buttonsContainer_gqs68_24 {
+  margin-bottom: var(--spacing--sm);
+}
+._secondaryButtonContainer_gqs68_29 {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+._withLabel_gqs68_35 {
+  margin-bottom: var(--spacing--sm);
+}._ssoLogin_87p45_1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+._divider_87p45_9 {
+  width: 100%;
+  position: relative;
+  text-transform: uppercase;
+}
+._divider_87p45_9::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color--foreground);
+}
+._divider_87p45_9 span {
+  position: relative;
+  display: inline-block;
+  margin: var(--spacing--2xs) auto;
+  padding: var(--spacing--lg);
+  background: var(--color--background--light-3);
+}body {
+  background-color: var(--color--background--light-2);
+}
+._container_1l1y2_5 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: var(--spacing--2xl);
+}
+._container_1l1y2_5 > * {
+  width: 352px;
+}
+._textContainer_1l1y2_15 {
+  text-align: center;
+}
+._formContainer_1l1y2_19 {
+  padding-bottom: var(--spacing--xl);
+}

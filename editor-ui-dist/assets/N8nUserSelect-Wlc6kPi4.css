@@ -1,0 +1,11 @@
+._itemContainer_ylo45_1 {
+  --select--option--padding: var(--spacing--2xs) var(--spacing--sm);
+  --select--option--line-height: 1;
+}
+:root ._limitPopperWidth_ylo45_6 {
+  width: 0;
+}
+:root ._limitPopperWidth_ylo45_6 li > span {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}

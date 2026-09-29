@@ -1,0 +1,195 @@
+._content_18lq1_1 {
+  display: flex;
+  flex-direction: column;
+}
+._modalHeader_18lq1_6 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--height--sm);
+}
+._headerActions_18lq1_14 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+  margin-left: auto;
+}
+._headerIconButton_18lq1_21 {
+  --button--color: var(--color--info);
+  --button--color--background-hover: transparent;
+  --button--color--background-active: transparent;
+}
+._headerIconButton_18lq1_21:hover, ._headerIconButton_18lq1_21:active {
+  --button--color: var(--color--primary);
+}
+._welcomeLabel_18lq1_30 {
+  margin-bottom: var(--spacing--2xs);
+  font-weight: var(--font-weight--medium);
+}
+._countdownPill_18lq1_35 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--4xs);
+  padding: var(--spacing--5xs) var(--spacing--2xs);
+  border: var(--border-width) var(--border-style) var(--color--orange-alpha-300);
+  border-radius: var(--radius--full);
+  background: var(--color--orange-alpha-100);
+  color: var(--color--primary);
+  font-size: var(--font-size--2xs);
+  font-weight: var(--font-weight--bold);
+  font-variant-numeric: tabular-nums;
+}
+._headerLogo_18lq1_49 {
+  display: flex;
+  align-items: center;
+}
+._trialLead_18lq1_54 {
+  margin: 0;
+}
+._titleHighlight_18lq1_58 {
+  color: var(--color--primary);
+}
+._subtitle_18lq1_62 {
+  margin-top: var(--spacing--2xs);
+  margin-bottom: var(--spacing--md);
+}
+._statCards_18lq1_67 {
+  display: flex;
+  gap: var(--spacing--2xs);
+  margin-bottom: var(--spacing--md);
+}
+._statCard_18lq1_67 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing--3xs);
+  padding: var(--spacing--md) var(--spacing--xs);
+  border-radius: var(--radius--sm);
+  background: var(--background--subtle);
+  text-align: center;
+}
+._statIconTile_18lq1_85 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing--xl);
+  height: var(--spacing--xl);
+  margin: 0 auto var(--spacing--4xs);
+  border-radius: var(--radius--xs);
+  border: var(--border-width) var(--border-style) var(--border-color--subtle);
+  background: var(--background--surface);
+  color: var(--icon-color);
+}
+._blurredOverlay_18lq1_98 {
+  backdrop-filter: blur(4px);
+}
+._calloutTitle_18lq1_102 {
+  display: block;
+  font-weight: var(--font-weight--bold);
+}
+._calloutBody_18lq1_107 {
+  display: block;
+}
+._comparisonRows_18lq1_111 {
+  margin-bottom: var(--spacing--md);
+  border: var(--border);
+  border-radius: var(--radius--sm);
+  overflow: hidden;
+}
+._comparisonRow_18lq1_111 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+  padding: var(--spacing--xs) var(--spacing--sm);
+  font-size: var(--font-size--sm);
+  color: var(--text-color);
+}
+._comparisonRow_18lq1_111 + ._comparisonRow_18lq1_111 {
+  border-top: var(--border);
+}
+._rowIcon_18lq1_130 {
+  color: var(--icon-color);
+}
+._rowLabel_18lq1_134 {
+  flex: 1;
+}
+._rowOldValue_18lq1_138 {
+  color: var(--text-color--subtler);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+._rowArrow_18lq1_144 {
+  color: var(--icon-color--subtle);
+}
+._rowNewValue_18lq1_148 {
+  font-weight: var(--font-weight--bold);
+  font-variant-numeric: tabular-nums;
+}
+._rowPerMonth_18lq1_153 {
+  color: var(--text-color--subtler);
+  font-size: var(--font-size--2xs);
+  font-weight: var(--font-weight--regular);
+}
+._periodCards_18lq1_159 {
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: var(--spacing--2xs);
+}
+._periodCard_18lq1_159 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--xs);
+  padding: var(--spacing--sm);
+  border: var(--border-width) var(--border-style) var(--border-color--subtle);
+  border-radius: var(--radius--sm);
+  background: var(--background--surface);
+  cursor: pointer;
+  transition: border-color var(--duration--snappy) var(--easing--ease-out), background-color var(--duration--snappy) var(--easing--ease-out);
+}
+._periodCard_18lq1_159:hover {
+  border-color: var(--border-color--strong);
+}
+._periodCardSelected_18lq1_180 {
+  border-color: var(--color--primary);
+  box-shadow: inset 0 0 0 var(--border-width, 1px) var(--color--primary);
+  background: var(--color--orange-alpha-100);
+}
+._periodCardSelected_18lq1_180:hover {
+  border-color: var(--color--primary);
+}
+._periodCardSelected_18lq1_180 ._radioDot_18lq1_188 {
+  border-color: var(--color--primary);
+}
+._periodCardSelected_18lq1_180 ._radioDot_18lq1_188::after {
+  content: "";
+  position: absolute;
+  inset: var(--spacing--5xs);
+  border-radius: var(--radius--full);
+  background: var(--color--primary);
+}
+._radioDot_18lq1_188 {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--spacing--sm);
+  height: var(--spacing--sm);
+  border: var(--border-width) var(--border-style) var(--border-color--strong);
+  border-radius: var(--radius--full);
+}
+._priceBlock_18lq1_208 {
+  margin-left: auto;
+  text-align: right;
+}
+._savingsBadge_18lq1_213 {
+  padding: var(--spacing--4xs) var(--spacing--2xs);
+  border-radius: var(--radius--full);
+}
+._footer_18lq1_218 {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing--2xs);
+}
+._ctaButton_18lq1_224 {
+  width: 100%;
+}

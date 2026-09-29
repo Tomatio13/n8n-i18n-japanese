@@ -1,0 +1,8 @@
+._grid_17fl0_1 {
+  display: grid;
+  grid-row-gap: var(--spacing--sm);
+  grid-column-gap: var(--spacing--2xs);
+}
+._gridMulti_17fl0_7 {
+  grid-template-columns: repeat(2, 1fr);
+}
