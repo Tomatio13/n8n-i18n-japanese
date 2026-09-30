@@ -1,0 +1,36 @@
+._list_1sqeq_1 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--lg);
+}
+._body_1sqeq_10 {
+  margin-top: var(--spacing--lg);
+}
+._owner_1sqeq_14 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--xs);
+}
+._identity_1sqeq_20 {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}._root_8fhwu_1 {
+  display: contents;
+}
+._card_8fhwu_5 {
+  border-radius: var(--radius);
+}
+._popover_8fhwu_9 {
+  padding: var(--spacing--xs);
+  text-align: left;
+}
+._description_8fhwu_14 {
+  margin-top: var(--spacing--3xs);
+}
+._action_8fhwu_18 {
+  margin-top: var(--spacing--sm);
+}

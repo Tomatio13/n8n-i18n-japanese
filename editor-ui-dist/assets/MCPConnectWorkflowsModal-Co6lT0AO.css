@@ -1,0 +1,31 @@
+._mcp-workflows-select-loading_l8bd8_1,
+._mcp-workflows-select-empty_l8bd8_2 {
+  display: flex;
+  min-height: var(--spacing--5xl);
+  align-items: center;
+  justify-content: space-around;
+}
+._empty-option_l8bd8_9 {
+  cursor: default !important;
+  color: var(--color--text) !important;
+}._container_1svtf_1 {
+  display: flex;
+  flex-direction: column;
+}
+._content_1svtf_6 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+}
+._content_1svtf_6 ._notice_1svtf_11 {
+  margin: 0;
+}
+._content_1svtf_6 ._notice_1svtf_11 a {
+  font-weight: normal;
+}
+._footer_1svtf_18 {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing--2xs);
+  margin-top: var(--spacing--2xs);
+}

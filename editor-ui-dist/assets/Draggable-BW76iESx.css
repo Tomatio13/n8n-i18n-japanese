@@ -1,0 +1,15 @@
+._dragging_r2v9t_1 {
+  visibility: visible;
+  cursor: grabbing;
+}
+._draggable_r2v9t_6 {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999999;
+  top: 0;
+  left: 0;
+}
+._draggable-data-transfer_r2v9t_14 {
+  width: 0;
+  height: 0;
+}

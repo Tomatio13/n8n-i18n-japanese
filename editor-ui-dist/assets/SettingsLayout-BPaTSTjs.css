@@ -1,0 +1,67 @@
+@charset "UTF-8";
+._layout_5q562_2 {
+  /* The single component-scoped width token; 45rem === 720px at a 16px root. */
+  --settings-content--max-width: 45rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: var(--spacing--lg);
+  width: 100%;
+  /* top | inline | bottom — bottom uses the larger 2xl token. */
+  padding: var(--spacing--lg) var(--spacing--lg) var(--spacing--2xl);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+._backRow_5q562_14 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+._backButton_5q562_19 {
+  /* Pull the ghost button's inner padding so the arrow aligns to the page's 24px inset. */
+  -webkit-margin-start: calc(-1 * var(--spacing--xs));
+          margin-inline-start: calc(-1 * var(--spacing--xs));
+}
+._content_5q562_24 {
+  width: 100%;
+  max-width: var(--settings-content--max-width);
+  margin-inline: auto;
+  /*
+   * Center each child within its own cap. The page header caps itself at
+   * --settings-content--max-width, so it stays centered on the page even when the
+   * content region goes full-width; full-width children (width: 100%) are unaffected.
+   */
+}
+._content_5q562_24 > * {
+  margin-inline: auto;
+}
+._content_5q562_24 {
+  /*
+   * Vertical rhythm is owned solely by the FOLLOWING child's margin-block-start, so two
+   * adjacent margins never meet and the spacing never depends on margin-collapsing.
+   * Default rhythm for non-section direct children:
+   */
+}
+._content_5q562_24 > * + * {
+  -webkit-margin-before: var(--spacing--lg);
+          margin-block-start: var(--spacing--lg); /* 24px */
+}
+._content_5q562_24 {
+  /*
+   * Enforced page-header → content gap (48px). The page header renders a semantic <header>,
+   * so the element that follows it owns the larger gap. Kept here (not on the header's own
+   * margin) so it is deterministic, can't be overridden, and never relies on collapse.
+   */
+}
+._content_5q562_24 > header + * {
+  -webkit-margin-before: var(--spacing--2xl);
+          margin-block-start: var(--spacing--2xl); /* 48px */
+}
+._fullWidth_5q562_58 {
+  max-width: none;
+}
