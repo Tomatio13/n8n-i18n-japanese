@@ -1,0 +1,241 @@
+._headingOnly_1v47s_1 {
+  display: contents;
+}
+._row_1v47s_5 {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing--xs);
+}
+._copy_1v47s_11 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--4xs);
+  flex: 1;
+  min-width: 0;
+  max-width: 80%;
+}
+._copy_1v47s_11 > span {
+  text-wrap: balance;
+}
+._actions_1v47s_23 {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}._panelContainer_v2k9n_1 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+  padding: var(--spacing--sm);
+  padding-block: var(--spacing--md);
+  background-color: var(--background--surface);
+  border-radius: var(--radius--lg);
+  border: var(--border);
+  box-shadow: var(--shadow--xs);
+}._disabled_ec9ag_1 {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+._dataEntryLabel_ec9ag_6 {
+  color: var(--text-color);
+  font-size: var(--font-size--sm);
+  font-weight: var(--font-weight--medium);
+}
+
+._dataEntrySubLabel_ec9ag_12 {
+  color: var(--text-color--subtler);
+  font-size: var(--font-size--2xs);
+  font-weight: var(--font-weight--regular);
+}
+._panels_x6z7e_2 {
+	display: flex;
+	align-items: stretch;
+	flex-direction: column;
+	gap: var(--spacing--lg);
+	width: 100%;
+}
+._panels_x6z7e_2 > * {
+	flex: 1;
+	min-width: 0;
+}
+._instructionsDocument_x6z7e_15 {
+	display: block;
+	width: 100%;
+	margin-inline: calc(var(--spacing--xs) * -1);
+}
+._instructionsDocument_x6z7e_15:disabled {
+	opacity: 0.5;
+}
+._field_x6z7e_25 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--3xs);
+}
+._label_x6z7e_31 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--4xs);
+	-webkit-user-select: none;
+	        user-select: none;
+}
+._defaultHint_x6z7e_38 {
+	margin-top: var(--spacing--3xs);
+}
+._defaultHintBody_x6z7e_42 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing--2xs);
+}
+._defaultHintText_x6z7e_49 {
+	flex: 1;
+	min-width: 0;
+}
+._divider_x6z7e_54 {
+	flex: initial;
+	height: 1px;
+	background-color: var(--border-color--subtle);
+	margin-inline: calc(var(--spacing--sm) * -1);
+}
+._containerClass_x6z7e_61 {
+	padding-bottom: 0;
+}
+._row_16ds0_1 {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing--2xs);
+}
+._label_16ds0_7 {
+  --n8n--row-label-width: max(7%, calc(var(--spacing--3xl) + var(--spacing--sm)));
+  flex: 0 0 var(--n8n--row-label-width);
+  line-height: var(--line-height--sm);
+  margin-top: var(--spacing--3xs);
+}
+._content_16ds0_14 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--3xs);
+  min-width: 0;
+}
+._chips_16ds0_21 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing--3xs);
+  min-width: 0;
+}
+._emptyAddButton_16ds0_29 {
+  --button--color: var(--text-color--subtler);
+  margin-left: calc(-1 * var(--spacing--xs));
+  margin-top: calc(-1 * var(--spacing--4xs));
+  /** TODO: Consider making this style a generic N8nButton style. DS-652 **/
+}
+._emptyAddButton_16ds0_29:hover {
+  --button--color: var(--text-color);
+  background-color: transparent;
+}
+._extra_16ds0_40 {
+  min-width: 0;
+}
+@media (max-width: 768px) {
+._row_16ds0_1 {
+    flex-direction: column;
+    gap: var(--spacing--xs);
+}
+._label_16ds0_7 {
+    flex-basis: auto;
+    line-height: var(--line-height--sm);
+}
+}._chipGroup_2zv1u_1 {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--spacing--3xs);
+  min-width: 0;
+  max-width: min(var(--spacing--5xl), 100%);
+}
+._chipGroup_2zv1u_1 > ._skillChip_2zv1u_9 {
+  width: 100%;
+}
+._content_1qtqc_2 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--sm);
+	width: 100%;
+}
+._settingGroup_1qtqc_9 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--sm);
+}
+._row_1qtqc_15 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing--sm);
+	min-height: var(--spacing--xl);
+}
+._rowLabel_1qtqc_23 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--5xs);
+	flex: 1;
+	min-width: 0;
+}
+._subSettings_1qtqc_31 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--xs);
+	padding: var(--spacing--xs);
+	border: var(--border);
+	border-radius: var(--radius);
+}
+._shortInput_1qtqc_40 {
+	max-width: 140px;
+	width: -moz-fit-content;
+	width: fit-content;
+	flex-shrink: 0;
+}
+._dropdownTriggerLabel_1qtqc_46 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+._credentialSelect_1qtqc_52 {
+	max-width: 220px;
+	flex-shrink: 0;
+}
+._switchControl_1qtqc_57:not([data-disabled]) {
+	cursor: pointer;
+}
+._section_19bp6_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+  width: 100%;
+}
+._chipGroup_19bp6_8 {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--spacing--3xs);
+  min-width: 0;
+  /** Truncates chip to stop overly-long labels **/
+  max-width: min(var(--spacing--5xl), 100%);
+}
+._chipGroup_19bp6_8 > ._capabilityChip_19bp6_17 {
+  width: 100%;
+}
+._groupChipLabel_19bp6_21 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--4xs);
+}
+._divider_19bp6_27 {
+  flex: initial;
+  height: 1px;
+  background-color: var(--border-color--subtle);
+  margin-inline: calc(var(--spacing--sm) * -1);
+}

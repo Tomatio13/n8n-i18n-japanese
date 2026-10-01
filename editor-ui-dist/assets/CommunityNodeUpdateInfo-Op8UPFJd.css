@@ -1,0 +1,27 @@
+._wrapper_spbkp_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--2xs);
+}
+._disclaimer_spbkp_7 {
+  margin: 0;
+  font-size: var(--font-size--2xs);
+  font-style: italic;
+  color: var(--text-color--subtler);
+}
+._disclaimer_spbkp_7 a {
+  color: inherit;
+  text-decoration: underline;
+}._container_2erah_1 {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: var(--spacing--2xs);
+  padding: var(--spacing--sm);
+}
+._separator_2erah_9 {
+  height: var(--border-width);
+  background: var(--color--foreground);
+  margin-right: var(--spacing--sm);
+  margin-left: var(--spacing--sm);
+}

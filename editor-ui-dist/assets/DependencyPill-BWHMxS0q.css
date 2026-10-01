@@ -1,0 +1,29 @@
+._badge_q9hcr_1 {
+  cursor: pointer;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing--4xs) var(--spacing--2xs);
+  color: var(--color--text);
+}
+._badge_q9hcr_1:hover {
+  background-color: var(--background--hover);
+}
+[aria-expanded='true'] ._badge_q9hcr_1 {
+  background-color: var(--background--active);
+}
+._badgeText_q9hcr_15 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--3xs);
+  line-height: calc(var(--font-size--sm) + 1px);
+}
+._hiddenNotice_q9hcr_22 {
+  padding: var(--spacing--4xs) var(--spacing--2xs);
+  border-top: var(--border);
+  color: var(--color--text--tint-1);
+  font-size: var(--font-size--3xs);
+  font-style: italic;
+  line-height: var(--line-height--lg);
+}.dependency-pill-dropdown {
+  z-index: 1;
+}

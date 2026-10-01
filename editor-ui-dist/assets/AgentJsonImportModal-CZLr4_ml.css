@@ -1,0 +1,15 @@
+._content_ssape_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+}
+._fileField_ssape_7 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--3xs);
+}
+._footer_ssape_13 {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing--2xs);
+}

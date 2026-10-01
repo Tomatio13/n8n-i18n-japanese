@@ -1,0 +1,55 @@
+._icon_11xa7_1 {
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+._icon_11xa7_1 svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+._icon_11xa7_1 img,
+._icon_11xa7_1 svg {
+  pointer-events: none;
+}
+._nodeIconPlaceholder_11xa7_18 {
+  text-align: center;
+}
+._nodeIconImage_11xa7_22 {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+._badge_11xa7_29 {
+  position: absolute;
+  background: var(--node--icon--badge--color--background, var(--color--background));
+  border-radius: 50%;
+  --node--icon--color: var(--color--text--shade-1);
+}._nodeIconWrapper_9sc15_1 {
+  width: var(--node--icon--size, 26px);
+  height: var(--node--icon--size, 26px);
+  border-radius: var(--radius--sm);
+  color: var(--node--icon--color, #444);
+  line-height: var(--node--icon--size, 26px);
+  font-size: 1.1em;
+  text-align: center;
+  font-weight: var(--font-weight--bold);
+  font-size: 20px;
+}
+._circle_9sc15_13 {
+  border-radius: 50%;
+}
+._disabled_9sc15_17 {
+  color: "#ccc";
+  -webkit-filter: contrast(40%) brightness(1.5) grayscale(100%);
+  filter: contrast(40%) brightness(1.5) grayscale(100%);
+}
