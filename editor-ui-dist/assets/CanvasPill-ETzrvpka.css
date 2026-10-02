@@ -1,0 +1,28 @@
+._pill_1puzo_1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 40px;
+  padding: 0 var(--spacing--sm) 0 var(--spacing--xs);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: var(--spacing--2xs);
+  border-radius: 22px;
+  border: var(--border-width) solid var(--color--neutral-850);
+  background: rgba(65, 66, 68, 0.92);
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+}
+._text_1puzo_17 {
+  color: white;
+  font-size: var(--font-size--sm);
+  font-weight: var(--font-weight--medium);
+  white-space: nowrap;
+}

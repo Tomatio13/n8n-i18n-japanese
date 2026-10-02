@@ -1,0 +1,173 @@
+._name_125ko_1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+._name_125ko_1 del:not(:last-child) {
+  margin-right: var(--spacing--4xs);
+}._container_d4vxd_1 {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  padding-inline-end: var(--spacing--5xs);
+  cursor: pointer;
+}
+._container_d4vxd_1 > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: var(--spacing--2xs);
+}
+._background_d4vxd_18 {
+  position: absolute;
+  /* stylelint-disable-next-line @n8n/css-var-naming */
+  left: calc(var(--indent-depth) * 32px);
+  top: 0;
+  /* stylelint-disable-next-line @n8n/css-var-naming */
+  width: calc(100% - var(--indent-depth) * 32px);
+  height: 100%;
+  border-radius: var(--radius);
+  z-index: -1;
+}
+._selected_d4vxd_29 ._background_d4vxd_18 {
+  background-color: var(--color--foreground);
+}
+._container_d4vxd_1:hover:not(._selected_d4vxd_29) ._background_d4vxd_18 {
+  background-color: var(--color--background--light-1);
+}
+._selected_d4vxd_29:not(:hover)._error_d4vxd_35 ._background_d4vxd_18 {
+  background-color: var(--callout--color--background--danger);
+}
+._indent_d4vxd_39 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: var(--spacing--xl);
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+._indent_d4vxd_39._connectorCurved_d4vxd_48:before {
+  content: "";
+  position: absolute;
+  left: var(--spacing--sm);
+  bottom: var(--spacing--sm);
+  border: 2px solid var(--canvas--dot--color);
+  width: var(--spacing--lg);
+  height: var(--spacing--lg);
+  border-radius: var(--radius--lg);
+}
+._indent_d4vxd_39._connectorStraight_d4vxd_58:after {
+  content: "";
+  position: absolute;
+  left: var(--spacing--sm);
+  top: 0;
+  border-left: 2px solid var(--canvas--dot--color);
+  height: 100%;
+}
+._icon_d4vxd_67 {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+._name_d4vxd_72 {
+  flex-basis: 0;
+  flex-grow: 1;
+  padding-inline-start: 0;
+}
+
+/* Groups have no icon, so inset the label to match where node labels start */
+._groupName_d4vxd_79 {
+  padding-inline-start: var(--spacing--2xs);
+}
+._timeTook_d4vxd_83 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 20%;
+}
+._timeTook_d4vxd_83 ._statusTextIcon_d4vxd_88 {
+  margin-right: var(--spacing--5xs);
+  vertical-align: text-bottom;
+}
+._startedAt_d4vxd_93 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 25%;
+}
+._consumedTokens_d4vxd_99 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 15%;
+  text-align: right;
+}
+._compactErrorIcon_d4vxd_106 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+._container_d4vxd_1:hover ._compactErrorIcon_d4vxd_106 {
+  display: none;
+}
+._partialExecutionButton_d4vxd_118,
+._openNdvButton_d4vxd_119 {
+  transition: none;
+  /* By default, take space but keep invisible */
+  visibility: hidden;
+}
+._container_d4vxd_1._compact_d4vxd_106 ._partialExecutionButton_d4vxd_118,
+._container_d4vxd_1._compact_d4vxd_106 ._openNdvButton_d4vxd_119 {
+  /* When compact, collapse to save space */
+  display: none;
+}
+._container_d4vxd_1:hover ._partialExecutionButton_d4vxd_118:not(._unavailable_d4vxd_129),
+._container_d4vxd_1:hover ._openNdvButton_d4vxd_119:not(._unavailable_d4vxd_129) {
+  visibility: visible;
+  display: inline-flex;
+}
+._partialExecutionButton_d4vxd_118,
+._openNdvButton_d4vxd_119,
+._toggleButton_d4vxd_137 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--color--text);
+  align-items: center;
+  justify-content: center;
+}
+._partialExecutionButton_d4vxd_118:hover,
+._openNdvButton_d4vxd_119:hover,
+._toggleButton_d4vxd_137:hover {
+  background: transparent;
+}
+._partialExecutionButton_d4vxd_118:disabled,
+._openNdvButton_d4vxd_119:disabled,
+._toggleButton_d4vxd_137:disabled {
+  visibility: hidden !important;
+}
+._toggleButton_d4vxd_137 {
+  display: inline-flex;
+}
+
+/* Matches a single small icon button's footprint (row padding comes from .container > *) */
+._buttonSpacer_d4vxd_162 {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: var(--height--sm);
+}
+._statusIcon_d4vxd_168 {
+  color: var(--color--text--tint-1);
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: var(--spacing--3xs);
+}
+._statusIcon_d4vxd_168._placeholder_d4vxd_176 {
+  color: transparent;
+}

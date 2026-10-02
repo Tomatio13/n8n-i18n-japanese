@@ -1,0 +1,173 @@
+@charset "UTF-8";
+/* Focus State
+ -------------------------- */
+._wrapper_1ou0z_4 {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: var(--spacing--2xs);
+}
+._container_1ou0z_11 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: var(--spacing--xs);
+  background: var(--background--surface);
+  -webkit-box-shadow: var(--shadow--outline), var(--shadow--xs);
+          box-shadow: var(--shadow--outline), var(--shadow--xs);
+  border-radius: var(--radius--lg);
+  padding: var(--spacing--2xs);
+}
+._container_1ou0z_11._focused_1ou0z_20 {
+  outline: var(--focus--border-width) solid var(--focus--outline-color);
+  -webkit-box-shadow: 0 0 0 1px var(--focus--border-color), var(--shadow--xs);
+          box-shadow: 0 0 0 1px var(--focus--border-color), var(--shadow--xs);
+}
+._container_1ou0z_11._disabled_1ou0z_24 {
+  cursor: not-allowed;
+}
+._container_1ou0z_11._disabled_1ou0z_24 textarea,
+._container_1ou0z_11._disabled_1ou0z_24 input {
+  cursor: not-allowed;
+  color: var(--color--text--tint-1);
+}
+._singleLineContainer_1ou0z_33 {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* Adaptive: one visual row that grows with the autosized textarea. The send button
+	is pinned to the bottom-right corner instead of holding a dedicated actions row,
+	so the textarea height is the only thing that moves while typing — the button
+	just rides the bottom edge. See the overrides next to the single-line ones at
+	the end of this stylesheet. */
+._adaptiveContainer_1ou0z_43 {
+  position: relative;
+  /* The pinned button is taller than one line of text; without this floor it
+  	would poke out of the single-row state. */
+  min-height: calc(var(--height--md) + 2 * var(--spacing--2xs));
+}
+._textarea_1ou0z_50 {
+  width: 100%;
+  border: none;
+  background: transparent;
+  resize: none;
+  outline: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size--md);
+  line-height: var(--line-height--xs);
+  color: var(--text-color);
+  padding: var(--spacing--3xs);
+  margin-bottom: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  overflow-y: hidden;
+}
+._textarea_1ou0z_50:not(._singleLineTextarea_1ou0z_66) {
+  line-height: var(--line-height--xl);
+}
+._textarea_1ou0z_50 {
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+._textarea_1ou0z_50::-webkit-scrollbar {
+  display: none;
+}
+._textarea_1ou0z_50::-webkit-input-placeholder {
+  color: var(--text-color--subtler);
+}
+._textarea_1ou0z_50::-moz-placeholder {
+  color: var(--text-color--subtler);
+}
+._textarea_1ou0z_50:-ms-input-placeholder {
+  color: var(--text-color--subtler);
+}
+._textarea_1ou0z_50::-ms-input-placeholder {
+  color: var(--text-color--subtler);
+}
+._textarea_1ou0z_50::placeholder {
+  color: var(--text-color--subtler);
+}
+._bottomActions_1ou0z_80 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: var(--spacing--2xs);
+  margin-top: auto;
+}
+._leftActions_1ou0z_88,
+._rightActions_1ou0z_89,
+._actionsContent_1ou0z_90 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: var(--spacing--2xs);
+}
+._rightActions_1ou0z_89 {
+  margin-left: auto;
+}
+._characterCount_1ou0z_100 {
+  font-size: var(--font-size--3xs);
+  color: var(--color--text--tint-1);
+  padding: 0 var(--spacing--3xs);
+}
+._characterCount_1ou0z_100 ._overLimit_1ou0z_105 {
+  color: var(--color--danger);
+  font-weight: var(--font-weight--bold);
+}
+._singleLineTextarea_1ou0z_66 {
+  height: var(--height--sm);
+}
+._singleLineActions_1ou0z_114 {
+  padding: 0;
+}
+
+/* Placed after `.textarea`, whose `padding` shorthand would otherwise win the tie. */
+._adaptiveTextarea_1ou0z_119 {
+  /* Reserve the pinned button's column at every height: a width that differed
+  	between the compact and grown states would re-wrap the text and make the
+  	two states oscillate. */
+  padding-right: calc(var(--height--md) + var(--spacing--3xs));
+  /* A 24px text line plus 4px above and below matches the 32px send button,
+  	leaving the same 8px inset on every side in the compact state. */
+  padding-block: var(--spacing--4xs);
+}
+._adaptiveActions_1ou0z_129 {
+  position: absolute;
+  right: var(--spacing--2xs);
+  bottom: var(--spacing--2xs);
+}
+._leading_1ou0z_135 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: var(--spacing--2xs);
+  overflow-x: auto;
+}
