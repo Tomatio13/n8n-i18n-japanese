@@ -1,0 +1,19 @@
+._wrapper_191lr_1 {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color--background--light-2);
+}
+._spinner_191lr_13 {
+  margin: 0 auto;
+}
+._spinner_191lr_13 * {
+  color: var(--color--primary);
+  min-height: 40px;
+  min-width: 40px;
+}

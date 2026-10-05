@@ -1,0 +1,15 @@
+._preview_bdi73_1 {
+  display: inline-block;
+  color: var(--color--secondary);
+  font-weight: var(--font-weight--bold);
+  background-color: var(--color--secondary--tint-2);
+  border-radius: 16px;
+}
+._small_bdi73_9 {
+  font-size: var(--font-size--3xs);
+  padding: var(--spacing--5xs) var(--spacing--4xs);
+}
+._medium_bdi73_14 {
+  font-size: var(--font-size--2xs);
+  padding: var(--spacing--4xs) var(--spacing--2xs);
+}

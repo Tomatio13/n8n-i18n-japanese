@@ -1,0 +1,98 @@
+._bold_qsoec_1 {
+  font-weight: var(--font-weight--bold);
+}
+._regular_qsoec_5 {
+  font-weight: var(--font-weight--regular);
+}
+._size-2xlarge_qsoec_9 {
+  font-size: var(--font-size--2xl);
+  line-height: var(--line-height--sm);
+}
+._size-xlarge_qsoec_14 {
+  font-size: var(--font-size--xl);
+  line-height: var(--line-height--sm);
+}
+._size-large_qsoec_19 {
+  font-size: var(--font-size--lg);
+  line-height: var(--line-height--lg);
+}
+._size-medium_qsoec_24 {
+  font-size: var(--font-size--md);
+  line-height: var(--line-height--lg);
+}
+._size-small_qsoec_29 {
+  font-size: var(--font-size--sm);
+  line-height: var(--line-height--md);
+}
+._step-4xs_qsoec_34 {
+  font-size: var(--font-size--4xs);
+  line-height: var(--line-height--xs);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-3xs_qsoec_40 {
+  font-size: var(--font-size--3xs);
+  line-height: var(--line-height--sm);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-2xs_qsoec_46 {
+  font-size: var(--font-size--2xs);
+  line-height: var(--line-height--md);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-xs_qsoec_52 {
+  font-size: var(--font-size--xs);
+  line-height: var(--line-height--md);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-sm_qsoec_58 {
+  font-size: var(--font-size--sm);
+  line-height: var(--line-height--lg);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-md_qsoec_64 {
+  font-size: var(--font-size--md);
+  line-height: var(--line-height--lg);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-lg_qsoec_70 {
+  font-size: var(--font-size--lg);
+  line-height: var(--line-height--xl);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-xl_qsoec_76 {
+  font-size: var(--font-size--xl);
+  line-height: var(--line-height--xl);
+  letter-spacing: var(--letter-spacing--normal);
+}
+._step-2xl_qsoec_82 {
+  font-size: var(--font-size--2xl);
+  line-height: var(--line-height--xl);
+  letter-spacing: var(--letter-spacing--tight);
+}
+._primary_qsoec_88 {
+  color: var(--color--primary);
+}
+._text-dark_qsoec_92 {
+  color: var(--text-color);
+}
+._text-base_qsoec_96 {
+  color: var(--text-color--subtle);
+}
+._text-light_qsoec_100 {
+  color: var(--text-color--subtler);
+}
+._text-xlight_qsoec_104 {
+  color: var(--color--text--tint-3);
+}
+._danger_qsoec_108 {
+  color: var(--color--danger);
+}
+._align-left_qsoec_112 {
+  text-align: left;
+}
+._align-right_qsoec_116 {
+  text-align: right;
+}
+._align-center_qsoec_120 {
+  text-align: center;
+}

@@ -1,0 +1,6 @@
+._nodeIcon_8k2kr_1 {
+  --node--icon--color: var(
+  	--node-creator--icon--color,
+  	var(--canvas-node--icon-color, var(--v8b78d264))
+  );
+}

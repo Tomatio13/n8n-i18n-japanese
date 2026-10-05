@@ -1,0 +1,80 @@
+
+._header_1emwe_2 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing--sm);
+	padding-right: var(--spacing--xl);
+}
+._content_1emwe_10 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--sm);
+}
+._field_1emwe_16 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--2xs);
+}
+
+/* Matches the height the skills instructions editor fills inside its modal. */
+._objectiveEditor_1emwe_23 {
+	height: 400px;
+}
+._scheduleRow_1emwe_27 {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--spacing--2xs);
+}
+._frequencySelect_1emwe_34 {
+	width: 12rem;
+}
+._daySelect_1emwe_38 {
+	width: 10rem;
+}
+._minuteInput_1emwe_42 {
+	width: 6rem;
+}
+._cronInput_1emwe_46 {
+	flex: 1;
+	min-width: 12rem;
+}
+._timeSelect_1emwe_51 {
+	width: 8rem;
+}
+._timezoneSelect_1emwe_55 {
+	width: 14rem;
+}
+._scheduleSummary_1emwe_59 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--4xs);
+}
+._infoIcon_1emwe_65 {
+	display: inline-flex;
+	color: var(--color--text--tint-1);
+	cursor: help;
+}
+._help_1emwe_71 {
+	color: var(--color--text--tint-1);
+}
+._error_1emwe_75 {
+	color: var(--color--danger);
+}
+._pauseControl_1emwe_79 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--2xs);
+}
+._footer_1emwe_85 {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--spacing--2xs);
+}
+._footerActions_1emwe_91 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--2xs);
+	margin-left: auto;
+}

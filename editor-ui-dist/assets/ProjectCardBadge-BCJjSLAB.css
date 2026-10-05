@@ -1,0 +1,43 @@
+._wrapper_1a29a_1 {
+  display: flex;
+  align-items: center;
+  border: var(--border);
+  border-radius: var(--radius);
+}
+._wrapper_1a29a_1._no-border_1a29a_7 {
+  border: none;
+}
+._badge_1a29a_11 {
+  padding: var(--spacing--4xs) var(--spacing--2xs);
+  background-color: var(--color--background--light-3);
+  border-color: var(--color--foreground);
+  z-index: 1;
+  position: relative;
+  height: 23px;
+}
+._badge_1a29a_11 .n8n-text,
+._badge_1a29a_11 a {
+  color: var(--color--text);
+}
+._projectBadge_1a29a_24 > span {
+  display: flex;
+  gap: var(--spacing--3xs);
+}
+._link_1a29a_29:hover {
+  background-color: var(--background--hover);
+}
+._count-badge_1a29a_33 {
+  font-size: var(--font-size--2xs);
+  padding: var(--spacing--4xs) var(--spacing--3xs);
+  color: var(--color--text);
+  border-left: var(--border);
+  line-height: var(--line-height--md);
+}
+._global-badge_1a29a_41 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--3xs);
+}
+._nowrap_1a29a_48 {
+  white-space: nowrap !important;
+}

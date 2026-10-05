@@ -1,0 +1,24 @@
+._callout_mvrez_1 {
+  height: var(--banner--height);
+}
+._mainContent_mvrez_5 {
+  display: flex;
+  gap: var(--spacing--4xs);
+}
+._keepSpace_mvrez_10 {
+  padding: 5px 0;
+}
+._trailingContent_mvrez_14 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--lg);
+}._markdown_uk7b2_1 p,
+._markdown_uk7b2_1 strong,
+._markdown_uk7b2_1 em,
+._markdown_uk7b2_1 s,
+._markdown_uk7b2_1 a {
+  font-size: var(--font-size--2xs);
+}
+._markdown_uk7b2_1 p {
+  margin-bottom: 0;
+}
