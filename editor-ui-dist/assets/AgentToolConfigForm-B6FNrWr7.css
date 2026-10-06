@@ -1,0 +1,126 @@
+._approvalRow_ssfms_1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing--sm);
+  padding-top: var(--spacing--2xs);
+}
+._approvalText_ssfms_9 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--5xs);
+  min-width: 0;
+}._wrapper_1dag9_1 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+._editor_1dag9_8 {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+._editor_1dag9_8 .cm-editor {
+  border: none;
+  border-radius: 0;
+  height: 100%;
+}._container_x8923_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--md);
+}
+._field_x8923_7 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--4xs);
+}
+._label_x8923_13 {
+  font-size: var(--font-size--sm);
+  font-weight: var(--font-weight--bold);
+  color: var(--color--text);
+}
+._toggleRow_x8923_19 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing--sm);
+  padding-top: var(--spacing--2xs);
+}
+._toggleText_x8923_27 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--5xs);
+  min-width: 0;
+}
+._controlRow_x8923_34 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--3xs);
+}
+._modeSelector_x8923_40 {
+  flex: 0 0 auto;
+  width: 120px;
+}
+._controlInput_x8923_45 {
+  flex: 1;
+  min-width: 0;
+}
+._openTarget_x8923_50 {
+  flex: 0 0 auto;
+}
+._popper_x8923_54 .el-select-dropdown__item {
+  height: auto;
+  line-height: var(--line-height--md);
+  padding-top: var(--spacing--2xs);
+  padding-bottom: var(--spacing--2xs);
+}
+._option_x8923_61 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--4xs);
+  min-width: 0;
+}
+._optionMeta_x8923_68 {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+._inputFields_x8923_74 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--xs);
+  padding-top: var(--spacing--3xs);
+}
+._inputName_x8923_81 {
+  text-transform: capitalize;
+}
+._inputMode_x8923_85 {
+  flex: 0 0 180px;
+}._contentWrapper_1qm8f_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+  overflow-x: hidden;
+}
+._contentWrapper_1qm8f_1 .ndv-connection-hint-notice {
+  display: none;
+}
+._codeContentWrapper_1qm8f_11 {
+  height: min(var(--spacing--5xl) * 2, 70dvh - var(--spacing--5xl));
+  overflow: hidden;
+}
+._configureTab_1qm8f_16 {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+}
+._customToolViewer_1qm8f_23 {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}

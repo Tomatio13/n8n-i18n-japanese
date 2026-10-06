@@ -1,0 +1,54 @@
+._container_1cnup_1 {
+  padding-bottom: 100px;
+}
+._container_1cnup_1 > * {
+  margin-bottom: var(--spacing--2xl);
+}
+._header_1cnup_8 {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+._header_1cnup_8 *:first-child {
+  flex-grow: 1;
+}
+._user_1cnup_17 {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 600px) {
+._user_1cnup_17 {
+    display: none;
+}
+}
+._username_1cnup_27 {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-right: var(--spacing--sm);
+}
+@media (max-width: 992px) {
+._username_1cnup_27 {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+}
+._tooltip_1cnup_40 {
+  justify-self: start;
+}
+._disableMfaButton_1cnup_44 > span {
+  font-weight: var(--font-weight--bold);
+}
+._button_1cnup_48 {
+  font-size: var(--spacing--xs);
+}
+._button_1cnup_48 > span {
+  font-weight: var(--font-weight--bold);
+}
+._infoText_1cnup_55 {
+  font-size: var(--font-size--2xs);
+  color: var(--color--text--tint-1);
+}
+._themeSelect_1cnup_60 {
+  max-width: 50%;
+}
