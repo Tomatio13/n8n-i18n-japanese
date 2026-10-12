@@ -1,0 +1,60 @@
+
+._content_nyg3o_2 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--sm);
+}
+._field_nyg3o_8 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--2xs);
+}
+._objectiveEditor_nyg3o_14 {
+	height: min(36dvh, calc(var(--height--5xl) * 3));
+}
+._scheduleRow_nyg3o_18 {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--spacing--2xs);
+}
+._frequencySelect_nyg3o_25 {
+	width: 12rem;
+}
+._daySelect_nyg3o_29 {
+	width: 10rem;
+}
+._minuteInput_nyg3o_33 {
+	width: 6rem;
+}
+._cronInput_nyg3o_37 {
+	flex: 1;
+	min-width: 12rem;
+}
+._timeSelect_nyg3o_42 {
+	width: 8rem;
+}
+._timezoneSelect_nyg3o_46 {
+	width: 14rem;
+}
+._scheduleSummary_nyg3o_50 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--4xs);
+}
+._infoIcon_nyg3o_56 {
+	display: inline-flex;
+	color: var(--color--text--tint-1);
+	cursor: help;
+}
+._help_nyg3o_62 {
+	color: var(--color--text--tint-1);
+}
+._error_nyg3o_66 {
+	color: var(--color--danger);
+}
+._pauseControl_nyg3o_70 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--2xs);
+}
