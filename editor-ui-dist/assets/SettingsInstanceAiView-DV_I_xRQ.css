@@ -1,0 +1,54 @@
+._highlighted_mc897_1 {
+  border-radius: var(--radius);
+  animation: _flash_mc897_1 1.2s ease-in-out 2;
+}
+@keyframes _flash_mc897_1 {
+50% {
+    background-color: var(--color--foreground--tint-1);
+}
+}._statusLabel_11y2x_1 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--3xs);
+}
+._statusDot_11y2x_7 {
+  width: var(--spacing--2xs);
+  height: var(--spacing--2xs);
+  border-radius: var(--radius--full);
+}
+._statusDotSuccess_11y2x_13 {
+  background: var(--text-color--success);
+}
+._statusDotWarning_11y2x_17 {
+  background: var(--text-color--warning);
+}
+._danger_11y2x_21 {
+  color: var(--text-color--danger);
+}
+._titleWithTag_11y2x_25 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+}
+._dim_11y2x_31 {
+  opacity: 0.5;
+  pointer-events: none;
+}
+._permissionList_11y2x_36 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--3xs);
+  padding: var(--spacing--2xs) var(--spacing--sm);
+}
+._permissionDescription_11y2x_43 {
+  padding-bottom: var(--spacing--2xs);
+}
+._permissionRow_11y2x_47 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing--sm);
+}
+._permissionSelect_11y2x_54 {
+  width: 11rem;
+}
