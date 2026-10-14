@@ -1,0 +1,21 @@
+._approvalRow_4tj0v_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--2xs);
+  padding-top: var(--spacing--2xs);
+  margin-right: var(--spacing--lg);
+}
+._approvalText_4tj0v_9 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--5xs);
+  min-width: 0;
+}
+._controls_4tj0v_16 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+}
+._modeSelect_4tj0v_22 {
+  width: 180px;
+}
