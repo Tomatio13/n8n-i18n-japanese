@@ -1,0 +1,80 @@
+._form_1wcac_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--sm);
+  padding: var(--spacing--sm) 0;
+}
+._counter_1wcac_8 {
+  align-self: flex-end;
+  margin-top: calc(-1 * var(--spacing--xs));
+}
+._optionContent_1wcac_13 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+}
+._emoji_1wcac_19 {
+  line-height: 1;
+}._text_15vfq_1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.n8n-tooltip._tooltip_15vfq_11 {
+  max-width: 480px;
+}
+._full_15vfq_15 {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}._badge_tav9i_1 {
+  max-width: 100%;
+}
+._content_tav9i_5 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--4xs);
+  min-width: 0;
+}
+._label_tav9i_12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+._emoji_tav9i_18 {
+  line-height: 1;
+}._actions_79cox_1 {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing--2xs);
+  /* Revealed on hover, per the row-action pattern; focus keeps it reachable by keyboard. */
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
+}
+._row_79cox_10:hover ._actions_79cox_1, ._row_79cox_10:focus-within ._actions_79cox_1 {
+  opacity: 1;
+}/* The settings shell insets the page; the header is pulled to the table's left edge. */
+._layout_ruzar_2 {
+  padding: 0;
+}
+._layout_ruzar_2 header {
+  margin-inline: 0 auto;
+}
+._empty_ruzar_9 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing--xs);
+  padding: var(--spacing--2xl) var(--spacing--md);
+  text-align: center;
+}
+._toolbar_ruzar_18 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing--xs);
+  width: 100%;
+}
