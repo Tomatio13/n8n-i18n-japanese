@@ -1,0 +1,59 @@
+
+._NoIssuesContainer_1o8ra_2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: var(--spacing--4xl) 0;
+}
+
+._CardTitleContainer_192by_2 {
+	display: flex;
+	align-items: center;
+	margin-bottom: var(--spacing--2xs);
+	gap: var(--spacing--2xs);
+}
+._NoLineBreak_192by_9 {
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing--4xs);
+}
+._Progress_192by_16 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--lg);
+	margin-bottom: var(--spacing--xl);
+}
+._ProgressTrack_192by_23 {
+	flex: 1;
+	height: var(--height--5xs);
+	border-radius: var(--radius--3xs);
+	background-color: var(--color--foreground--tint-1);
+	overflow: hidden;
+}
+._ProgressFill_192by_31 {
+	height: 100%;
+	border-radius: inherit;
+	background-color: var(--color--primary);
+}
+._ActionBar_192by_37 {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--spacing--sm);
+}
+._RefreshGroup_192by_44 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--xs);
+}
+._PLoading_192by_50 {
+.el-skeleton__p {
+		margin-top: 0;
+}
+}
+._UnderlinedText_192by_56 {
+	text-decoration: underline;
+}
