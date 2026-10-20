@@ -1,0 +1,107 @@
+@charset "UTF-8";
+/* Wrapper renders as if it weren't there. */
+._roleCell_xu5xc_3 {
+  display: contents;
+}
+
+/* Non-editable role name — truncates so it doesn't overflow the adjacent column */
+._roleName_xu5xc_8 {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}._header_udcyi_1 {
+  margin: calc(var(--spacing--lg) * -1) calc(var(--spacing--lg) * -1) 0;
+  padding: var(--spacing--lg) var(--spacing--lg) var(--spacing--sm);
+  border-bottom: var(--border);
+}
+._header_udcyi_1 ._title_udcyi_6 {
+  font-size: var(--font-size--xl);
+}
+._search_udcyi_10 {
+  margin-top: var(--spacing--xs);
+}
+._list_udcyi_14 {
+  margin-top: var(--spacing--sm);
+  max-height: 400px;
+  overflow-y: auto;
+}
+._empty_udcyi_20 {
+  display: block;
+  padding: var(--spacing--sm) 0;
+  text-align: center;
+}
+._row_udcyi_26 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+  padding: var(--spacing--xs) 0;
+}
+._info_udcyi_33 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing--5xs);
+  min-width: 0;
+}._projects_xproz_1 {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  min-width: 0;
+}
+._trigger_xproz_8 {
+  display: flex;
+  align-items: baseline;
+  max-width: 100%;
+  min-width: 0;
+}
+._trigger_xproz_8 > span {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  max-width: 100%;
+}
+._trigger_xproz_8 .n8n-text {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+}
+._project_xproz_1 {
+  min-width: 0;
+  flex: 0 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+._comma_xproz_34 {
+  flex: 0 0 auto;
+  padding: 0 var(--spacing--5xs);
+}
+._additional_xproz_39 {
+  flex: 0 0 auto;
+}._roleName_evauf_1 {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}._userCount_rs87l_1 {
+  display: block;
+  padding: var(--spacing--3xs) 0 0;
+}
+._buttonContainer_rs87l_6 {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing--sm);
+  margin: 0 0 var(--spacing--sm);
+}
+._search_rs87l_13 {
+  max-width: 300px;
+}
+._setupInfoContainer_rs87l_17 {
+  max-width: 728px;
+}
+._container_rs87l_21 {
+  padding-bottom: 20px;
+}
