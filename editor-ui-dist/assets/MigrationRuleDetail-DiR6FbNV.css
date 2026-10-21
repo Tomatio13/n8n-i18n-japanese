@@ -1,0 +1,112 @@
+._itemStack_16fpv_1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--5xs);
+}
+._content_1hyv0_2 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--sm);
+	padding: var(--spacing--sm);
+}
+._group_1hyv0_9 {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing--3xs);
+}
+._ownerSelect_1hyv0_16 {
+	width: 100%;
+}
+._footer_1hyv0_20 {
+	display: flex;
+	justify-content: space-between;
+	padding-top: var(--spacing--xs);
+	border-top: var(--border);
+}
+
+/* Mirrors N8nSettingsPageHeader's self-capping so the header column stays centered
+   while the table below spans the full-width layout. */
+._pageHeader_1w6qf_4 {
+	width: 100%;
+	max-width: var(--settings-content--max-width, 45rem);
+	margin-inline: auto;
+}
+._unusedCallout_1w6qf_10 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing--sm);
+	padding: var(--spacing--sm) var(--spacing--md);
+	margin-bottom: var(--spacing--md);
+	border: var(--border);
+	border-radius: var(--radius--lg);
+	background-color: var(--color--background--light-3);
+}
+._unusedCalloutActions_1w6qf_22 {
+	display: flex;
+	flex-shrink: 0;
+	gap: var(--spacing--2xs);
+}
+._cellStack_1w6qf_28 {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing--5xs);
+	min-width: 0;
+}
+._truncate_1w6qf_35 {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+._nodeNames_1w6qf_41 {
+	font-family: var(--font-family--monospace);
+}
+._ownerLabel_1w6qf_45 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--2xs);
+	min-width: 0;
+}
+._actions_1w6qf_52 {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+	gap: var(--spacing--sm);
+}
+
+/* Sticks to the bottom of the viewport, so the floating selection bar stays in
+   view while a long table scrolls. The height holds the bar and its bottom
+   offset, so the bar does not cover the rows of a short table. */
+._selectionBar_1w6qf_62 {
+	position: sticky;
+	bottom: 0;
+	height: calc(var(--spacing--3xl) + var(--spacing--2xl));
+}
+._toolbar_1w6qf_68 {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing--xs);
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: var(--spacing--xs);
+}
+._quickFilters_1w6qf_77,
+._sortAndFilters_1w6qf_78 {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing--2xs);
+	align-items: center;
+}
+._sortAndFilters_1w6qf_78 {
+	margin-bottom: var(--spacing--md);
+}
+._search_1w6qf_89 {
+	flex: 0 1 20rem;
+}
+._NoLineBreak_1w6qf_93 {
+	white-space: nowrap;
+}
+._UnderlinedText_1w6qf_97 {
+	text-decoration: underline;
+}
