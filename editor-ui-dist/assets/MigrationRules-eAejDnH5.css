@@ -1,0 +1,87 @@
+
+._NoIssuesContainer_1o8ra_2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: var(--spacing--4xl) 0;
+}
+
+._CardTitleContainer_vyl9i_2 {
+	display: flex;
+	align-items: center;
+	margin-bottom: var(--spacing--2xs);
+	gap: var(--spacing--2xs);
+}
+._NoLineBreak_vyl9i_9 {
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing--4xs);
+}
+._Progress_vyl9i_16 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--lg);
+	margin-bottom: var(--spacing--xl);
+}
+._ProgressTrack_vyl9i_23 {
+	flex: 1;
+	height: var(--height--5xs);
+	border-radius: var(--radius--3xs);
+	background-color: var(--color--foreground--tint-1);
+	overflow: hidden;
+}
+._ProgressFill_vyl9i_31 {
+	height: 100%;
+	border-radius: inherit;
+	background-color: var(--color--primary);
+}
+._ActionBar_vyl9i_37 {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--spacing--sm);
+}
+._RefreshGroup_vyl9i_44 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--xs);
+}
+._PLoading_vyl9i_50 {
+.el-skeleton__p {
+		margin-top: 0;
+}
+}
+._UnderlinedText_vyl9i_56 {
+	text-decoration: underline;
+}
+._TitleLink_vyl9i_60 {
+	color: inherit;
+	text-decoration: none;
+&:hover {
+		color: var(--color--primary);
+}
+}
+._FindingCounts_vyl9i_69 {
+	display: flex;
+	gap: var(--spacing--sm);
+	margin-top: var(--spacing--2xs);
+}
+._FindingCount_vyl9i_69 {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing--3xs);
+}
+._FindingCountDot_vyl9i_81 {
+	width: var(--spacing--2xs);
+	height: var(--spacing--2xs);
+	border-radius: var(--radius--full);
+&._open_vyl9i_86 {
+		background-color: var(--text-color--subtler);
+}
+&._wontFix_vyl9i_90 {
+		background-color: var(--icon-color--warning);
+}
+}

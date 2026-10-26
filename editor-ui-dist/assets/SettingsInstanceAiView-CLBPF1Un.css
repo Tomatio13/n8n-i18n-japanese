@@ -1,0 +1,43 @@
+._highlighted_mc897_1 {
+  border-radius: var(--radius);
+  animation: _flash_mc897_1 1.2s ease-in-out 2;
+}
+@keyframes _flash_mc897_1 {
+50% {
+    background-color: var(--color--foreground--tint-1);
+}
+}._statusLabel_18c0l_1 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--3xs);
+}
+._danger_18c0l_7 {
+  color: var(--text-color--danger);
+}
+._titleWithTag_18c0l_11 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing--2xs);
+}
+._dim_18c0l_17 {
+  opacity: 0.5;
+  pointer-events: none;
+}
+._permissionList_18c0l_22 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing--3xs);
+  padding: var(--spacing--2xs) var(--spacing--sm);
+}
+._permissionDescription_18c0l_29 {
+  padding-bottom: var(--spacing--2xs);
+}
+._permissionRow_18c0l_33 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing--sm);
+}
+._permissionSelect_18c0l_40 {
+  width: 11rem;
+}
