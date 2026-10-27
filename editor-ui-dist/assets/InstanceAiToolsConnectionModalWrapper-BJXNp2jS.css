@@ -1,0 +1,32 @@
+._container_1c13b_1 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+._body_1c13b_9 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+._failureCallout_1c13b_18 {
+  margin-top: var(--spacing--sm);
+}
+._permissions_1c13b_22 {
+  margin-top: var(--spacing--xl);
+}
+._footer_1c13b_26 {
+  flex-shrink: 0;
+  padding-top: var(--spacing--md);
+  border-top: var(--border);
+}
+._removeButton_1c13b_32 {
+  margin-right: auto;
+}
+._footerIcon_1c13b_36 {
+  margin-right: var(--spacing--5xs);
+}
