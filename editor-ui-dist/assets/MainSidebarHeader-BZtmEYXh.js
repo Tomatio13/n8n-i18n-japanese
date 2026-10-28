@@ -1,0 +1,454 @@
+import { Ad as createElementBlock, Cd as Fragment, Dd as createBaseVNode, Ed as computed, Id as defineComponent, Nd as createTextVNode, Nf as unref, Od as createBlock, Pd as createVNode, Qd as openBlock, Tf as ref, Wd as mergeProps, Xo as RouterLink, ap as toDisplayString, ef as renderList, ep as normalizeClass, hu as onClickOutside, if as resolveDynamicComponent, kd as createCommentVNode, ld as I18nT, pf as withCtx } from "./vendor-z-loPfiR.js";
+import { $d as usePageRedirectionHelper, AE as _plugin_vue_export_helper_default, Cy as useVersionsStore, DE as N8nIcon_default, DT as N8nLink_default, Dr as ClaudeLogo_default, EE as N8nButton_default, Ey as VIEWS, FE as useI18n, Hg as CHANGELOG_URL, Ji as useMcpDiscovery, My as useSettingsStore, Qw as N8nPopover_default, TE as N8nIconButton_default, _T as N8nLogo_default, bE as N8nTooltip_default, fT as N8nNavigationDropdown_default, js as KeyboardShortcutTooltip_default, jy as useUsersStore, ky as useTelemetry, ng as PROTECTED_INSTANCE_DOCS_URL, on as useGlobalEntityCreation, pT as N8nMenuItem_default, pm as useSourceControlStore, qw as isCustomMenuItem, vE as N8nText_default } from "./app-CqwplyU_.js";
+//#endregion
+//#region src/app/components/VersionUpdateCTA.vue
+var VersionUpdateCTA_default = /* @__PURE__ */ defineComponent({
+	__name: "VersionUpdateCTA",
+	props: {
+		disabled: {
+			type: Boolean,
+			default: false
+		},
+		tooltipText: { default: void 0 }
+	},
+	setup(__props) {
+		const props = __props;
+		const i18n = useI18n();
+		const versionsStore = useVersionsStore();
+		const pageRedirectionHelper = usePageRedirectionHelper();
+		const telemetry = useTelemetry();
+		const onUpdateClick = async () => {
+			telemetry.track("User clicked on update button", { source: "main-sidebar" });
+			await pageRedirectionHelper.goToVersions();
+		};
+		return (_ctx, _cache) => {
+			return openBlock(), createBlock(unref(N8nMenuItem_default), {
+				"data-test-id": "version-update-cta-button",
+				item: {
+					id: "version-update-cta",
+					icon: {
+						value: "status-warning",
+						type: "icon",
+						color: "primary"
+					},
+					disabled: props.disabled,
+					disabledReason: props.tooltipText,
+					label: unref(i18n).baseText("whatsNew.versionsBehind", { interpolate: { count: unref(versionsStore).nextVersions.length > 99 ? "99+" : unref(versionsStore).nextVersions.length } })
+				},
+				onClick: onUpdateClick
+			}, null, 8, ["item"]);
+		};
+	}
+});
+//#endregion
+//#region src/app/components/BottomMenu.vue?vue&type=script&setup=true&lang.ts
+var BottomMenu_vue_vue_type_script_setup_true_lang_default = /* @__PURE__ */ defineComponent({
+	__name: "BottomMenu",
+	props: {
+		items: {},
+		isCollapsed: { type: Boolean }
+	},
+	emits: ["select", "logout"],
+	setup(__props, { emit: __emit }) {
+		const emit = __emit;
+		const versionsStore = useVersionsStore();
+		const usersStore = useUsersStore();
+		const i18n = useI18n();
+		const whatsNewItems = computed(() => ({
+			available: versionsStore.hasVersionUpdates || versionsStore.whatsNewArticles.length > 0,
+			children: [
+				...versionsStore.whatsNewArticles.map((article) => ({
+					id: `whats-new-article-${article.id}`,
+					label: article.title,
+					size: "small",
+					customIconSize: "small",
+					icon: {
+						type: "emoji",
+						value: "•",
+						color: !versionsStore.isWhatsNewArticleRead(article.id) ? "primary" : "text-light"
+					}
+				})),
+				{
+					id: "full-changelog",
+					icon: "external-link",
+					label: i18n.baseText("mainSidebar.whatsNew.fullChangelog"),
+					link: {
+						href: CHANGELOG_URL,
+						target: "_blank"
+					},
+					size: "small",
+					customIconSize: "small"
+				},
+				...versionsStore.hasVersionUpdates ? [{
+					id: "version-upgrade-cta",
+					component: VersionUpdateCTA_default,
+					props: {
+						tooltipText: !usersStore.canUserUpdateVersion ? i18n.baseText("whatsNew.updateNudgeTooltip") : void 0,
+						disabled: !usersStore.canUserUpdateVersion
+					}
+				}] : []
+			]
+		}));
+		function handleSelect(key) {
+			emit("select", key);
+		}
+		function onLogout() {
+			emit("logout");
+		}
+		return (_ctx, _cache) => {
+			return openBlock(), createElementBlock("div", { class: normalizeClass({
+				[_ctx.$style.bottomMenu]: true,
+				[_ctx.$style.collapsed]: __props.isCollapsed
+			}) }, [createBaseVNode("div", { class: normalizeClass(_ctx.$style.bottomMenuItems) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(__props.items, (item) => {
+				return openBlock(), createElementBlock(Fragment, { key: item.id }, [item.children && item.id === "help" ? (openBlock(), createBlock(unref(N8nPopover_default), {
+					key: "help",
+					side: "right",
+					align: "end",
+					"side-offset": 12
+				}, {
+					content: withCtx(() => [createBaseVNode("div", { class: normalizeClass(_ctx.$style.popover) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(item.children, (child) => {
+						return openBlock(), createElementBlock(Fragment, { key: child.id }, [unref(isCustomMenuItem)(child) ? (openBlock(), createBlock(resolveDynamicComponent(child.component), mergeProps({
+							key: 0,
+							ref_for: true
+						}, child.props), null, 16)) : (openBlock(), createBlock(unref(N8nMenuItem_default), {
+							key: 1,
+							item: child,
+							onClick: () => handleSelect(child.id)
+						}, null, 8, ["item", "onClick"]))], 64);
+					}), 128)), whatsNewItems.value.available ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [createVNode(unref(N8nText_default), {
+						bold: "",
+						size: "small",
+						class: normalizeClass(_ctx.$style.popoverTitle),
+						color: "text-light"
+					}, {
+						default: withCtx(() => [..._cache[0] || (_cache[0] = [createTextVNode("What's new", -1)])]),
+						_: 1
+					}, 8, ["class"]), (openBlock(true), createElementBlock(Fragment, null, renderList(whatsNewItems.value.children, (child) => {
+						return openBlock(), createElementBlock(Fragment, { key: child.id }, [unref(isCustomMenuItem)(child) ? (openBlock(), createBlock(resolveDynamicComponent(child.component), mergeProps({
+							key: 0,
+							ref_for: true
+						}, child.props), null, 16)) : (openBlock(), createBlock(unref(N8nMenuItem_default), {
+							key: 1,
+							item: child,
+							onClick: () => handleSelect(child.id)
+						}, null, 8, ["item", "onClick"]))], 64);
+					}), 128))], 64)) : createCommentVNode("", true)], 2)]),
+					trigger: withCtx(() => [createVNode(unref(N8nMenuItem_default), {
+						"data-test-id": `main-sidebar-${item.id}`,
+						item,
+						compact: __props.isCollapsed,
+						onClick: () => handleSelect(item.id)
+					}, null, 8, [
+						"data-test-id",
+						"item",
+						"compact",
+						"onClick"
+					])]),
+					_: 2
+				}, 1024)) : item.children && item.id === "settings" ? (openBlock(), createBlock(unref(N8nPopover_default), {
+					key: "settings",
+					side: "right",
+					align: "end",
+					"side-offset": 12
+				}, {
+					content: withCtx(() => [createBaseVNode("div", { class: normalizeClass(_ctx.$style.popover) }, [
+						(openBlock(true), createElementBlock(Fragment, null, renderList(item.children, (child) => {
+							return openBlock(), createElementBlock(Fragment, { key: child.id }, [unref(isCustomMenuItem)(child) ? (openBlock(), createBlock(resolveDynamicComponent(child.component), mergeProps({
+								key: 0,
+								ref_for: true
+							}, child.props), null, 16)) : (openBlock(), createBlock(unref(N8nMenuItem_default), {
+								key: 1,
+								item: child,
+								onClick: () => handleSelect(child.id)
+							}, null, 8, ["item", "onClick"]))], 64);
+						}), 128)),
+						createBaseVNode("span", { class: normalizeClass(_ctx.$style.divider) }, null, 2),
+						createVNode(unref(N8nMenuItem_default), {
+							"data-test-id": "main-sidebar-log-out",
+							item: {
+								id: "sign-out",
+								label: unref(i18n).baseText("auth.signout"),
+								icon: "log-out"
+							},
+							onClick: onLogout
+						}, null, 8, ["item"])
+					], 2)]),
+					trigger: withCtx(() => [createVNode(unref(N8nMenuItem_default), {
+						"data-test-id": `main-sidebar-${item.id}`,
+						item,
+						compact: __props.isCollapsed,
+						onClick: () => handleSelect(item.id)
+					}, null, 8, [
+						"data-test-id",
+						"item",
+						"compact",
+						"onClick"
+					])]),
+					_: 2
+				}, 1024)) : (openBlock(), createBlock(unref(N8nMenuItem_default), {
+					key: 2,
+					"data-test-id": `main-sidebar-${item.id}`,
+					item,
+					compact: __props.isCollapsed,
+					class: normalizeClass(item.id === "resource-center" ? _ctx.$style.resourceCenterMenuItem : void 0),
+					onClick: () => handleSelect(item.id)
+				}, null, 8, [
+					"data-test-id",
+					"item",
+					"compact",
+					"class",
+					"onClick"
+				]))], 64);
+			}), 128))], 2)], 2);
+		};
+	}
+});
+var BottomMenu_vue_vue_type_style_index_0_lang_module_default = {
+	bottomMenu: "_bottomMenu_gd65e_1",
+	collapsed: "_collapsed_gd65e_6",
+	bottomMenuItems: "_bottomMenuItems_gd65e_10",
+	resourceCenterMenuItem: "_resourceCenterMenuItem_gd65e_14",
+	popover: "_popover_gd65e_18",
+	popoverTitle: "_popoverTitle_gd65e_23",
+	divider: "_divider_gd65e_30"
+};
+var BottomMenu_default = /* @__PURE__ */ _plugin_vue_export_helper_default(BottomMenu_vue_vue_type_script_setup_true_lang_default, [["__cssModules", { "$style": BottomMenu_vue_vue_type_style_index_0_lang_module_default }]]);
+//#endregion
+//#region src/experiments/surfaceMcpToClaudeTrialUsers/useClaudeCreateMenu.ts
+function useClaudeCreateMenu(menu, handleMenuSelect) {
+	const { showMcpDiscovery, mcpDiscovery, entryLabel, openEntry } = useMcpDiscovery();
+	const claudeAppendSlotName = "item.append.claude-mcp";
+	const claudeMenu = computed(() => showMcpDiscovery.value ? [
+		...menu.value,
+		{
+			id: "claude-divider",
+			isDivider: true
+		},
+		{
+			id: "claude-mcp",
+			title: entryLabel.value
+		}
+	] : menu.value);
+	function selectItem(id) {
+		if (id === "claude-mcp") openEntry("create_menu");
+		else handleMenuSelect(id);
+	}
+	return {
+		claudeMenu,
+		claudeAppendSlotName,
+		selectItem,
+		trackOpen: () => {
+			if (showMcpDiscovery.value) mcpDiscovery.trackEntry("create_menu", "viewed");
+		}
+	};
+}
+var createMenu_module_default = {
+	claudeMenu: "_claudeMenu_1g1wd_1",
+	claudeMenuIcon: "_claudeMenuIcon_1g1wd_1"
+};
+//#endregion
+//#region src/app/components/MainSidebarHeader.vue?vue&type=script&setup=true&lang.ts
+var MainSidebarHeader_vue_vue_type_script_setup_true_lang_default = /* @__PURE__ */ defineComponent({
+	__name: "MainSidebarHeader",
+	props: {
+		isCollapsed: { type: Boolean },
+		hideCreate: { type: Boolean }
+	},
+	emits: ["collapse", "openCommandBar"],
+	setup(__props, { emit: __emit }) {
+		const emit = __emit;
+		const i18n = useI18n();
+		const sourceControlStore = useSourceControlStore();
+		const settingsStore = useSettingsStore();
+		const createBtn = ref();
+		onClickOutside(createBtn, () => {
+			createBtn.value?.close();
+		});
+		function toggleCollapse() {
+			emit("collapse");
+		}
+		function openCommandBar(event) {
+			emit("openCommandBar", event);
+		}
+		const { menu, handleSelect: handleMenuSelect, createProjectAppendSlotName, createWorkflowsAppendSlotName, createCredentialsAppendSlotName, projectsLimitReachedMessage, upgradeLabel, hasPermissionToCreateProjects } = useGlobalEntityCreation();
+		const { claudeMenu, claudeAppendSlotName, selectItem, trackOpen } = useClaudeCreateMenu(menu, handleMenuSelect);
+		return (_ctx, _cache) => {
+			return openBlock(), createElementBlock("div", { class: normalizeClass({
+				[_ctx.$style.header]: true,
+				[_ctx.$style.collapsed]: __props.isCollapsed
+			}) }, [
+				!__props.isCollapsed ? (openBlock(), createBlock(unref(RouterLink), {
+					key: 0,
+					to: { name: unref(VIEWS).HOMEPAGE },
+					class: normalizeClass(_ctx.$style.logo)
+				}, {
+					default: withCtx(() => [createVNode(unref(N8nLogo_default), {
+						size: "small",
+						collapsed: __props.isCollapsed,
+						"release-channel": unref(settingsStore).settings.releaseChannel
+					}, {
+						default: withCtx(() => [unref(sourceControlStore).preferences.branchReadOnly && !__props.isCollapsed ? (openBlock(), createBlock(unref(N8nTooltip_default), {
+							key: 0,
+							placement: "bottom"
+						}, {
+							content: withCtx(() => [createVNode(unref(I18nT), {
+								keypath: "readOnlyEnv.tooltip",
+								scope: "global"
+							}, {
+								link: withCtx(() => [createVNode(unref(N8nLink_default), {
+									to: unref(PROTECTED_INSTANCE_DOCS_URL),
+									size: "small"
+								}, {
+									default: withCtx(() => [createTextVNode(toDisplayString(unref(i18n).baseText("readOnlyEnv.tooltip.link")), 1)]),
+									_: 1
+								}, 8, ["to"])]),
+								_: 1
+							})]),
+							default: withCtx(() => [createVNode(unref(N8nIcon_default), {
+								"data-test-id": "read-only-env-icon",
+								icon: "lock",
+								class: normalizeClass(_ctx.$style.readOnlyEnvironmentIcon)
+							}, null, 8, ["class"])]),
+							_: 1
+						})) : createCommentVNode("", true)]),
+						_: 1
+					}, 8, ["collapsed", "release-channel"])]),
+					_: 1
+				}, 8, ["to", "class"])) : createCommentVNode("", true),
+				!__props.hideCreate ? (openBlock(), createBlock(unref(N8nNavigationDropdown_default), {
+					key: 1,
+					ref_key: "createBtn",
+					ref: createBtn,
+					"data-test-id": "universal-add",
+					menu: unref(claudeMenu),
+					"submenu-class": unref(createMenu_module_default).claudeMenu,
+					teleport: true,
+					onSelect: unref(selectItem)
+				}, {
+					[unref(claudeAppendSlotName)]: withCtx(() => [createVNode(ClaudeLogo_default, { class: normalizeClass(unref(createMenu_module_default).claudeMenuIcon) }, null, 8, ["class"])]),
+					[unref(createWorkflowsAppendSlotName)]: withCtx(() => [unref(sourceControlStore).preferences.branchReadOnly ? (openBlock(), createBlock(unref(N8nTooltip_default), {
+						key: 0,
+						placement: "right",
+						content: unref(i18n).baseText("readOnlyEnv.cantAdd.workflow")
+					}, {
+						default: withCtx(() => [createVNode(unref(N8nIcon_default), {
+							class: normalizeClass(_ctx.$style.iconButton),
+							icon: "lock",
+							size: "xsmall"
+						}, null, 8, ["class"])]),
+						_: 1
+					}, 8, ["content"])) : createCommentVNode("", true)]),
+					[unref(createCredentialsAppendSlotName)]: withCtx(() => [unref(sourceControlStore).preferences.branchReadOnly ? (openBlock(), createBlock(unref(N8nTooltip_default), {
+						key: 0,
+						placement: "right",
+						content: unref(i18n).baseText("readOnlyEnv.cantAdd.credential")
+					}, {
+						default: withCtx(() => [createVNode(unref(N8nIcon_default), {
+							class: normalizeClass(_ctx.$style.iconButton),
+							icon: "lock",
+							size: "xsmall"
+						}, null, 8, ["class"])]),
+						_: 1
+					}, 8, ["content"])) : createCommentVNode("", true)]),
+					[unref(createProjectAppendSlotName)]: withCtx(({ item }) => [unref(sourceControlStore).preferences.branchReadOnly ? (openBlock(), createBlock(unref(N8nTooltip_default), {
+						key: 0,
+						placement: "right",
+						content: unref(i18n).baseText("readOnlyEnv.cantAdd.project")
+					}, {
+						default: withCtx(() => [createVNode(unref(N8nIcon_default), {
+							class: normalizeClass(_ctx.$style.iconButton),
+							icon: "lock",
+							size: "xsmall"
+						}, null, 8, ["class"])]),
+						_: 1
+					}, 8, ["content"])) : item.disabled ? (openBlock(), createBlock(unref(N8nTooltip_default), {
+						key: 1,
+						placement: "right",
+						content: unref(projectsLimitReachedMessage)
+					}, {
+						default: withCtx(() => [!unref(hasPermissionToCreateProjects) ? (openBlock(), createBlock(unref(N8nIcon_default), {
+							key: 0,
+							class: normalizeClass(_ctx.$style.iconButton),
+							icon: "lock",
+							size: "xsmall"
+						}, null, 8, ["class"])) : (openBlock(), createBlock(unref(N8nButton_default), {
+							key: 1,
+							variant: "outline",
+							size: "mini",
+							class: normalizeClass(_ctx.$style.upgradeButton),
+							onClick: ($event) => unref(handleMenuSelect)(item.id)
+						}, {
+							default: withCtx(() => [createTextVNode(toDisplayString(unref(upgradeLabel)), 1)]),
+							_: 1
+						}, 8, ["class", "onClick"]))]),
+						_: 2
+					}, 1032, ["content"])) : createCommentVNode("", true)]),
+					default: withCtx(() => [createVNode(unref(N8nIconButton_default), {
+						class: "n8n-button--highlight",
+						variant: "ghost",
+						size: "small",
+						icon: "plus",
+						"icon-size": "large",
+						"aria-label": "Add new item",
+						onClick: unref(trackOpen)
+					}, null, 8, ["onClick"])]),
+					_: 2
+				}, 1032, [
+					"menu",
+					"submenu-class",
+					"onSelect"
+				])) : createCommentVNode("", true),
+				!unref(settingsStore).isCanvasOnly ? (openBlock(), createBlock(KeyboardShortcutTooltip_default, {
+					key: 2,
+					placement: __props.isCollapsed ? "right" : "bottom",
+					"show-after": 500,
+					label: unref(i18n).baseText("nodeView.openCommandBar"),
+					shortcut: {
+						keys: ["k"],
+						metaKey: true
+					}
+				}, {
+					default: withCtx(() => [createVNode(unref(N8nIconButton_default), {
+						class: "n8n-button--highlight",
+						variant: "ghost",
+						size: "small",
+						icon: "search",
+						"icon-size": "large",
+						"aria-label": "Open command palette",
+						onClick: openCommandBar
+					})]),
+					_: 1
+				}, 8, ["placement", "label"])) : createCommentVNode("", true),
+				createVNode(KeyboardShortcutTooltip_default, {
+					placement: __props.isCollapsed ? "right" : "bottom",
+					label: __props.isCollapsed ? unref(i18n).baseText("mainSidebar.state.expand") : unref(i18n).baseText("mainSidebar.state.collapse"),
+					"show-after": 500,
+					shortcut: { keys: ["["] }
+				}, {
+					default: withCtx(() => [createVNode(unref(N8nIconButton_default), {
+						id: "toggle-sidebar-button",
+						class: "n8n-button--highlight",
+						variant: "ghost",
+						size: "small",
+						icon: "panel-left",
+						"icon-size": "large",
+						"aria-label": "Toggle sidebar",
+						onClick: toggleCollapse
+					})]),
+					_: 1
+				}, 8, ["placement", "label"])
+			], 2);
+		};
+	}
+});
+var MainSidebarHeader_vue_vue_type_style_index_0_lang_module_default = {
+	header: "_header_1jqqp_3",
+	collapsed: "_collapsed_1jqqp_16",
+	logo: "_logo_1jqqp_21",
+	readOnlyEnvironmentIcon: "_readOnlyEnvironmentIcon_1jqqp_29",
+	iconButton: "_iconButton_1jqqp_39",
+	upgradeButton: "_upgradeButton_1jqqp_44"
+};
+var MainSidebarHeader_default = /* @__PURE__ */ _plugin_vue_export_helper_default(MainSidebarHeader_vue_vue_type_script_setup_true_lang_default, [["__cssModules", { "$style": MainSidebarHeader_vue_vue_type_style_index_0_lang_module_default }]]);
+//#endregion
+export { BottomMenu_default as n, MainSidebarHeader_default as t };
