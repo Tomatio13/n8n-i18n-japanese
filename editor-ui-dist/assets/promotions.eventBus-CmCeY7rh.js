@@ -1,0 +1,5 @@
+import { nO as createEventBus } from "./app-6jl1hHsu.js";
+//#region src/features/integrations/promotions.ee/promotions.eventBus.ts
+var promotionEventBus = createEventBus();
+//#endregion
+export { promotionEventBus as t };
