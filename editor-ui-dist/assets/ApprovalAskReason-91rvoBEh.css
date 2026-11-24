@@ -1,0 +1,10 @@
+/* The card shows its default description in the same way: plain text that keeps its line breaks. */
+._description_ew9qy_2 {
+  white-space: pre-line;
+}
+._reason_ew9qy_6 {
+  margin: 0;
+}
+._description_ew9qy_2 + ._reason_ew9qy_6 {
+  margin-top: var(--spacing--2xs);
+}
