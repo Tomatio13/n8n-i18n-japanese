@@ -1,0 +1,14 @@
+._container_1pxfb_1 p {
+  line-height: normal;
+}
+._container_1pxfb_1 p + p {
+  margin-top: 10px;
+}
+._assistantIcon_1pxfb_8 {
+  margin-right: var(--spacing--4xs);
+}
+._footer_1pxfb_12 {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
