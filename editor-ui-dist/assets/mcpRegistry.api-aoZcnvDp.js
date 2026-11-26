@@ -1,0 +1,10 @@
+import { QC as makeRestApiRequest } from "./app-B_io1t1X.js";
+//#region src/features/shared/toolsConnection/mcpRegistry.api.ts
+async function fetchMcpRegistryCatalog(context) {
+	return await makeRestApiRequest(context, "GET", "/mcp-registry/servers");
+}
+async function discoverMcpConnection(context, request) {
+	return await makeRestApiRequest(context, "POST", "/mcp-registry/discover", request);
+}
+//#endregion
+export { fetchMcpRegistryCatalog as n, discoverMcpConnection as t };
