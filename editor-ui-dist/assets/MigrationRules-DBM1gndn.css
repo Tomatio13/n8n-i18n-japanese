@@ -1,0 +1,107 @@
+
+._NoIssuesContainer_1o8ra_2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: var(--spacing--4xl) 0;
+}
+
+._CardTitleContainer_6ktl8_2 {
+	display: flex;
+	align-items: center;
+	margin-bottom: var(--spacing--2xs);
+	gap: var(--spacing--2xs);
+}
+._NoLineBreak_6ktl8_9 {
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing--4xs);
+}
+._Progress_6ktl8_16 {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing--lg);
+	margin-bottom: var(--spacing--xl);
+}
+._ProgressTrack_6ktl8_23 {
+	flex: 1;
+	height: var(--height--5xs);
+	border-radius: var(--radius--3xs);
+	background-color: var(--color--foreground--tint-1);
+	overflow: hidden;
+}
+._ProgressFill_6ktl8_31 {
+	height: 100%;
+	border-radius: inherit;
+	background-color: var(--color--primary);
+}
+._ActionBar_6ktl8_37 {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	row-gap: var(--spacing--xs);
+	margin-bottom: var(--spacing--sm);
+}
+
+/* N8nTabs fills the row by default. That would push the refresh group to its own line at every width. */
+._ActionBar_6ktl8_37 ._Tabs_6ktl8_47 {
+	width: auto;
+	max-width: 100%;
+}
+._RefreshGroup_6ktl8_52 {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--spacing--xs);
+}
+._LoadingContainer_6ktl8_59 {
+	position: relative;
+}
+._SlowLoadingOverlay_6ktl8_63 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: var(--spacing--sm) var(--spacing--lg);
+	border: var(--border);
+	border-radius: var(--radius--lg);
+	background-color: var(--color--background--light-3);
+	text-align: center;
+}
+._PLoading_6ktl8_75 {
+.el-skeleton__p {
+		margin-top: 0;
+}
+}
+._TitleLink_6ktl8_81 {
+	color: inherit;
+	text-decoration: none;
+&:hover {
+		color: var(--color--primary);
+}
+}
+._FindingCounts_6ktl8_90 {
+	display: flex;
+	gap: var(--spacing--sm);
+	margin-top: var(--spacing--2xs);
+}
+._FindingCount_6ktl8_90 {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing--3xs);
+}
+._FindingCountDot_6ktl8_102 {
+	width: var(--spacing--2xs);
+	height: var(--spacing--2xs);
+	border-radius: var(--radius--full);
+&._open_6ktl8_107 {
+		background-color: var(--text-color--subtler);
+}
+&._wontFix_6ktl8_111 {
+		background-color: var(--icon-color--warning);
+}
+}
